@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, IBM_Plex_Mono } from "next/font/google";
+import { Inter, IBM_Plex_Mono, Geist } from "next/font/google";
 import "./globals.css";
 import { TopNav } from "@/components/ui";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${plexMono.variable}`}>
+    <html lang="en" className={cn(inter.variable, plexMono.variable, "font-sans", geist.variable)}>
       <body>
         <TopNav />
         <main className="mx-auto max-w-[1408px] px-8 py-10">{children}</main>
