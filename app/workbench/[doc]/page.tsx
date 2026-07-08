@@ -3,46 +3,57 @@
 import { use, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  DocFindings, DocMeta, Finding, getFindings, getManifest, Manifest, pct,
+  Decision, DocMeta, Finding, getManifest, loadDocFindings, Manifest,
+  pct, recordDecision,
 } from "@/lib/demo";
 import { ConfBar, RoutingChip, StatusChip } from "@/components/ui";
 
 type Tab = "findings" | "bookmarks" | "fields";
-type Decision = "approved" | "rejected" | undefined;
 
 export default function Workbench({ params }: { params: Promise<{ doc: string }> }) {
   const { doc: docId } = use(params);
   const [m, setM] = useState<Manifest | null>(null);
-  const [data, setData] = useState<DocFindings | null>(null);
+  const [findings, setFindings] = useState<Finding[] | null>(null);
   const [tab, setTab] = useState<Tab>("findings");
   const [page, setPage] = useState(1);
-  const [decisions, setDecisions] = useState<Record<number, Decision>>({});
   const [routingFilter, setRoutingFilter] = useState<string>("all");
+  const [saving, setSaving] = useState<number | null>(null);
 
   useEffect(() => { getManifest().then(setM); }, []);
   const doc: DocMeta | undefined = m?.documents.find((d) => d.id === docId);
-  useEffect(() => { if (doc) getFindings(doc).then(setData); }, [doc]);
+  useEffect(() => {
+    if (doc) { setFindings(null); loadDocFindings(doc).then(setFindings); }
+  }, [doc]);
 
   const grouped = useMemo(() => {
-    if (!data) return [];
-    const filtered = data.findings
-      .map((f, i) => ({ f, i }))
-      .filter(({ f }) => routingFilter === "all" || f.routing === routingFilter);
-    const byCat = new Map<string, { f: Finding; i: number }[]>();
-    for (const item of filtered) {
-      const k = item.f.category_label;
-      if (!byCat.has(k)) byCat.set(k, []);
-      byCat.get(k)!.push(item);
+    if (!findings) return [];
+    const filtered = findings.filter(
+      (f) => routingFilter === "all" || f.routing === routingFilter
+    );
+    const byCat = new Map<string, Finding[]>();
+    for (const f of filtered) {
+      if (!byCat.has(f.category_label)) byCat.set(f.category_label, []);
+      byCat.get(f.category_label)!.push(f);
     }
     return [...byCat.entries()];
-  }, [data, routingFilter]);
+  }, [findings, routingFilter]);
 
-  if (!m || !doc || !data) return <div className="p-8 text-muted">Loading…</div>;
+  if (!m || !doc || !findings) return <div className="p-8 text-muted">Loading…</div>;
 
-  const decide = (i: number, d: Decision) =>
-    setDecisions((prev) => ({ ...prev, [i]: prev[i] === d ? undefined : d }));
+  const decide = async (f: Finding, decision: "approved" | "rejected") => {
+    const next: Decision = f.decision === decision ? null : decision;
+    // optimistic update; persistence via Supabase (toggle-off stays local)
+    setFindings((prev) =>
+      prev!.map((x) => (x.idx === f.idx ? { ...x, decision: next } : x))
+    );
+    if (next) {
+      setSaving(f.idx);
+      await recordDecision(doc.id, f.idx, next);
+      setSaving(null);
+    }
+  };
 
-  const decidedCount = Object.values(decisions).filter(Boolean).length;
+  const decidedCount = findings.filter((f) => f.decision).length;
 
   return (
     <div className="grid gap-3">
@@ -57,14 +68,16 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
         </div>
         <StatusChip status={doc.status} />
         <div className="ml-auto flex items-center gap-2">
-          <span className="text-[11px] text-muted">{decidedCount}/{data.counts.total} reviewed</span>
+          <span className="text-[11px] text-muted">
+            {decidedCount}/{findings.length} reviewed · persisted
+          </span>
           <a href={doc.enrichedPdf} target="_blank" className="btn btn-ghost">Open Enriched PDF ↗</a>
           <Link href={`/litify?stage=${doc.id}`} className="btn btn-primary">Stage Write-Back</Link>
         </div>
       </div>
 
       <div className="grid gap-3" style={{ gridTemplateColumns: "180px minmax(0,1fr) 430px" }}>
-        {/* Left rail: documents in matter */}
+        {/* Left rail */}
         <div className="panel self-start">
           <div className="panel-h">Documents</div>
           <div className="p-1.5 grid gap-1">
@@ -98,7 +111,7 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
           />
         </div>
 
-        {/* Right: findings / bookmarks / fields */}
+        {/* Right: tabs */}
         <div className="panel self-start flex flex-col" style={{ maxHeight: "78vh" }}>
           <div className="flex border-b" style={{ borderColor: "var(--sw-border)" }}>
             {(["findings", "bookmarks", "fields"] as Tab[]).map((t) => (
@@ -107,7 +120,7 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
                 style={tab === t
                   ? { color: "var(--sw-navy)", borderBottom: "2px solid var(--sw-navy)", background: "var(--sw-mist)" }
                   : { color: "var(--sw-muted)" }}>
-                {t === "findings" ? `Findings (${data.counts.total})` : t}
+                {t === "findings" ? `Findings (${findings.length})` : t}
               </button>
             ))}
           </div>
@@ -130,8 +143,8 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
                       style={{ background: "var(--sw-mist)", color: "var(--sw-navy-ink)" }}>
                       {cat} · {items.length}
                     </div>
-                    {items.map(({ f, i }) => (
-                      <div key={i} className="px-3 py-2.5 border-b" style={{ borderColor: "var(--sw-border)" }}>
+                    {items.map((f) => (
+                      <div key={f.idx} className="px-3 py-2.5 border-b" style={{ borderColor: "var(--sw-border)" }}>
                         <div className="flex items-center gap-2 flex-wrap">
                           <button onClick={() => setPage(f.page)}
                             className="font-semibold text-[12.5px] hover:underline"
@@ -147,15 +160,19 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
                           <span className="text-muted"> ({f.source === "ocr" ? `OCR ${pct(f.ocr_conf)}` : "text layer"})</span>
                         </div>
                         <div className="text-[11px] italic text-muted mt-0.5 leading-4">…{f.evidence}…</div>
-                        <div className="flex gap-1.5 mt-1.5">
-                          <button onClick={() => decide(i, "approved")}
-                            className={`btn !py-[2px] !text-[11px] ${decisions[i] === "approved" ? "btn-primary" : "btn-ghost"}`}>
+                        <div className="flex gap-1.5 mt-1.5 items-center">
+                          <button onClick={() => decide(f, "approved")}
+                            className={`btn !py-[2px] !text-[11px] ${f.decision === "approved" ? "btn-primary" : "btn-ghost"}`}>
                             ✓ Validate
                           </button>
-                          <button onClick={() => decide(i, "rejected")}
-                            className={`btn !py-[2px] !text-[11px] ${decisions[i] === "rejected" ? "btn-primary" : "btn-ghost"}`}>
+                          <button onClick={() => decide(f, "rejected")}
+                            className={`btn !py-[2px] !text-[11px] ${f.decision === "rejected" ? "btn-primary" : "btn-ghost"}`}>
                             ✗ Reject
                           </button>
+                          {saving === f.idx && <span className="text-[10.5px] text-muted">saving…</span>}
+                          {f.decision && saving !== f.idx && (
+                            <span className="chip chip-auto">{f.decision}</span>
+                          )}
                           {f.routing === "escalated" && (
                             <span className="chip chip-escalated ml-auto">agent second-opinion pending</span>
                           )}
@@ -170,12 +187,11 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
 
           {tab === "bookmarks" && (
             <div className="overflow-y-auto p-2 text-[12px]">
-              {grouped.length === 0 && <div className="text-muted p-3">No bookmarks.</div>}
-              {[...new Set(data.findings.filter((f) => !f.negated).map((f) => f.category_label))].map((cat) => (
+              {[...new Set(findings.filter((f) => !f.negated).map((f) => f.category_label))].map((cat) => (
                 <div key={cat} className="mb-2">
                   <div className="font-bold" style={{ color: "var(--sw-navy-ink)" }}>▾ {cat}</div>
-                  {[...new Set(data.findings.filter((f) => !f.negated && f.category_label === cat).map((f) => f.term_label))].map((term) => {
-                    const hits = data.findings.filter((f) => !f.negated && f.term_label === term);
+                  {[...new Set(findings.filter((f) => !f.negated && f.category_label === cat).map((f) => f.term_label))].map((term) => {
+                    const hits = findings.filter((f) => !f.negated && f.term_label === term);
                     return (
                       <div key={term} className="ml-3">
                         <div className="font-semibold text-[11.5px]">▾ {term} ({hits.length})</div>

@@ -2,12 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getManifest, Manifest, pct } from "@/lib/demo";
+import { AuditEvent, getManifest, loadAuditEvents, Manifest, pct } from "@/lib/demo";
 import { StatusChip } from "@/components/ui";
 
 export default function Dashboard() {
   const [m, setM] = useState<Manifest | null>(null);
-  useEffect(() => { getManifest().then(setM); }, []);
+  const [audit, setAudit] = useState<AuditEvent[]>([]);
+  useEffect(() => {
+    getManifest().then(setM);
+    loadAuditEvents(20).then(setAudit);
+  }, []);
   if (!m) return <div className="p-8 text-muted">Loading…</div>;
 
   const totals = m.documents.reduce(
@@ -131,24 +135,43 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Audit trail preview */}
+      {/* Audit trail — live from the findings store */}
       <div className="panel">
-        <div className="panel-h">Audit Trail (most recent)</div>
+        <div className="panel-h">
+          <span>Audit Trail (most recent)</span>
+          <span className="text-[10.5px] font-normal normal-case text-muted">
+            {audit.length > 0 ? "source: Supabase audit_events" : "store unreachable — showing pipeline summary"}
+          </span>
+        </div>
         <div className="overflow-x-auto">
           <table className="sw-table">
-            <thead><tr><th>Event</th><th>Document</th><th>Detail</th><th>Actor</th></tr></thead>
+            <thead><tr><th>Event</th><th>Document</th><th>Detail</th><th>Actor</th><th>When</th></tr></thead>
             <tbody>
-              {m.documents.flatMap((d) => [
-                { e: "pipeline.completed", doc: d.title, det: `${d.counts.total} findings · ${d.processingSeconds}s · mean OCR conf ${pct(d.meanOcrConf)}`, a: "pipeline v0.1.0" },
-                { e: "litify.pull", doc: d.title, det: `ContentVersion ${d.sfContentVersionId} downloaded (simulated)`, a: "litify-connector" },
-              ]).map((r, i) => (
-                <tr key={i}>
-                  <td><span className="chip chip-neutral">{r.e}</span></td>
-                  <td>{r.doc}</td>
-                  <td className="text-muted">{r.det}</td>
-                  <td className="text-muted">{r.a}</td>
-                </tr>
-              ))}
+              {audit.length > 0
+                ? audit.map((r) => {
+                    const doc = m.documents.find((d) => d.id === r.document_id);
+                    return (
+                      <tr key={r.id}>
+                        <td><span className={`chip ${r.event.startsWith("review.") ? "chip-review" : "chip-neutral"}`}>{r.event}</span></td>
+                        <td>{doc ? doc.docType : "—"}</td>
+                        <td className="text-muted">{r.detail}</td>
+                        <td className="text-muted">{r.actor}</td>
+                        <td className="text-muted whitespace-nowrap">{new Date(r.created_at).toLocaleString()}</td>
+                      </tr>
+                    );
+                  })
+                : m.documents.flatMap((d) => [
+                    { e: "pipeline.completed", doc: d.title, det: `${d.counts.total} findings · ${d.processingSeconds}s · mean OCR conf ${pct(d.meanOcrConf)}`, a: "pipeline v0.1.0" },
+                    { e: "litify.pull", doc: d.title, det: `ContentVersion ${d.sfContentVersionId} downloaded (simulated)`, a: "litify-connector" },
+                  ]).map((r, i) => (
+                    <tr key={i}>
+                      <td><span className="chip chip-neutral">{r.e}</span></td>
+                      <td>{r.doc}</td>
+                      <td className="text-muted">{r.det}</td>
+                      <td className="text-muted">{r.a}</td>
+                      <td className="text-muted">—</td>
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>

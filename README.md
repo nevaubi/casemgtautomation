@@ -56,16 +56,30 @@ npm install && npm run dev
   staging (ContentVersion insert → ContentDocumentLink → field PATCH → Task),
   gated on explicit approval
 
+## Persistence (Supabase)
+
+Findings, review decisions, and audit events live in a Supabase Postgres
+(`matters`, `documents`, `findings`, `audit_events`) with Row Level Security:
+anonymous read everywhere; anonymous writes limited to review decisions on
+`findings` and inserts on `audit_events`. Workbench validate/reject and the
+review queue's approve/correct/escalate persist with an audit event and
+survive reloads. The static JSON under `public/demo/` remains a read fallback
+if the store is unreachable.
+
+The publishable key in `lib/supabase.ts` is intentionally client-safe (RLS is
+the enforcement layer) and can be overridden with `NEXT_PUBLIC_SUPABASE_URL`
+and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel.
+
 ## Roadmap (next slices)
 
-1. Supabase persistence: findings store, review actions, audit events, storage
-2. Managed Agents escalation worker (code-first, agent second-opinion on
+1. Managed Agents escalation worker (code-first, agent second-opinion on
    low-confidence findings; gated behind `ANTHROPIC_API_KEY` env)
-3. Real Litify connector behind the same interface as the mock
+2. Real Litify connector behind the same interface as the mock
    (`app/api/litify/*` defines the contract)
-4. Adjustable-schema editor backed by a describe()-shaped definition file
+3. Adjustable-schema editor backed by a describe()-shaped definition file
+4. Supabase Realtime for a live processing board
 
 ## Environment
 
-No secrets required for the demo. Future slices read from env (set in Vercel):
-`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ANTHROPIC_API_KEY`.
+No server secrets required for the demo. Future slices read from env (set in
+Vercel): `SUPABASE_SERVICE_ROLE_KEY` (never in the repo), `ANTHROPIC_API_KEY`.

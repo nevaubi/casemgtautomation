@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { getManifest, Manifest } from "@/lib/demo";
+import { getManifest, logAuditEvent, Manifest } from "@/lib/demo";
 import { StatusChip } from "@/components/ui";
 
 function LitifySyncInner() {
@@ -122,7 +122,11 @@ function LitifySyncInner() {
                     )}
                     {staged[d.id] && !pushed[d.id] && (
                       <button className="btn btn-primary !py-[3px]"
-                        onClick={() => setPushed((p) => ({ ...p, [d.id]: true }))}>Approve &amp; Push</button>
+                        onClick={() => {
+                          setPushed((p) => ({ ...p, [d.id]: true }));
+                          logAuditEvent("litify.writeback", d.id,
+                            `Enriched ContentVersion staged and approved for push (simulated) — ${d.counts.total} findings`);
+                        }}>Approve &amp; Push</button>
                     )}
                     {pushed[d.id] && <span className="text-[11px] text-muted">audit event logged</span>}
                   </td>

@@ -1,6 +1,10 @@
+import { supabase } from "./supabase";
+
 export type Routing = "auto" | "review" | "escalated" | "negated";
+export type Decision = "approved" | "rejected" | "corrected" | "escalated" | null;
 
 export interface Finding {
+  idx: number;
   category: string;
   category_label: string;
   term_key: string;
@@ -15,6 +19,8 @@ export interface Finding {
   rects: number[][];
   confidence: number;
   routing: Routing;
+  decision: Decision;
+  decided_by?: string | null;
 }
 
 export interface PageInfo {
@@ -22,15 +28,6 @@ export interface PageInfo {
   source: "text_layer" | "ocr";
   mean_conf: number;
   words: number;
-}
-
-export interface DocFindings {
-  source_pdf: string;
-  enriched_pdf: string;
-  pages: PageInfo[];
-  counts: { total: number; auto: number; review: number; escalated: number; negated: number };
-  processing_seconds: number;
-  findings: Finding[];
 }
 
 export interface DocMeta {
@@ -44,7 +41,7 @@ export interface DocMeta {
   pages: number;
   ocrPages: number;
   meanOcrConf: number;
-  counts: DocFindings["counts"];
+  counts: { total: number; auto: number; review: number; escalated: number; negated: number };
   processingSeconds: number;
   enrichedPdf: string;
   findingsJson: string;
@@ -66,14 +63,105 @@ export interface Manifest {
   pipelineVersion: string;
 }
 
+export interface AuditEvent {
+  id: number;
+  event: string;
+  document_id: string | null;
+  detail: string | null;
+  actor: string | null;
+  created_at: string;
+}
+
 export async function getManifest(): Promise<Manifest> {
   const r = await fetch("/demo/manifest.json");
   return r.json();
 }
 
-export async function getFindings(doc: DocMeta): Promise<DocFindings> {
+/**
+ * Load findings for a document. Primary source: Supabase findings store
+ * (carries persisted review decisions). Fallback: the static pipeline
+ * output JSON, so the demo still renders if the database is unreachable.
+ */
+export async function loadDocFindings(doc: DocMeta): Promise<Finding[]> {
+  try {
+    const { data, error } = await supabase()
+      .from("findings")
+      .select(
+        "idx,category,category_label,term_key,term_label,variant,page,match_quality,ocr_conf,source,negated,evidence,rects,confidence,routing,decision,decided_by"
+      )
+      .eq("document_id", doc.id)
+      .order("idx");
+    if (error) throw error;
+    if (data && data.length > 0) return data as Finding[];
+  } catch {
+    // fall through to static fixture
+  }
   const r = await fetch(doc.findingsJson);
-  return r.json();
+  const j = await r.json();
+  return (j.findings as Omit<Finding, "idx" | "decision">[]).map((f, i) => ({
+    ...f,
+    idx: i,
+    decision: null,
+  }));
+}
+
+/** Persist a review decision and log the audit event. */
+export async function recordDecision(
+  docId: string,
+  idx: number,
+  decision: Exclude<Decision, null>,
+  actor = "Ops Reviewer (demo)"
+): Promise<boolean> {
+  try {
+    const sb = supabase();
+    const { error } = await sb
+      .from("findings")
+      .update({ decision, decided_by: actor, decided_at: new Date().toISOString() })
+      .eq("document_id", docId)
+      .eq("idx", idx);
+    if (error) throw error;
+    await sb.from("audit_events").insert({
+      event: `review.${decision}`,
+      document_id: docId,
+      detail: `Finding #${idx} marked ${decision}`,
+      actor,
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function loadAuditEvents(limit = 25): Promise<AuditEvent[]> {
+  try {
+    const { data, error } = await supabase()
+      .from("audit_events")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error) throw error;
+    return (data ?? []) as AuditEvent[];
+  } catch {
+    return [];
+  }
+}
+
+export async function logAuditEvent(
+  event: string,
+  documentId: string | null,
+  detail: string,
+  actor = "Ops Reviewer (demo)"
+): Promise<void> {
+  try {
+    await supabase().from("audit_events").insert({
+      event,
+      document_id: documentId,
+      detail,
+      actor,
+    });
+  } catch {
+    // audit logging is best-effort in the demo
+  }
 }
 
 export const routingLabel: Record<Routing, string> = {
