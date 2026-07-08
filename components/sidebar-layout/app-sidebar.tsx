@@ -3,14 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  ClipboardCheck,
-  Files,
-  LayoutDashboard,
-  RefreshCw,
-  Scale,
-  ShieldCheck,
-} from "lucide-react";
+import { ClipboardCheck, Files, LayoutDashboard, RefreshCw, ShieldCheck } from "lucide-react";
 
 import {
   Sidebar,
@@ -43,14 +36,19 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
+            <SidebarMenuButton size="lg" asChild className="hover:bg-sidebar-accent/60">
               <Link href="/">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Scale className="size-4" />
+                <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-white/10 font-serif text-sm font-bold tracking-tight text-white">
+                  SW
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Seeger Weiss</span>
-                  <span className="text-muted-foreground truncate text-xs">Case Automation</span>
+                <div className="grid flex-1 text-left leading-tight">
+                  <span className="truncate font-serif text-[15px] font-bold tracking-wide text-white">
+                    SEEGER<span className="font-normal">WEISS</span>
+                    <span className="ml-1 align-middle text-[9px] font-semibold tracking-widest text-white/70">
+                      LLP
+                    </span>
+                  </span>
+                  <span className="truncate text-[11px] text-white/60">Case Automation</span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -60,7 +58,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Records review</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-white/50">Records review</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {NAV.map((item) => (
@@ -78,7 +76,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>System</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-white/50">System</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -88,7 +86,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
                     <span>Admin</span>
                   </a>
                 </SidebarMenuButton>
-                <SidebarMenuBadge>↗</SidebarMenuBadge>
+                <SidebarMenuBadge className="text-white/50">↗</SidebarMenuBadge>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
@@ -96,9 +94,12 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       <SidebarFooter>
-        <div className="text-muted-foreground flex items-center gap-2 px-2 py-1.5 text-xs group-data-[collapsible=icon]:hidden">
-          <span className="bg-status-warn size-1.5 rounded-full" />
-          Simulated Litify environment
+        <div className="grid gap-1 px-2 py-1.5 text-[11px] leading-tight text-white/55 group-data-[collapsible=icon]:hidden">
+          <span className="flex items-center gap-1.5">
+            <span className="size-1.5 rounded-full bg-amber-400" />
+            Simulated Litify environment
+          </span>
+          <span>Synthetic records only · pipeline v0.1.0</span>
         </div>
       </SidebarFooter>
       <SidebarRail />

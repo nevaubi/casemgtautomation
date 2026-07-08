@@ -2,26 +2,36 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { CheckCircle, Flag, Loader2, PencilLine } from "lucide-react";
 
 import {
   Decision, DocMeta, Finding, getManifest, loadDocFindings, Manifest,
   pct, recordDecision,
 } from "@/lib/demo";
-import { ConfMeter, DecisionBadge, PageHeader, RoutingBadge } from "@/components/case-ui";
-import { Badge } from "@/components/ui/badge";
+import {
+  ConfMeter, DecisionBadge, PageHeader, RoutingBadge, TintBadge,
+} from "@/components/case-ui";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
+  TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface QueueItem { doc: DocMeta; f: Finding; key: string }
+type Action = Exclude<Decision, null>;
+
+const ACTIONS: { type: Action; label: string; icon: typeof CheckCircle }[] = [
+  { type: "approved", label: "Approve", icon: CheckCircle },
+  { type: "corrected", label: "Correct", icon: PencilLine },
+  { type: "escalated", label: "Escalate", icon: Flag },
+];
 
 export default function ReviewQueue() {
   const [m, setM] = useState<Manifest | null>(null);
   const [all, setAll] = useState<QueueItem[]>([]);
-  const [saving, setSaving] = useState<string | null>(null);
+  const [pending, setPending] = useState<{ key: string; type: Action } | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -44,89 +54,106 @@ export default function ReviewQueue() {
   const remaining = useMemo(() => all.filter((i) => !i.f.decision), [all]);
   const resolved = useMemo(() => all.filter((i) => i.f.decision), [all]);
 
-  const act = async (item: QueueItem, decision: Exclude<Decision, null>) => {
-    setSaving(item.key);
+  const act = async (item: QueueItem, decision: Action) => {
+    setPending({ key: item.key, type: decision });
+    await recordDecision(item.doc.id, item.f.idx, decision);
     setAll((prev) =>
       prev.map((x) => (x.key === item.key ? { ...x, f: { ...x.f, decision } } : x))
     );
-    await recordDecision(item.doc.id, item.f.idx, decision);
-    setSaving(null);
+    setPending(null);
   };
 
-  if (!m) return <Skeleton className="h-96 w-full" />;
+  if (!m) return <Skeleton className="mt-3 h-[80%] w-full" />;
 
   return (
-    <div className="grid gap-6">
+    <div className="flex h-full min-h-0 flex-col gap-3">
       <PageHeader
         overline={m.matter.litifyMatterNumber}
         title="Review queue"
-        description="Findings the pipeline wasn’t confident enough to accept, lowest confidence first. Decisions persist and feed threshold tuning."
+        description="Findings below the auto-accept gate, lowest confidence first. Decisions persist and feed threshold tuning."
       >
-        <Badge variant="outline" className="gap-1.5">
-          <span className="bg-status-warn size-1.5 rounded-full" />
-          {remaining.length} awaiting
-        </Badge>
-        <Badge variant="outline" className="gap-1.5">
-          <span className="bg-status-ok size-1.5 rounded-full" />
-          {resolved.length} resolved
-        </Badge>
+        <TintBadge tone="amber">{remaining.length} awaiting</TintBadge>
+        <TintBadge tone="emerald">{resolved.length} resolved</TintBadge>
       </PageHeader>
 
-      <Card className="min-w-0 shadow-none">
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Finding</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead className="max-w-72">Evidence</TableHead>
-                <TableHead>Confidence</TableHead>
-                <TableHead className="text-right">Decision</TableHead>
+      <Card className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden rounded-lg py-0 shadow-none">
+        <div className="min-h-0 flex-1 overflow-auto">
+          <table className="w-full caption-bottom text-sm">
+            <TableHeader className="bg-card sticky top-0 z-10">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="h-10 px-4 font-medium">Finding</TableHead>
+                <TableHead className="h-10 px-4 font-medium">Location</TableHead>
+                <TableHead className="h-10 px-4 font-medium">Evidence</TableHead>
+                <TableHead className="h-10 w-[140px] px-4 font-medium">Confidence</TableHead>
+                <TableHead className="h-10 w-[130px] px-4 font-medium">Routing</TableHead>
+                <TableHead className="h-10 w-[120px] px-4 font-medium">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {all.map((item) => {
                 const { doc, f, key } = item;
+                const busy = pending?.key === key;
                 return (
-                  <TableRow key={key} className={f.decision ? "opacity-50" : undefined}>
-                    <TableCell className="max-w-72">
+                  <TableRow
+                    key={key}
+                    className={`hover:bg-muted/50 ${f.decision ? "opacity-55" : ""}`}
+                  >
+                    <TableCell className="max-w-[240px] px-4 py-2.5">
                       <div className="font-medium">{f.term_label}</div>
-                      <div className="text-muted-foreground mt-0.5 text-xs">
-                        Matched “{f.variant}” — compound {pct(f.confidence)} (match{" "}
-                        {pct(f.match_quality)} × OCR {pct(f.ocr_conf)}
-                        {f.source === "ocr" ? ", scanned page" : ""})
+                      <div className="text-muted-foreground mt-0.5 truncate text-xs">
+                        “{f.variant}” · {pct(f.match_quality)} match × {pct(f.ocr_conf)} OCR
+                        {f.source === "ocr" ? " · scanned" : ""}
                       </div>
-                      <div className="mt-1.5"><RoutingBadge routing={f.routing} /></div>
                     </TableCell>
-                    <TableCell className="whitespace-nowrap">
+                    <TableCell className="px-4 py-2.5 whitespace-nowrap">
                       <Link href={`/workbench/${doc.id}`} className="font-medium hover:underline">
                         {doc.docType}
                       </Link>
-                      <div className="text-muted-foreground text-xs">
-                        Page {f.page} · {f.source === "ocr" ? "OCR" : "text layer"}
-                      </div>
+                      <div className="text-muted-foreground text-xs">p.{f.page}</div>
                     </TableCell>
-                    <TableCell className="max-w-72">
-                      <span className="text-muted-foreground text-xs italic">…{f.evidence}…</span>
+                    <TableCell className="text-muted-foreground max-w-[280px] px-4 py-2.5 text-xs">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="block cursor-help truncate italic">
+                            …{f.evidence}…
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-md">{f.evidence}</TooltipContent>
+                      </Tooltip>
                     </TableCell>
-                    <TableCell className="whitespace-nowrap">
+                    <TableCell className="px-4 py-2.5 whitespace-nowrap">
                       <ConfMeter value={f.confidence} routing={f.routing} />
                     </TableCell>
-                    <TableCell className="text-right whitespace-nowrap">
+                    <TableCell className="px-4 py-2.5">
+                      <RoutingBadge routing={f.routing} />
+                    </TableCell>
+                    <TableCell className="px-4 py-2.5">
                       {f.decision ? (
                         <DecisionBadge decision={f.decision} />
-                      ) : saving === key ? (
-                        <span className="text-muted-foreground text-xs">Saving…</span>
                       ) : (
-                        <span className="inline-flex gap-1.5">
-                          <Button size="sm" onClick={() => act(item, "approved")}>Approve</Button>
-                          <Button size="sm" variant="outline" onClick={() => act(item, "corrected")}>
-                            Correct
-                          </Button>
-                          <Button size="sm" variant="ghost" onClick={() => act(item, "escalated")}>
-                            Escalate
-                          </Button>
-                        </span>
+                        <div className="flex items-center gap-1">
+                          {ACTIONS.map(({ type, label, icon: Icon }) => (
+                            <Tooltip key={type}>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  className="size-7"
+                                  onClick={() => act(item, type)}
+                                  disabled={busy}
+                                  aria-label={label}
+                                >
+                                  {busy && pending?.type === type ? (
+                                    <Loader2 className="size-3.5 animate-spin" />
+                                  ) : (
+                                    <Icon className="size-3.5" />
+                                  )}
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>{label}</TooltipContent>
+                            </Tooltip>
+                          ))}
+                        </div>
                       )}
                     </TableCell>
                   </TableRow>
@@ -134,14 +161,14 @@ export default function ReviewQueue() {
               })}
               {all.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-muted-foreground h-32 text-center">
+                  <TableCell colSpan={6} className="text-muted-foreground h-28 px-4 text-center">
                     Queue is empty — every finding cleared the auto-accept threshold.
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
-          </Table>
-        </CardContent>
+          </table>
+        </div>
       </Card>
     </div>
   );

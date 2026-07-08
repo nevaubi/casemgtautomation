@@ -2,36 +2,33 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink, PanelsTopLeft } from "lucide-react";
 
 import { AuditEvent, getManifest, loadAuditEvents, Manifest, pct } from "@/lib/demo";
 import { PageHeader, ROUTING_DOT, StatusBadge } from "@/components/case-ui";
 import { Button } from "@/components/ui/button";
-import {
-  Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
+  TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function Dashboard() {
   const [m, setM] = useState<Manifest | null>(null);
   const [audit, setAudit] = useState<AuditEvent[]>([]);
   useEffect(() => {
     getManifest().then(setM);
-    loadAuditEvents(8).then(setAudit);
+    loadAuditEvents(10).then(setAudit);
   }, []);
 
   if (!m) {
     return (
-      <div className="grid gap-6">
-        <Skeleton className="h-20 w-full max-w-xl" />
-        <div className="grid gap-4 md:grid-cols-4">
-          {[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-28" />)}
-        </div>
-        <Skeleton className="h-72" />
+      <div className="grid h-full content-start gap-3 pt-3">
+        <Skeleton className="h-12 w-full max-w-xl" />
+        <Skeleton className="h-16" />
+        <Skeleton className="h-64" />
       </div>
     );
   }
@@ -51,10 +48,11 @@ export default function Dashboard() {
   const straightThrough = totals.total ? totals.auto / totals.total : 0;
 
   const stats: { label: string; value: string | number; sub: string }[] = [
-    { label: "Documents", value: m.documents.length, sub: `${totals.pages} pages · ${totals.secs.toFixed(1)}s pipeline` },
-    { label: "Findings", value: totals.total, sub: `across ${m.documents.length} records` },
-    { label: "Straight-through", value: pct(straightThrough), sub: "auto-accepted at ≥ 85%" },
-    { label: "Awaiting review", value: totals.review + totals.escalated, sub: "confidence 60–85%" },
+    { label: "Documents", value: m.documents.length, sub: `${totals.pages} pages` },
+    { label: "Findings", value: totals.total, sub: `${m.documents.length} records` },
+    { label: "Straight-through", value: pct(straightThrough), sub: "auto ≥ 85%" },
+    { label: "Awaiting review", value: totals.review + totals.escalated, sub: "60–85% conf" },
+    { label: "Pipeline time", value: `${totals.secs.toFixed(1)}s`, sub: "OCR + match" },
   ];
 
   const routingRows: { label: string; n: number; dot: string }[] = [
@@ -65,56 +63,60 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="grid gap-6">
+    <div className="flex h-full min-h-0 flex-col gap-3">
       <PageHeader
         overline={`${m.matter.litifyMatterNumber} · ${m.matter.team}`}
         title={m.matter.name}
         description={m.matter.caption}
       >
         <StatusBadge status={m.matter.status} />
-        <Button variant="outline" asChild>
+        <Button variant="outline" size="sm" asChild>
           <Link href="/worklist">Open work list</Link>
         </Button>
-        <Button asChild>
+        <Button size="sm" asChild>
           <Link href="/litify">Litify sync</Link>
         </Button>
       </PageHeader>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {/* KPI strip */}
+      <Card className="grid shrink-0 grid-cols-2 gap-0 divide-y rounded-lg py-0 shadow-none sm:grid-cols-3 sm:divide-y-0 xl:grid-cols-5 xl:divide-x">
         {stats.map((s) => (
-          <Card key={s.label} className="shadow-none">
-            <CardHeader>
-              <CardDescription>{s.label}</CardDescription>
-              <CardTitle className="text-3xl tabular-nums">{s.value}</CardTitle>
-            </CardHeader>
-            <CardFooter className="text-muted-foreground text-xs">{s.sub}</CardFooter>
-          </Card>
+          <div key={s.label} className="px-4 py-2.5">
+            <div className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">
+              {s.label}
+            </div>
+            <div className="mt-0.5 flex items-baseline gap-2">
+              <span className="text-xl leading-none font-semibold tabular-nums">{s.value}</span>
+              <span className="text-muted-foreground text-[11px]">{s.sub}</span>
+            </div>
+          </div>
         ))}
-      </div>
+      </Card>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <Card className="min-w-0 shadow-none lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Matter documents</CardTitle>
-            <CardDescription>
+      <div className="grid min-h-0 flex-1 gap-3 lg:grid-cols-3">
+        {/* Documents */}
+        <Card className="flex h-full min-h-0 min-w-0 flex-col gap-0 overflow-hidden rounded-lg py-0 shadow-none lg:col-span-2">
+          <div className="flex shrink-0 items-baseline justify-between gap-3 border-b px-4 py-2.5">
+            <span className="text-sm font-semibold">Matter documents</span>
+            <span className="text-muted-foreground text-xs">
               Pulled from Litify (simulated) · pipeline v{m.pipelineVersion}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Document</TableHead>
-                  <TableHead className="text-right">Pages</TableHead>
-                  <TableHead className="text-right">Findings</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead />
+            </span>
+          </div>
+          <div className="min-h-0 flex-1 overflow-auto">
+            <table className="w-full caption-bottom text-sm">
+              <TableHeader className="bg-card sticky top-0 z-10">
+                <TableRow className="hover:bg-transparent">
+                  <TableHead className="h-10 px-4 font-medium">Document</TableHead>
+                  <TableHead className="h-10 px-4 text-right font-medium">Pages</TableHead>
+                  <TableHead className="h-10 px-4 text-right font-medium">Findings</TableHead>
+                  <TableHead className="h-10 px-4 font-medium">Status</TableHead>
+                  <TableHead className="h-10 w-[90px] px-4 font-medium">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {m.documents.map((d) => (
-                  <TableRow key={d.id}>
-                    <TableCell>
+                  <TableRow key={d.id} className="hover:bg-muted/50">
+                    <TableCell className="px-4 py-2.5">
                       <Link href={`/workbench/${d.id}`} className="font-medium hover:underline">
                         {d.title}
                       </Link>
@@ -123,56 +125,85 @@ export default function Dashboard() {
                         {d.ocrPages > 0 && ` · ${d.ocrPages} OCR page${d.ocrPages > 1 ? "s" : ""}`}
                       </div>
                     </TableCell>
-                    <TableCell className="text-right tabular-nums">{d.pages}</TableCell>
-                    <TableCell className="text-right tabular-nums">
+                    <TableCell className="px-4 py-2.5 text-right tabular-nums">{d.pages}</TableCell>
+                    <TableCell className="px-4 py-2.5 text-right tabular-nums">
                       {d.counts.total}
                       {d.counts.review + d.counts.escalated > 0 && (
-                        <span className="text-status-warn text-xs">
+                        <span className="text-[11px] text-amber-700">
                           {" "}· {d.counts.review + d.counts.escalated} flagged
                         </span>
                       )}
                     </TableCell>
-                    <TableCell><StatusBadge status={d.status} /></TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="outline" size="sm" asChild>
-                        <Link href={`/workbench/${d.id}`}>Open</Link>
-                      </Button>
+                    <TableCell className="px-4 py-2.5">
+                      <StatusBadge status={d.status} />
+                    </TableCell>
+                    <TableCell className="px-4 py-2.5">
+                      <div className="flex items-center gap-1">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="outline" size="icon" className="size-7" asChild>
+                              <Link href={`/workbench/${d.id}`} aria-label="Open workbench">
+                                <PanelsTopLeft className="size-3.5" />
+                              </Link>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Open workbench</TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="outline" size="icon" className="size-7" asChild>
+                              <a
+                                href={d.enrichedPdf}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Open enriched PDF"
+                              >
+                                <ExternalLink className="size-3.5" />
+                              </a>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Enriched PDF</TooltipContent>
+                        </Tooltip>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
-            </Table>
-          </CardContent>
+            </table>
+          </div>
         </Card>
 
-        <div className="grid content-start gap-6">
-          <Card className="shadow-none">
-            <CardHeader>
-              <CardTitle>Routing</CardTitle>
-              <CardDescription>Auto-accept threshold at 85% confidence</CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-4">
+        {/* Right rail */}
+        <div className="flex h-full min-h-0 flex-col gap-3">
+          <Card className="shrink-0 gap-0 rounded-lg py-0 shadow-none">
+            <div className="border-b px-4 py-2.5">
+              <span className="text-sm font-semibold">Routing</span>
+              <span className="text-muted-foreground ml-2 text-xs">auto-accept at 85%</span>
+            </div>
+            <div className="grid gap-2.5 px-4 py-3">
               {routingRows.map((r) => (
                 <div key={r.label}>
-                  <div className="mb-1.5 flex items-center justify-between text-sm">
-                    <span className="flex items-center gap-2">
+                  <div className="mb-1 flex items-center justify-between text-xs">
+                    <span className="flex items-center gap-1.5">
                       <span className={`size-1.5 rounded-full ${r.dot}`} />
                       {r.label}
                     </span>
                     <span className="font-medium tabular-nums">{r.n}</span>
                   </div>
-                  <Progress value={totals.total ? (r.n / totals.total) * 100 : 0} className="h-1.5" />
+                  <Progress value={totals.total ? (r.n / totals.total) * 100 : 0} className="h-1" />
                 </div>
               ))}
-            </CardContent>
+            </div>
           </Card>
 
-          <Card className="shadow-none">
-            <CardHeader>
-              <CardTitle>Recent activity</CardTitle>
-              <CardDescription>{audit.length > 0 ? "Live audit trail" : "Pipeline summary"}</CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-4">
+          <Card className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden rounded-lg py-0 shadow-none">
+            <div className="flex shrink-0 items-baseline justify-between border-b px-4 py-2.5">
+              <span className="text-sm font-semibold">Recent activity</span>
+              <span className="text-muted-foreground text-xs">
+                {audit.length > 0 ? "live audit trail" : "pipeline summary"}
+              </span>
+            </div>
+            <div className="min-h-0 flex-1 divide-y overflow-y-auto">
               {(audit.length > 0
                 ? audit.map((r) => ({
                     key: String(r.id),
@@ -189,16 +220,18 @@ export default function Dashboard() {
                     meta: "pipeline v0.1.0",
                   }))
               ).map((r) => (
-                <div key={r.key} className="flex items-start gap-3">
-                  <ArrowUpRight className="text-muted-foreground mt-0.5 size-3.5 shrink-0" />
-                  <div className="min-w-0">
-                    <div className="font-mono text-xs font-medium">{r.event}</div>
-                    <div className="text-muted-foreground truncate text-xs">{r.detail}</div>
-                    <div className="text-muted-foreground/70 text-xs">{r.meta}</div>
+                <div key={r.key} className="flex items-start gap-2.5 px-4 py-2">
+                  <ArrowUpRight className="text-muted-foreground mt-0.5 size-3 shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <span className="truncate font-mono text-[11px] font-medium">{r.event}</span>
+                      <span className="text-muted-foreground shrink-0 text-[11px]">{r.meta}</span>
+                    </div>
+                    <div className="text-muted-foreground truncate text-[11px]">{r.detail}</div>
                   </div>
                 </div>
               ))}
-            </CardContent>
+            </div>
           </Card>
         </div>
       </div>

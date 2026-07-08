@@ -27,11 +27,11 @@ export function AppHeader() {
   const title = TITLES.find(([p]) => pathname.startsWith(p))?.[1] ?? "Dashboard";
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2">
+    <header className="flex h-12 shrink-0 items-center gap-2 border-b">
       <div className="flex items-center gap-2 px-4 md:px-6">
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
-        <div className="font-medium">{title}</div>
+        <div className="text-sm font-medium">{title}</div>
       </div>
       <div className="ml-auto flex items-center gap-3 px-4 md:px-6">
         <Badge variant="outline" className="text-muted-foreground hidden gap-1.5 sm:inline-flex">
@@ -43,7 +43,7 @@ export function AppHeader() {
             aria-label="Account menu"
             className="focus-visible:ring-ring rounded-full outline-none focus-visible:ring-2"
           >
-            <Avatar className="size-8">
+            <Avatar className="size-7">
               <AvatarFallback>OP</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>

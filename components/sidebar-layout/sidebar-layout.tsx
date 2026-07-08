@@ -9,15 +9,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset className="min-w-0">
+      <SidebarInset className="flex h-svh min-w-0 flex-col overflow-hidden">
         <AppHeader />
-        <main className="flex flex-1 flex-col gap-6 p-4 pt-2 md:p-6 md:pt-3">
+        <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-4 lg:overflow-hidden">
           {children}
         </main>
-        <footer className="text-muted-foreground border-t px-4 py-4 text-xs md:px-6">
-          Prototype · simulated Litify connection · synthetic records only — every patient and
-          provider is fictional · pipeline v0.1.0
-        </footer>
       </SidebarInset>
     </SidebarProvider>
   );

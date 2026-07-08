@@ -3,58 +3,84 @@
 import { Badge } from "@/components/ui/badge";
 import { Routing, routingLabel } from "@/lib/demo";
 
-/** Tailwind color classes for routing dots / fills (single source of truth). */
+/** Tailwind color classes for routing dots / meter fills. */
 export const ROUTING_DOT: Record<Routing, string> = {
-  auto: "bg-status-ok",
-  review: "bg-status-warn",
-  escalated: "bg-status-alert",
-  negated: "bg-status-quiet",
+  auto: "bg-emerald-600",
+  review: "bg-amber-500",
+  escalated: "bg-orange-600",
+  negated: "bg-slate-400",
+};
+
+/* Soft tinted chips — borderless, enterprise-CRM style. */
+const TINT = {
+  emerald:
+    "border-0 bg-emerald-500/15 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400",
+  amber: "border-0 bg-amber-500/15 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300",
+  orange: "border-0 bg-orange-500/15 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400",
+  rose: "border-0 bg-rose-500/15 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400",
+  blue: "border-0 bg-blue-500/15 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400",
+  slate: "border-0 bg-slate-500/15 text-slate-600 dark:bg-slate-500/10 dark:text-slate-400",
+} as const;
+
+const ROUTING_TINT: Record<Routing, string> = {
+  auto: TINT.emerald,
+  review: TINT.amber,
+  escalated: TINT.orange,
+  negated: TINT.slate,
 };
 
 export function RoutingBadge({ routing }: { routing: Routing }) {
-  return (
-    <Badge variant="outline" className="text-muted-foreground gap-1.5 font-normal">
-      <span className={`size-1.5 rounded-full ${ROUTING_DOT[routing]}`} />
-      {routingLabel[routing]}
-    </Badge>
-  );
+  return <Badge className={ROUTING_TINT[routing]}>{routingLabel[routing]}</Badge>;
 }
 
 export function StatusBadge({ status }: { status: string }) {
-  const dot =
-    status === "Auto-Processed" ? "bg-status-ok"
-    : status === "Needs Review" ? "bg-status-warn"
-    : "bg-status-quiet";
-  return (
-    <Badge variant="outline" className="text-muted-foreground gap-1.5 font-normal">
-      <span className={`size-1.5 rounded-full ${dot}`} />
-      {status}
-    </Badge>
-  );
+  const tint =
+    status === "Auto-Processed" || status === "Reviewed" || status === "Written Back"
+      ? TINT.emerald
+      : status === "Needs Review"
+        ? TINT.amber
+        : TINT.slate;
+  return <Badge className={tint}>{status}</Badge>;
 }
 
 export function DecisionBadge({ decision }: { decision: string }) {
-  return <Badge variant="secondary" className="capitalize">{decision}</Badge>;
+  const tint =
+    decision === "approved" ? TINT.emerald
+    : decision === "rejected" ? TINT.rose
+    : decision === "corrected" ? TINT.blue
+    : TINT.orange;
+  return <Badge className={`${tint} capitalize`}>{decision}</Badge>;
 }
 
-/** Confidence meter with a tick at the 85% auto-accept threshold. */
+export function TintBadge({
+  tone,
+  children,
+}: {
+  tone: keyof typeof TINT;
+  children: React.ReactNode;
+}) {
+  return <Badge className={TINT[tone]}>{children}</Badge>;
+}
+
+/** Compact confidence meter with a tick at the 85% auto-accept threshold. */
 export function ConfMeter({ value, routing }: { value: number; routing: Routing }) {
   return (
-    <span className="inline-flex items-center gap-2">
-      <span className="bg-muted relative inline-block h-1.5 w-16 rounded-full">
+    <span className="inline-flex items-center gap-1.5">
+      <span className="bg-muted relative inline-block h-1 w-14 rounded-full">
         <span
           className={`absolute inset-y-0 left-0 rounded-full ${ROUTING_DOT[routing]}`}
           style={{ width: `${Math.round(value * 100)}%` }}
         />
-        <span className="bg-foreground/30 absolute -inset-y-0.5 left-[85%] w-px" />
+        <span className="bg-foreground/30 absolute -inset-y-[3px] left-[85%] w-px" />
       </span>
-      <span className="text-muted-foreground w-8 text-xs font-medium tabular-nums">
+      <span className="text-muted-foreground w-7 text-[11px] font-medium tabular-nums">
         {(value * 100).toFixed(0)}%
       </span>
     </span>
   );
 }
 
+/** Compact page header: one dense row of context + actions. */
 export function PageHeader({
   overline,
   title,
@@ -67,15 +93,19 @@ export function PageHeader({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
-      <div className="min-w-0 max-w-2xl">
-        {overline && (
-          <div className="text-muted-foreground font-mono text-xs tracking-wide uppercase">
-            {overline}
-          </div>
+    <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+          <h1 className="text-lg leading-tight font-semibold tracking-tight">{title}</h1>
+          {overline && (
+            <span className="text-muted-foreground font-mono text-[11px] tracking-wide uppercase">
+              {overline}
+            </span>
+          )}
+        </div>
+        {description && (
+          <p className="text-muted-foreground mt-0.5 truncate text-xs">{description}</p>
         )}
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight">{title}</h1>
-        {description && <p className="text-muted-foreground mt-1 text-sm">{description}</p>}
       </div>
       {children && <div className="flex flex-wrap items-center gap-2">{children}</div>}
     </div>
