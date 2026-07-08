@@ -17,6 +17,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const TITLES: [string, string][] = [
   ["/worklist", "Work list"],
+  ["/upload", "Upload & process"],
   ["/workbench", "Workbench"],
   ["/review", "Review queue"],
   ["/litify", "Litify sync"],
