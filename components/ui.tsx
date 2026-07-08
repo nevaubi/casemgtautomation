@@ -93,6 +93,7 @@ const NAV = [
   { href: "/worklist", label: "Work list" },
   { href: "/review", label: "Review queue" },
   { href: "/litify", label: "Litify sync" },
+  { href: "/admin", label: "Admin ↗" },
 ];
 
 export function TopNav() {

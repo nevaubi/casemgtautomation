@@ -56,6 +56,26 @@ npm install && npm run dev
   staging (ContentVersion insert → ContentDocumentLink → field PATCH → Task),
   gated on explicit approval
 
+## Admin application (Payload CMS)
+
+The primary operator UI is now **Payload CMS** (Vercel's Next.js-native CMS),
+mounted at `/admin` in this same app. It provides the professionally designed
+interface for the whole review workflow: browse Case Documents, open Findings
+(sorted lowest-confidence first, searchable by term/evidence), set a review
+`decision` (which auto-writes an Audit Event via hook), and inspect the
+append-only Audit Trail. Payload runs on the same Supabase Postgres in an
+isolated `payload` schema; migrations run automatically on first boot
+(`prodMigrations`).
+
+Required environment variables (Vercel → Settings → Environment Variables):
+
+- `DATABASE_URI` — Postgres session-pooler string for the `payload_admin` role
+- `PAYLOAD_SECRET` — Payload auth/crypto secret
+
+After the first deploy with env set: `POST /api/payload-seed` with header
+`x-seed-token: $PAYLOAD_SECRET` loads the demo matter/documents/findings, then
+visit `/admin` to create the first admin user.
+
 ## Persistence (Supabase)
 
 Findings, review decisions, and audit events live in a Supabase Postgres
