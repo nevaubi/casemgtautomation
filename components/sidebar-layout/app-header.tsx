@@ -1,0 +1,66 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+
+const TITLES: [string, string][] = [
+  ["/worklist", "Work list"],
+  ["/workbench", "Workbench"],
+  ["/review", "Review queue"],
+  ["/litify", "Litify sync"],
+];
+
+export function AppHeader() {
+  const pathname = usePathname();
+  const title = TITLES.find(([p]) => pathname.startsWith(p))?.[1] ?? "Dashboard";
+
+  return (
+    <header className="flex h-16 shrink-0 items-center gap-2">
+      <div className="flex items-center gap-2 px-4 md:px-6">
+        <SidebarTrigger className="-ml-1" />
+        <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
+        <div className="font-medium">{title}</div>
+      </div>
+      <div className="ml-auto flex items-center gap-3 px-4 md:px-6">
+        <Badge variant="outline" className="text-muted-foreground hidden gap-1.5 sm:inline-flex">
+          <span className="bg-status-warn size-1.5 rounded-full" />
+          Simulated Litify
+        </Badge>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            aria-label="Account menu"
+            className="focus-visible:ring-ring rounded-full outline-none focus-visible:ring-2"
+          >
+            <Avatar className="size-8">
+              <AvatarFallback>OP</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-52">
+            <DropdownMenuLabel>
+              <div className="text-sm font-medium">Ops Reviewer</div>
+              <div className="text-muted-foreground text-xs">demo session</div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              render={<a href="/admin" target="_blank" rel="noopener noreferrer" />}
+            >
+              Open admin (Payload)
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </header>
+  );
+}
