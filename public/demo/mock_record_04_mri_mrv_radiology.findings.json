@@ -1,0 +1,439 @@
+{
+  "source_pdf": "mock_record_04_mri_mrv_radiology.pdf",
+  "enriched_pdf": "AI Reviewed - mock_record_04_mri_mrv_radiology.pdf",
+  "pages": [
+    {
+      "number": 1,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 187
+    },
+    {
+      "number": 2,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 81
+    }
+  ],
+  "counts": {
+    "total": 15,
+    "auto": 13,
+    "review": 0,
+    "escalated": 0,
+    "negated": 2
+  },
+  "processing_seconds": 0.06,
+  "findings": [
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "transient visual obscurations",
+      "page": 1,
+      "match_quality": 0.9571,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "female with two months of progressive headaches and transient visual obscurations. Fundoscopic exam 11/21/2022 documented bilateral papilledema. Patient denies",
+      "rects": [
+        [
+          336.48260498046875,
+          146.78750610351562,
+          372.9151611328125,
+          159.8404998779297
+        ],
+        [
+          54.0,
+          160.28750610351562,
+          78.28199768066406,
+          173.3404998779297
+        ],
+        [
+          80.9229965209961,
+          160.28750610351562,
+          137.41949462890625,
+          173.3404998779297
+        ]
+      ],
+      "confidence": 0.9475,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "vision loss",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": true,
+      "evidence": "bilateral papilledema. Patient denies pulsatile tinnitus. Presents without vision loss at time of exam. Evaluate for secondary causes",
+      "rects": [
+        [
+          319.06903076171875,
+          173.78750610351562,
+          343.35107421875,
+          186.8404998779297
+        ],
+        [
+          54.0,
+          187.28750610351562,
+          70.89100646972656,
+          200.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "negated"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "tinnitus",
+      "term_label": "Pulsatile tinnitus",
+      "variant": "pulsatile tinnitus",
+      "page": 1,
+      "match_quality": 0.9415,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": true,
+      "evidence": "Fundoscopic exam 11/21/2022 documented bilateral papilledema. Patient denies pulsatile tinnitus. Presents without vision loss at time of exam.",
+      "rects": [
+        [
+          173.3389892578125,
+          173.78750610351562,
+          208.18496704101562,
+          186.8404998779297
+        ],
+        [
+          210.8259735107422,
+          173.78750610351562,
+          243.56297302246094,
+          186.8404998779297
+        ]
+      ],
+      "confidence": 0.9321,
+      "routing": "negated"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "lumbar-puncture",
+      "term_label": "Lumbar puncture",
+      "variant": "lumbar puncture",
+      "page": 1,
+      "match_quality": 0.9415,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "for secondary causes of intracranial hypertension prior to lumbar puncture. TECHNIQUE Multiplanar multisequence MRI brain performed before and",
+      "rects": [
+        [
+          143.23348999023438,
+          200.78750610351562,
+          172.26547241210938,
+          213.8404998779297
+        ],
+        [
+          174.90647888183594,
+          200.78750610351562,
+          214.51197814941406,
+          213.8404998779297
+        ]
+      ],
+      "confidence": 0.9321,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mri brain",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "WHITFIELD, DANA L. DOB: 03/14/1991 MRN: SIC-77320 EXAM: MRI BRAIN W/WO CONTRAST (CPT 70551) + MRV HEAD DATE:",
+      "rects": [
+        [
+          108.00001525878906,
+          96.61199951171875,
+          124.20001983642578,
+          107.85299682617188
+        ],
+        [
+          129.6000213623047,
+          96.61199951171875,
+          156.59999084472656,
+          107.85299682617188
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mri brain",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "hypertension prior to lumbar puncture. TECHNIQUE Multiplanar multisequence MRI brain performed before and after 7 mL gadobutrol. 2D",
+      "rects": [
+        [
+          166.98348999023438,
+          240.28750610351562,
+          184.39698791503906,
+          253.3404998779297
+        ],
+        [
+          187.03799438476562,
+          240.28750610351562,
+          208.15647888183594,
+          253.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "papilledema",
+      "page": 1,
+      "match_quality": 0.9278,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "transient visual obscurations. Fundoscopic exam 11/21/2022 documented bilateral papilledema. Patient denies pulsatile tinnitus. Presents without vision loss",
+      "rects": [
+        [
+          54.0,
+          173.78750610351562,
+          107.8554916381836,
+          186.8404998779297
+        ]
+      ],
+      "confidence": 0.9185,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "HISTORY 31-year-old female with two months of progressive headaches and transient visual obscurations. Fundoscopic exam 11/21/2022 documented",
+      "rects": [
+        [
+          268.8804931640625,
+          146.78750610351562,
+          315.3545837402344,
+          159.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "70551",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "MRN: SIC-77320 EXAM: MRI BRAIN W/WO CONTRAST (CPT 70551) + MRV HEAD DATE: 12/02/2022 REFERRER: P. NATARAJAN,",
+      "rects": [
+        [
+          264.5998840332031,
+          96.61199951171875,
+          296.9998474121094,
+          107.85299682617188
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mrv",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "EXAM: MRI BRAIN W/WO CONTRAST (CPT 70551) + MRV HEAD DATE: 12/02/2022 REFERRER: P. NATARAJAN, MD \u00b7",
+      "rects": [
+        [
+          313.1998291015625,
+          96.61199951171875,
+          329.3998107910156,
+          107.85299682617188
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mrv",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "before and after 7 mL gadobutrol. 2D time-of-flight MRV of the head performed without contrast. FINDINGS Brain",
+      "rects": [
+        [
+          173.85198974609375,
+          253.78750610351562,
+          194.9609832763672,
+          266.84051513671875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mrv",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "be seen with elevated intracranial pressure. Venous system (MRV): The dural venous sinuses are patent. No evidence",
+      "rects": [
+        [
+          121.5829849243164,
+          374.2875061035156,
+          151.6599884033203,
+          387.34051513671875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "idiopathic intracranial hypertension",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "and optic nerve sheath distension: constellation compatible with idiopathic intracranial hypertension in the appropriate clinical setting. 3. Recommend correlation",
+      "rects": [
+        [
+          264.68145751953125,
+          126.7874984741211,
+          304.8095397949219,
+          139.8404998779297
+        ],
+        [
+          61.922996520996094,
+          140.28750610351562,
+          108.37798309326172,
+          153.3404998779297
+        ],
+        [
+          111.01898193359375,
+          140.28750610351562,
+          165.40646362304688,
+          153.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "lumbar-puncture",
+      "term_label": "Lumbar puncture",
+      "variant": "lumbar puncture",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "the appropriate clinical setting. 3. Recommend correlation with lumbar puncture opening pressure. ELECTRONICALLY SIGNED R. Vasquez, MD \u00b7",
+      "rects": [
+        [
+          187.56997680664062,
+          153.78750610351562,
+          216.60195922851562,
+          166.8404998779297
+        ],
+        [
+          219.2429656982422,
+          153.78750610351562,
+          256.20745849609375,
+          166.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "opening-pressure",
+      "term_label": "Opening pressure",
+      "variant": "opening pressure",
+      "page": 2,
+      "match_quality": 0.9415,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "clinical setting. 3. Recommend correlation with lumbar puncture opening pressure. ELECTRONICALLY SIGNED R. Vasquez, MD \u00b7 Neuroradiology Signed:",
+      "rects": [
+        [
+          258.84844970703125,
+          153.78750610351562,
+          292.6495361328125,
+          166.8404998779297
+        ],
+        [
+          295.29052734375,
+          153.78750610351562,
+          334.8865966796875,
+          166.8404998779297
+        ]
+      ],
+      "confidence": 0.9321,
+      "routing": "auto"
+    }
+  ]
+}

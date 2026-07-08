@@ -1,84 +1,153 @@
 {
-  "matter": {
-    "id": "a0B1U00000MattWhitfield",
-    "name": "Whitfield, Dana L.",
-    "caption": "In re: Injectable Contraceptive Products Liability Litigation (MDL)",
-    "litifyMatterNumber": "MAT-2023-04471",
-    "team": "Mass Tort Intake - Group B",
-    "attorney": "Case Attorney (Demo)",
-    "status": "Records Review"
+ "matter": {
+  "id": "a0B1U00000MattWhitfield",
+  "name": "Whitfield, Dana L.",
+  "caption": "In re: Injectable Contraceptive Products Liability Litigation (MDL)",
+  "litifyMatterNumber": "MAT-2023-04471",
+  "team": "Mass Tort Intake - Group B",
+  "attorney": "Case Attorney (Demo)",
+  "status": "Records Review"
+ },
+ "documents": [
+  {
+   "id": "mock_record_01_gyn_medication_history",
+   "title": "Medical Records - GYN Encounter Summary & Medication History",
+   "facility": "Lakeview Women's Health Clinic",
+   "docType": "Medical Records",
+   "received": "2023-02-06",
+   "sfContentDocumentId": "0691U00000Aq3XcQAJ",
+   "sfContentVersionId": "0681U00000BxT2mQAF",
+   "pages": 5,
+   "ocrPages": 0,
+   "meanOcrConf": 0.99,
+   "counts": {
+    "total": 47,
+    "auto": 45,
+    "review": 0,
+    "escalated": 0,
+    "negated": 2
+   },
+   "processingSeconds": 0.18,
+   "enrichedPdf": "/demo/AI-Reviewed---mock_record_01_gyn_medication_history.pdf",
+   "findingsJson": "/demo/mock_record_01_gyn_medication_history.findings.json",
+   "status": "Auto-Processed"
   },
-  "documents": [
-    {
-      "id": "mock_record_01_gyn_medication_history",
-      "title": "Medical Records - GYN Encounter Summary & Medication History",
-      "facility": "Lakeview Women's Health Clinic",
-      "docType": "Medical Records",
-      "received": "2023-02-06",
-      "sfContentDocumentId": "0691U00000Aq3XcQAJ",
-      "sfContentVersionId": "0681U00000BxT2mQAF",
-      "pages": 5,
-      "ocrPages": 0,
-      "meanOcrConf": 0.99,
-      "counts": {
-        "total": 47,
-        "auto": 45,
-        "review": 0,
-        "escalated": 0,
-        "negated": 2
-      },
-      "processingSeconds": 0.18,
-      "enrichedPdf": "/demo/AI-Reviewed---mock_record_01_gyn_medication_history.pdf",
-      "findingsJson": "/demo/mock_record_01_gyn_medication_history.findings.json",
-      "status": "Auto-Processed"
-    },
-    {
-      "id": "mock_record_02_pharmacy_scanned",
-      "title": "Pharmacy Dispensing History (Scanned Fax)",
-      "facility": "Northgate Pharmacy #204",
-      "docType": "Pharmacy Records",
-      "received": "2023-02-03",
-      "sfContentDocumentId": "0691U00000Aq3XdQAJ",
-      "sfContentVersionId": "0681U00000BxT2nQAF",
-      "pages": 3,
-      "ocrPages": 3,
-      "meanOcrConf": 0.877,
-      "counts": {
-        "total": 22,
-        "auto": 15,
-        "review": 7,
-        "escalated": 0,
-        "negated": 0
-      },
-      "processingSeconds": 17.66,
-      "enrichedPdf": "/demo/AI-Reviewed---mock_record_02_pharmacy_scanned.pdf",
-      "findingsJson": "/demo/mock_record_02_pharmacy_scanned.findings.json",
-      "status": "Needs Review"
-    },
-    {
-      "id": "mock_record_03_mixed_records_packet",
-      "title": "Records Release Packet - PCP / Eye / Neurology / Billing",
-      "facility": "Meridian Primary Care Associates",
-      "docType": "Mixed Records Packet",
-      "received": "2023-02-10",
-      "sfContentDocumentId": "0691U00000Aq3XeQAJ",
-      "sfContentVersionId": "0681U00000BxT2oQAF",
-      "pages": 12,
-      "ocrPages": 1,
-      "meanOcrConf": 0.986,
-      "counts": {
-        "total": 100,
-        "auto": 98,
-        "review": 0,
-        "escalated": 0,
-        "negated": 2
-      },
-      "processingSeconds": 4.7,
-      "enrichedPdf": "/demo/AI-Reviewed---mock_record_03_mixed_records_packet.pdf",
-      "findingsJson": "/demo/mock_record_03_mixed_records_packet.findings.json",
-      "status": "Auto-Processed"
-    }
-  ],
-  "generatedAt": "2026-07-07T00:00:00Z",
-  "pipelineVersion": "0.1.0"
+  {
+   "id": "mock_record_02_pharmacy_scanned",
+   "title": "Pharmacy Dispensing History (Scanned Fax)",
+   "facility": "Northgate Pharmacy #204",
+   "docType": "Pharmacy Records",
+   "received": "2023-02-03",
+   "sfContentDocumentId": "0691U00000Aq3XdQAJ",
+   "sfContentVersionId": "0681U00000BxT2nQAF",
+   "pages": 3,
+   "ocrPages": 3,
+   "meanOcrConf": 0.877,
+   "counts": {
+    "total": 22,
+    "auto": 15,
+    "review": 7,
+    "escalated": 0,
+    "negated": 0
+   },
+   "processingSeconds": 17.66,
+   "enrichedPdf": "/demo/AI-Reviewed---mock_record_02_pharmacy_scanned.pdf",
+   "findingsJson": "/demo/mock_record_02_pharmacy_scanned.findings.json",
+   "status": "Needs Review"
+  },
+  {
+   "id": "mock_record_03_mixed_records_packet",
+   "title": "Records Release Packet - PCP / Eye / Neurology / Billing",
+   "facility": "Meridian Primary Care Associates",
+   "docType": "Mixed Records Packet",
+   "received": "2023-02-10",
+   "sfContentDocumentId": "0691U00000Aq3XeQAJ",
+   "sfContentVersionId": "0681U00000BxT2oQAF",
+   "pages": 12,
+   "ocrPages": 1,
+   "meanOcrConf": 0.986,
+   "counts": {
+    "total": 100,
+    "auto": 98,
+    "review": 0,
+    "escalated": 0,
+    "negated": 2
+   },
+   "processingSeconds": 4.7,
+   "enrichedPdf": "/demo/AI-Reviewed---mock_record_03_mixed_records_packet.pdf",
+   "findingsJson": "/demo/mock_record_03_mixed_records_packet.findings.json",
+   "status": "Auto-Processed"
+  },
+  {
+   "id": "mock_record_04_mri_mrv_radiology",
+   "title": "MRI Brain / MRV Radiology Report",
+   "facility": "Springfield Imaging Center",
+   "docType": "Radiology Report",
+   "received": "2023-02-12",
+   "sfContentDocumentId": "0691U00000Aq3XfQAJ",
+   "sfContentVersionId": "0681U00000BxT2pQAF",
+   "pages": 2,
+   "ocrPages": 0,
+   "meanOcrConf": 0.99,
+   "counts": {
+    "total": 15,
+    "auto": 13,
+    "review": 0,
+    "escalated": 0,
+    "negated": 2
+   },
+   "processingSeconds": 0.06,
+   "enrichedPdf": "/demo/AI-Reviewed---mock_record_04_mri_mrv_radiology.pdf",
+   "findingsJson": "/demo/mock_record_04_mri_mrv_radiology.findings.json",
+   "status": "Auto-Processed"
+  },
+  {
+   "id": "mock_record_05_neuro_ophthalmology_followup",
+   "title": "Neuro-Ophthalmology Follow-Up + VF/OCT",
+   "facility": "Northgate Eye Specialists",
+   "docType": "Specialist Consult",
+   "received": "2023-02-12",
+   "sfContentDocumentId": "0691U00000Aq3XgQAJ",
+   "sfContentVersionId": "0681U00000BxT2qQAF",
+   "pages": 3,
+   "ocrPages": 0,
+   "meanOcrConf": 0.99,
+   "counts": {
+    "total": 26,
+    "auto": 24,
+    "review": 0,
+    "escalated": 0,
+    "negated": 2
+   },
+   "processingSeconds": 0.1,
+   "enrichedPdf": "/demo/AI-Reviewed---mock_record_05_neuro_ophthalmology_followup.pdf",
+   "findingsJson": "/demo/mock_record_05_neuro_ophthalmology_followup.findings.json",
+   "status": "Auto-Processed"
+  },
+  {
+   "id": "mock_record_06_urgent_care_fax_scanned",
+   "title": "Urgent Care Visit Note (Faxed, Low Quality)",
+   "facility": "Riverbend Urgent Care",
+   "docType": "Urgent Care Records",
+   "received": "2023-02-14",
+   "sfContentDocumentId": "0691U00000Aq3XhQAJ",
+   "sfContentVersionId": "0681U00000BxT2rQAF",
+   "pages": 2,
+   "ocrPages": 2,
+   "meanOcrConf": 0.501,
+   "counts": {
+    "total": 12,
+    "auto": 3,
+    "review": 8,
+    "escalated": 1,
+    "negated": 0
+   },
+   "processingSeconds": 6.24,
+   "enrichedPdf": "/demo/AI-Reviewed---mock_record_06_urgent_care_fax_scanned.pdf",
+   "findingsJson": "/demo/mock_record_06_urgent_care_fax_scanned.findings.json",
+   "status": "Needs Review"
+  }
+ ],
+ "generatedAt": "2026-07-07T00:00:00Z",
+ "pipelineVersion": "0.1.0"
 }

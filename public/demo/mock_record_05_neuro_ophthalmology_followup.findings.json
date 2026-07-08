@@ -1,0 +1,758 @@
+{
+  "source_pdf": "mock_record_05_neuro_ophthalmology_followup.pdf",
+  "enriched_pdf": "AI Reviewed - mock_record_05_neuro_ophthalmology_followup.pdf",
+  "pages": [
+    {
+      "number": 1,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 185
+    },
+    {
+      "number": 2,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 82
+    },
+    {
+      "number": 3,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 126
+    }
+  ],
+  "counts": {
+    "total": 26,
+    "auto": 24,
+    "review": 0,
+    "escalated": 0,
+    "negated": 2
+  },
+  "processing_seconds": 0.1,
+  "findings": [
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "idiopathic intracranial hypertension",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "INTERVAL HISTORY Returns six weeks after diagnosis of idiopathic intracranial hypertension (G93.2), confirmed by lumbar puncture on 12/16/2022 with",
+      "rects": [
+        [
+          208.697998046875,
+          133.78750610351562,
+          248.8259735107422,
+          146.8404998779297
+        ],
+        [
+          251.46697998046875,
+          133.78750610351562,
+          297.92205810546875,
+          146.8404998779297
+        ],
+        [
+          300.56304931640625,
+          133.78750610351562,
+          354.9506530761719,
+          146.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "optic disc edema",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "equal, no RAPD. Color plates 14/14 OU. Fundus: optic disc edema improving; Frisen grade 1 OU (previously grade 3",
+      "rects": [
+        [
+          90.96449279785156,
+          361.2875061035156,
+          111.02848815917969,
+          374.34051513671875
+        ],
+        [
+          113.66948699951172,
+          361.2875061035156,
+          130.56048583984375,
+          374.34051513671875
+        ],
+        [
+          133.2014923095703,
+          361.2875061035156,
+          162.24298095703125,
+          374.34051513671875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "transient visual obscurations",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": true,
+      "evidence": "daily headaches in November. Denies pulsatile tinnitus. No transient visual obscurations since early January. Reports vision is subjectively back",
+      "rects": [
+        [
+          54.0,
+          294.7875061035156,
+          90.4324951171875,
+          307.84051513671875
+        ],
+        [
+          93.07349395751953,
+          294.7875061035156,
+          117.3554916381836,
+          307.84051513671875
+        ],
+        [
+          119.99649047851562,
+          294.7875061035156,
+          173.8519744873047,
+          307.84051513671875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "negated"
+    },
+    {
+      "category": "causation",
+      "category_label": "Causation Language",
+      "term_key": "contributing-factor",
+      "term_label": "Contributing factor language",
+      "variant": "should be discontinued",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "is best regarded as a contributing factor and should be discontinued permanently. CURRENT SYMPTOMS Headaches are markedly improved: two",
+      "rects": [
+        [
+          54.0,
+          228.28750610351562,
+          81.98699188232422,
+          241.3404998779297
+        ],
+        [
+          84.62799072265625,
+          228.28750610351562,
+          95.19198608398438,
+          241.3404998779297
+        ],
+        [
+          97.8329849243164,
+          228.28750610351562,
+          151.1659698486328,
+          241.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "has been tolerated aside from mild paresthesias. Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given the temporal",
+      "rects": [
+        [
+          281.5534973144531,
+          174.28750610351562,
+          377.11419677734375,
+          187.3404998779297
+        ],
+        [
+          54.0,
+          187.78750610351562,
+          88.323486328125,
+          200.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset; treating providers agree the",
+      "rects": [
+        [
+          92.55099487304688,
+          201.28750610351562,
+          132.67898559570312,
+          214.3404998779297
+        ],
+        [
+          135.3199920654297,
+          201.28750610351562,
+          191.8164825439453,
+          214.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "tinnitus",
+      "term_label": "Pulsatile tinnitus",
+      "variant": "pulsatile tinnitus",
+      "page": 1,
+      "match_quality": 0.9415,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": true,
+      "evidence": "past month versus daily headaches in November. Denies pulsatile tinnitus. No transient visual obscurations since early January. Reports",
+      "rects": [
+        [
+          247.2394561767578,
+          281.2875061035156,
+          282.08551025390625,
+          294.34051513671875
+        ],
+        [
+          284.72650146484375,
+          281.2875061035156,
+          317.4635314941406,
+          294.34051513671875
+        ]
+      ],
+      "confidence": 0.9321,
+      "routing": "negated"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "lumbar-puncture",
+      "term_label": "Lumbar puncture",
+      "variant": "lumbar puncture",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "diagnosis of idiopathic intracranial hypertension (G93.2), confirmed by lumbar puncture on 12/16/2022 with opening pressure of 32 cm",
+      "rects": [
+        [
+          148.50599670410156,
+          147.28750610351562,
+          177.53797912597656,
+          160.3404998779297
+        ],
+        [
+          180.17898559570312,
+          147.28750610351562,
+          217.1434783935547,
+          160.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "opening-pressure",
+      "term_label": "Opening pressure",
+      "variant": "opening pressure",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "(G93.2), confirmed by lumbar puncture on 12/16/2022 with opening pressure of 32 cm H2O. Acetazolamide 500 mg PO",
+      "rects": [
+        [
+          302.7005310058594,
+          147.28750610351562,
+          336.5016174316406,
+          160.3404998779297
+        ],
+        [
+          339.1426086425781,
+          147.28750610351562,
+          376.0976867675781,
+          160.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "causation",
+      "category_label": "Causation Language",
+      "term_key": "contributing-factor",
+      "term_label": "Contributing factor language",
+      "variant": "contributing factor",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "agree the agent is best regarded as a contributing factor and should be discontinued permanently. CURRENT SYMPTOMS Headaches",
+      "rects": [
+        [
+          256.2454833984375,
+          214.78750610351562,
+          305.35107421875,
+          227.8404998779297
+        ],
+        [
+          307.9920654296875,
+          214.78750610351562,
+          331.7515869140625,
+          227.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "causation",
+      "category_label": "Causation Language",
+      "term_key": "contributing-factor",
+      "term_label": "Contributing factor language",
+      "variant": "temporal relationship",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "acetate) was discontinued as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset; treating",
+      "rects": [
+        [
+          281.0784912109375,
+          187.78750610351562,
+          318.0335693359375,
+          200.8404998779297
+        ],
+        [
+          320.674560546875,
+          187.78750610351562,
+          369.2481689453125,
+          200.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "and has been tolerated aside from mild paresthesias. Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given",
+      "rects": [
+        [
+          219.7844696044922,
+          174.28750610351562,
+          278.9125061035156,
+          187.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "12/16/2022 with opening pressure of 32 cm H2O. Acetazolamide 500 mg PO BID started 12/16/2022 and has",
+      "rects": [
+        [
+          117.88748931884766,
+          160.78750610351562,
+          180.1884765625,
+          173.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "g93.2",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "six weeks after diagnosis of idiopathic intracranial hypertension (G93.2), confirmed by lumbar puncture on 12/16/2022 with opening",
+      "rects": [
+        [
+          54.0,
+          147.28750610351562,
+          88.84599304199219,
+          160.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "factor and should be discontinued permanently. CURRENT SYMPTOMS Headaches are markedly improved: two mild episodes in the",
+      "rects": [
+        [
+          54.0,
+          267.7875061035156,
+          102.05098724365234,
+          280.84051513671875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "mild episodes in the past month versus daily headaches in November. Denies pulsatile tinnitus. No transient visual",
+      "rects": [
+        [
+          106.79148864746094,
+          281.2875061035156,
+          153.26547241210938,
+          294.34051513671875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "enlarged blind spot",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "1% FL 0/13 FP 1% FN 2% INTERPRETATION Enlarged blind spot OU, improved from 12/16/2022 baseline (MD -5.4 /",
+      "rects": [
+        [
+          54.0,
+          195.78750610351562,
+          92.01898956298828,
+          208.8404998779297
+        ],
+        [
+          94.65998840332031,
+          195.78750610351562,
+          114.72398376464844,
+          208.8404998779297
+        ],
+        [
+          117.36498260498047,
+          195.78750610351562,
+          135.3199920654297,
+          208.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "papilledema",
+      "page": 2,
+      "match_quality": 0.9278,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "No new focal defects. Findings consistent with resolving papilledema. Page 2 of 3 \u00b7 Northgate Eye Specialists",
+      "rects": [
+        [
+          291.59503173828125,
+          209.28750610351562,
+          345.4506530761719,
+          222.3404998779297
+        ]
+      ],
+      "confidence": 0.9185,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "idiopathic intracranial hypertension",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "disc edema resolving bilaterally. ASSESSMENT AND PLAN 1. Idiopathic intracranial hypertension (G93.2) \u00b7 clinically improving on acetazolamide 500 mg",
+      "rects": [
+        [
+          64.56400299072266,
+          181.78750610351562,
+          105.22399139404297,
+          194.8404998779297
+        ],
+        [
+          107.864990234375,
+          181.78750610351562,
+          154.31996154785156,
+          194.8404998779297
+        ],
+        [
+          156.96096801757812,
+          181.78750610351562,
+          211.34844970703125,
+          194.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "optic disc edema",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Inferior: OD 161 um OS 152 um Interpretation: optic disc edema resolving bilaterally. ASSESSMENT AND PLAN 1. Idiopathic intracranial",
+      "rects": [
+        [
+          151.1999969482422,
+          143.61199951171875,
+          178.19996643066406,
+          154.85299682617188
+        ],
+        [
+          183.59996032714844,
+          143.61199951171875,
+          205.19993591308594,
+          154.85299682617188
+        ],
+        [
+          210.5999298095703,
+          143.61199951171875,
+          237.5998992919922,
+          154.85299682617188
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "improving. 3. Contraception counseling deferred to gynecology; injectable medroxyprogesterone remains contraindicated in this patient. 4. Return precautions",
+      "rects": [
+        [
+          61.922996520996094,
+          235.78750610351562,
+          154.31996154785156,
+          248.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Idiopathic intracranial hypertension (G93.2) \u00b7 clinically improving on acetazolamide 500 mg BID. Continue current dose; recheck in",
+      "rects": [
+        [
+          61.922996520996094,
+          195.28750610351562,
+          123.16947937011719,
+          208.3404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "g93.2",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "bilaterally. ASSESSMENT AND PLAN 1. Idiopathic intracranial hypertension (G93.2) \u00b7 clinically improving on acetazolamide 500 mg BID.",
+      "rects": [
+        [
+          213.9894561767578,
+          181.78750610351562,
+          246.1944580078125,
+          194.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "papilledema",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Continue current dose; recheck in 8 weeks. 2. Papilledema, bilateral (H47.10) \u00b7 Frisen grade 1 OU, improving.",
+      "rects": [
+        [
+          64.56400299072266,
+          208.78750610351562,
+          119.47399139404297,
+          221.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "h47.10",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "dose; recheck in 8 weeks. 2. Papilledema, bilateral (H47.10) \u00b7 Frisen grade 1 OU, improving. 3. Contraception",
+      "rects": [
+        [
+          158.01547241210938,
+          208.78750610351562,
+          194.970458984375,
+          221.8404998779297
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 3,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "in this patient. 4. Return precautions reviewed for headache or new visual symptoms. Electronically signed: C. Okafor,",
+      "rects": [
+        [
+          201.83897399902344,
+          249.28750610351562,
+          243.56295776367188,
+          262.34051513671875
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "source_pdf": "mock_record_06_urgent_care_fax_scanned.pdf",
+  "enriched_pdf": "AI Reviewed - mock_record_06_urgent_care_fax_scanned.pdf",
+  "pages": [
+    {
+      "number": 1,
+      "source": "ocr",
+      "mean_conf": 0.4801,
+      "words": 217
+    },
+    {
+      "number": 2,
+      "source": "ocr",
+      "mean_conf": 0.5219,
+      "words": 127
+    }
+  ],
+  "counts": {
+    "total": 12,
+    "auto": 3,
+    "review": 8,
+    "escalated": 1,
+    "negated": 0
+  },
+  "processing_seconds": 6.24,
+  "findings": [
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo provera",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "notes. E Et tie \u201chy HRA patient receives depo provera injection: for contraception; last\u2019 _ injection o7/19/2022 per",
+      "rects": [
+        [
+          125.52,
+          171.84,
+          143.28,
+          189.6
+        ],
+        [
+          147.6,
+          171.84,
+          179.76,
+          189.6
+        ]
+      ],
+      "confidence": 0.9024,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "sumatriptan",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.74,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "GIVENIN CLINIC wg os | , eg _o\u201d SUMATRIPTAN, 6: MG. SUBCUTANEOUS xt \u00b0 5 \u00b0\u00b0 LoT",
+      "rects": [
+        [
+          60.239999999999995,
+          238.56,
+          134.64,
+          254.16
+        ]
+      ],
+      "confidence": 0.6956,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "ibuprofen",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.85,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "toa jue ght BE Reports headache unrelieved by Ibuprofen 400 mg at-home, LMP notes. E Et tie",
+      "rects": [
+        [
+          194.64,
+          158.88,
+          234.72,
+          175.92
+        ]
+      ],
+      "confidence": 0.799,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "ibuprofen",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.65,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "SUBCUTANEOUS xt \u00b0 5 \u00b0\u00b0 LoT sm2203\u00b0 2005 \u201cIBUPROFEN 600 MG PO 1\u201d SoMa 3 \"por Tad4ai0",
+      "rects": [
+        [
+          63.599999999999994,
+          255.6,
+          121.67999999999999,
+          267.84
+        ]
+      ],
+      "confidence": 0.611,
+      "routing": "review"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 1,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "Peasy \"Chie COMPLAINT / HPL. : \u2018 Severe headache x 5 days, throbbing, worse whee 1 iving",
+      "rects": [
+        [
+          88.32,
+          129.6,
+          126.96,
+          148.56
+        ]
+      ],
+      "confidence": 0.8238,
+      "routing": "review"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 1,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "ae WE gs toa jue ght BE Reports headache unrelieved by Ibuprofen 400 mg at-home, LMP notes.",
+      "rects": [
+        [
+          90.72,
+          161.04,
+          133.92,
+          175.2
+        ]
+      ],
+      "confidence": 0.8238,
+      "routing": "review"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 1,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.8,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "By Pee ga, Ba _ Partial relief at headache, after quiraiptan \u2018Newio \u00e9 exam grossly intact... Hays",
+      "rects": [
+        [
+          118.32,
+          292.32,
+          160.07999999999998,
+          307.2
+        ]
+      ],
+      "confidence": 0.6865,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo provera",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "week. pisues recurrent \u2014 \u201cheadaches and contraceptive management (depo provera) with PCP: 4: Referral placed: oprimnalOnOgy evaluation for",
+      "rects": [
+        [
+          244.79999999999998,
+          152.16,
+          268.8,
+          168.95999999999998
+        ],
+        [
+          271.44,
+          154.56,
+          305.76,
+          166.79999999999998
+        ]
+      ],
+      "confidence": 0.9024,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "vision loss",
+      "page": 2,
+      "match_quality": 0.9327,
+      "ocr_conf": 0.875,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "headache,\u2019 iecaaueesd blurred vi vision, re a en _vision loss, weakness, or confusion.\u201d rt i \"2: Follow-up with",
+      "rects": [
+        [
+          54.72,
+          132.0,
+          83.52,
+          141.35999999999999
+        ],
+        [
+          86.16,
+          132.0,
+          105.36,
+          142.07999999999998
+        ]
+      ],
+      "confidence": 0.7671,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "ibuprofen",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.95,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "instructions: WHITFIELD. DANA t. oasoz0e8\"\u201d \u201cDISCHARGE INSTRUCTIONS A. IBUPROFEN \u2018600 mg by mouth every 8 hobs with",
+      "rects": [
+        [
+          60.96,
+          99.84,
+          116.16,
+          114.72
+        ]
+      ],
+      "confidence": 0.893,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 2,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.7,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "mas meat Tos \"-2, Return immediately for worsening headache,\u2019 iecaaueesd blurred vi vision, re a en _vision",
+      "rects": [
+        [
+          205.92,
+          115.44,
+          251.04,
+          125.75999999999999
+        ]
+      ],
+      "confidence": 0.6007,
+      "routing": "review"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.59,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "with primary care-within one week. pisues recurrent \u2014 \u201cheadaches and contraceptive management (depo provera) with PCP: 4:",
+      "rects": [
+        [
+          54.0,
+          154.79999999999998,
+          106.08,
+          171.12
+        ]
+      ],
+      "confidence": 0.5546,
+      "routing": "escalated"
+    }
+  ]
+}
