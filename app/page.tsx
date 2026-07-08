@@ -3,16 +3,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AuditEvent, getManifest, loadAuditEvents, Manifest, pct } from "@/lib/demo";
-import { StatusChip } from "@/components/ui";
+import { PageHeader, ROUTING_FILL, StatusBadge } from "@/components/ui";
 
 export default function Dashboard() {
   const [m, setM] = useState<Manifest | null>(null);
   const [audit, setAudit] = useState<AuditEvent[]>([]);
   useEffect(() => {
     getManifest().then(setM);
-    loadAuditEvents(20).then(setAudit);
+    loadAuditEvents(12).then(setAudit);
   }, []);
-  if (!m) return <div className="p-8 text-muted">Loading…</div>;
+
+  if (!m) return <div className="py-24 text-center" style={{ color: "var(--faint)" }}>Loading…</div>;
 
   const totals = m.documents.reduce(
     (a, d) => ({
@@ -22,110 +23,105 @@ export default function Dashboard() {
       escalated: a.escalated + d.counts.escalated,
       negated: a.negated + d.counts.negated,
       pages: a.pages + d.pages,
-      ocrPages: a.ocrPages + d.ocrPages,
       secs: a.secs + d.processingSeconds,
     }),
-    { total: 0, auto: 0, review: 0, escalated: 0, negated: 0, pages: 0, ocrPages: 0, secs: 0 }
+    { total: 0, auto: 0, review: 0, escalated: 0, negated: 0, pages: 0, secs: 0 }
   );
   const straightThrough = totals.total ? totals.auto / totals.total : 0;
 
-  return (
-    <div className="grid gap-4">
-      {/* Matter banner */}
-      <div className="panel flex flex-wrap items-center gap-x-8 gap-y-2 px-4 py-3">
-        <div>
-          <div className="text-[15px] font-bold" style={{ color: "var(--sw-navy-ink)" }}>
-            {m.matter.name} <span className="font-normal text-muted">· {m.matter.litifyMatterNumber}</span>
-          </div>
-          <div className="text-[12px] text-muted">{m.matter.caption}</div>
-        </div>
-        <div className="text-[12px]"><span className="text-muted">Team </span><b>{m.matter.team}</b></div>
-        <div className="text-[12px]"><span className="text-muted">Stage </span><b>{m.matter.status}</b></div>
-        <div className="ml-auto flex gap-2">
-          <Link href="/worklist" className="btn btn-primary">Open Work List</Link>
-          <Link href="/litify" className="btn btn-outline">Litify Sync</Link>
-        </div>
-      </div>
+  const stats: [string, string | number, string][] = [
+    ["Documents", m.documents.length, `${totals.pages} pages processed`],
+    ["Findings", totals.total, `across ${m.documents.length} records`],
+    ["Straight-through", pct(straightThrough), "auto-accepted at ≥ 85%"],
+    ["Awaiting review", totals.review + totals.escalated, "confidence 60–85%"],
+    ["Pipeline time", `${totals.secs.toFixed(1)}s`, "OCR + match + annotate"],
+  ];
 
-      {/* KPI row */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        {[
-          [m.documents.length, "Documents Processed"],
-          [totals.pages, "Pages"],
-          [totals.total, "Findings Extracted"],
-          [pct(straightThrough), "Straight-Through Rate"],
-          [totals.review + totals.escalated, "In Review Queue"],
-          [`${totals.secs.toFixed(1)}s`, "Total Pipeline Time"],
-        ].map(([v, l]) => (
-          <div key={String(l)} className="panel kpi">
-            <div className="v">{v}</div>
-            <div className="l">{l}</div>
+  const routingRows: [string, number, string][] = [
+    ["Auto-accepted", totals.auto, ROUTING_FILL.auto],
+    ["Needs review", totals.review, ROUTING_FILL.review],
+    ["Escalated", totals.escalated, ROUTING_FILL.escalated],
+    ["Negated context", totals.negated, ROUTING_FILL.negated],
+  ];
+
+  return (
+    <div className="grid gap-5">
+      <PageHeader
+        overline={`${m.matter.litifyMatterNumber} · ${m.matter.team}`}
+        title={m.matter.name}
+        description={m.matter.caption}
+      >
+        <StatusBadge status={m.matter.status} />
+        <Link href="/worklist" className="btn btn-secondary">Open work list</Link>
+        <Link href="/litify" className="btn btn-primary">Litify sync</Link>
+      </PageHeader>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
+        {stats.map(([label, value, sub]) => (
+          <div key={label} className="card px-5 py-4">
+            <div className="text-[12px] font-medium" style={{ color: "var(--muted)" }}>{label}</div>
+            <div
+              className="mt-1 text-[26px] font-semibold leading-none tabular-nums"
+              style={{ color: "var(--ink)" }}
+            >
+              {value}
+            </div>
+            <div className="mt-2 text-[12px]" style={{ color: "var(--faint)" }}>{sub}</div>
           </div>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-4">
-        {/* Routing distribution */}
-        <div className="panel">
-          <div className="panel-h">Routing Distribution</div>
-          <div className="p-4 grid gap-3">
-            {(
-              [
-                ["Auto-Accepted", totals.auto, "var(--sw-auto)"],
-                ["Needs Review", totals.review, "var(--sw-review)"],
-                ["Escalated", totals.escalated, "var(--sw-escalated)"],
-                ["Negated (context)", totals.negated, "var(--sw-negated)"],
-              ] as [string, number, string][]
-            ).map(([label, n, color]) => (
-              <div key={label}>
-                <div className="flex justify-between text-[12px] mb-1">
-                  <span className="font-medium">{label}</span>
-                  <span className="tabular-nums font-semibold" style={{ color }}>{n}</span>
-                </div>
-                <div className="confbar">
-                  <div style={{ width: pct(totals.total ? n / totals.total : 0), background: color }} />
-                </div>
-              </div>
-            ))}
-            <p className="text-[11px] text-muted mt-1">
-              Confidence-gated routing: auto ≥ 85%, review 60–85%, escalation &lt; 60% or extractor disagreement.
-            </p>
-          </div>
-        </div>
-
-        {/* Document table */}
-        <div className="panel lg:col-span-2">
-          <div className="panel-h">
-            <span>Matter Documents</span>
-            <span className="text-[10.5px] font-normal normal-case text-muted">
-              source: Litify (simulated) · pipeline v{m.pipelineVersion}
-            </span>
+      <div className="grid gap-5 lg:grid-cols-3">
+        {/* Documents */}
+        <div className="card lg:col-span-2 overflow-hidden">
+          <div className="card-h">
+            <div>
+              <div className="card-title">Matter documents</div>
+              <div className="card-sub">Pulled from Litify (simulated) · pipeline v{m.pipelineVersion}</div>
+            </div>
           </div>
           <div className="overflow-x-auto">
-            <table className="sw-table">
+            <table className="table">
               <thead>
                 <tr>
-                  <th>Document</th><th>Type</th><th>Pages</th><th>OCR</th>
-                  <th>Findings</th><th>Status</th><th></th>
+                  <th>Document</th>
+                  <th className="num">Pages</th>
+                  <th className="num">Findings</th>
+                  <th>Status</th>
+                  <th />
                 </tr>
               </thead>
               <tbody>
                 {m.documents.map((d) => (
                   <tr key={d.id}>
                     <td>
-                      <div className="font-semibold" style={{ color: "var(--sw-navy-ink)" }}>{d.title}</div>
-                      <div className="text-[11px] text-muted">{d.facility} · received {d.received}</div>
+                      <Link
+                        href={`/workbench/${d.id}`}
+                        className="font-medium hover:underline"
+                        style={{ color: "var(--ink)" }}
+                      >
+                        {d.title}
+                      </Link>
+                      <div className="mt-0.5 text-[12px]" style={{ color: "var(--muted)" }}>
+                        {d.facility} · received {d.received}
+                        {d.ocrPages > 0 && ` · ${d.ocrPages} OCR page${d.ocrPages > 1 ? "s" : ""}`}
+                      </div>
                     </td>
-                    <td>{d.docType}</td>
-                    <td className="tabular-nums">{d.pages}</td>
-                    <td className="tabular-nums">{d.ocrPages > 0 ? `${d.ocrPages} pg` : "—"}</td>
-                    <td className="tabular-nums">
+                    <td className="num">{d.pages}</td>
+                    <td className="num">
                       {d.counts.total}
-                      <span className="text-muted text-[11px]"> ({d.counts.review + d.counts.escalated} flagged)</span>
+                      {d.counts.review + d.counts.escalated > 0 && (
+                        <span className="ml-1 text-[12px]" style={{ color: "var(--warn)" }}>
+                          · {d.counts.review + d.counts.escalated} flagged
+                        </span>
+                      )}
                     </td>
-                    <td><StatusChip status={d.status} /></td>
-                    <td>
-                      <Link className="btn btn-outline !py-[3px]" href={`/workbench/${d.id}`}>Open</Link>
+                    <td><StatusBadge status={d.status} /></td>
+                    <td className="text-right">
+                      <Link href={`/workbench/${d.id}`} className="btn btn-secondary btn-sm">
+                        Open
+                      </Link>
                     </td>
                   </tr>
                 ))}
@@ -133,47 +129,76 @@ export default function Dashboard() {
             </table>
           </div>
         </div>
-      </div>
 
-      {/* Audit trail — live from the findings store */}
-      <div className="panel">
-        <div className="panel-h">
-          <span>Audit Trail (most recent)</span>
-          <span className="text-[10.5px] font-normal normal-case text-muted">
-            {audit.length > 0 ? "source: Supabase audit_events" : "store unreachable — showing pipeline summary"}
-          </span>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="sw-table">
-            <thead><tr><th>Event</th><th>Document</th><th>Detail</th><th>Actor</th><th>When</th></tr></thead>
-            <tbody>
-              {audit.length > 0
-                ? audit.map((r) => {
-                    const doc = m.documents.find((d) => d.id === r.document_id);
-                    return (
-                      <tr key={r.id}>
-                        <td><span className={`chip ${r.event.startsWith("review.") ? "chip-review" : "chip-neutral"}`}>{r.event}</span></td>
-                        <td>{doc ? doc.docType : "—"}</td>
-                        <td className="text-muted">{r.detail}</td>
-                        <td className="text-muted">{r.actor}</td>
-                        <td className="text-muted whitespace-nowrap">{new Date(r.created_at).toLocaleString()}</td>
-                      </tr>
-                    );
-                  })
-                : m.documents.flatMap((d) => [
-                    { e: "pipeline.completed", doc: d.title, det: `${d.counts.total} findings · ${d.processingSeconds}s · mean OCR conf ${pct(d.meanOcrConf)}`, a: "pipeline v0.1.0" },
-                    { e: "litify.pull", doc: d.title, det: `ContentVersion ${d.sfContentVersionId} downloaded (simulated)`, a: "litify-connector" },
-                  ]).map((r, i) => (
-                    <tr key={i}>
-                      <td><span className="chip chip-neutral">{r.e}</span></td>
-                      <td>{r.doc}</td>
-                      <td className="text-muted">{r.det}</td>
-                      <td className="text-muted">{r.a}</td>
-                      <td className="text-muted">—</td>
-                    </tr>
-                  ))}
-            </tbody>
-          </table>
+        {/* Right rail */}
+        <div className="grid gap-5 content-start">
+          <div className="card">
+            <div className="card-h"><div className="card-title">Routing</div></div>
+            <div className="grid gap-4 px-5 py-4">
+              {routingRows.map(([label, n, color]) => (
+                <div key={label}>
+                  <div className="mb-1.5 flex items-baseline justify-between text-[12.5px]">
+                    <span className="inline-flex items-center gap-2" style={{ color: "var(--text)" }}>
+                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} />
+                      {label}
+                    </span>
+                    <span className="font-medium tabular-nums" style={{ color: "var(--ink)" }}>{n}</span>
+                  </div>
+                  <div className="h-1 w-full rounded-full" style={{ background: "var(--line)" }}>
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: pct(totals.total ? n / totals.total : 0), background: color }}
+                    />
+                  </div>
+                </div>
+              ))}
+              <p className="text-[12px] leading-5" style={{ color: "var(--faint)" }}>
+                Auto-accept at ≥ 85% confidence; 60–85% routes to human review; below 60% or on
+                extractor disagreement, findings escalate.
+              </p>
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="card-h">
+              <div className="card-title">Recent activity</div>
+              <div className="card-sub">{audit.length > 0 ? "live" : "pipeline summary"}</div>
+            </div>
+            <div>
+              {(audit.length > 0
+                ? audit.slice(0, 8).map((r) => ({
+                    key: String(r.id),
+                    event: r.event,
+                    detail: r.detail ?? "",
+                    meta: `${r.actor ?? ""} · ${new Date(r.created_at).toLocaleString(undefined, {
+                      month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+                    })}`,
+                    tone: r.event.startsWith("review.") ? "var(--warn)"
+                      : r.event === "litify.writeback" ? "var(--brand)" : "var(--ok)",
+                  }))
+                : m.documents.map((d) => ({
+                    key: d.id,
+                    event: "pipeline.completed",
+                    detail: `${d.counts.total} findings in ${d.processingSeconds}s`,
+                    meta: "pipeline v0.1.0",
+                    tone: "var(--ok)",
+                  }))
+              ).map((r) => (
+                <div
+                  key={r.key}
+                  className="flex gap-3 px-5 py-3"
+                  style={{ borderBottom: "1px solid var(--line)" }}
+                >
+                  <span className="mt-[7px] h-1.5 w-1.5 flex-none rounded-full" style={{ background: r.tone }} />
+                  <div className="min-w-0">
+                    <div className="mono text-[11.5px]" style={{ color: "var(--ink)" }}>{r.event}</div>
+                    <div className="truncate text-[12px]" style={{ color: "var(--muted)" }}>{r.detail}</div>
+                    <div className="text-[11.5px]" style={{ color: "var(--faint)" }}>{r.meta}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

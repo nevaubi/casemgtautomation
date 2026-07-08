@@ -1,22 +1,42 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Sans, IBM_Plex_Mono, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { TopNav } from "@/components/ui";
 
+const plex = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex",
+});
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+});
+const serifBrand = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["600"],
+  variable: "--font-serif-brand",
+});
+
 export const metadata: Metadata = {
-  title: "Case Management Automation — Seeger Weiss (Prototype)",
+  title: "Case Automation — Seeger Weiss",
   description:
-    "Litify-centered document intelligence prototype: OCR, term search, bookmarking, structured extraction, and write-back staging. Simulated Litify connection; synthetic records only.",
+    "Litify-centered document intelligence: OCR, term search, bookmarking, structured extraction, confidence-gated review, and write-back staging. Simulated Litify connection; synthetic records only.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${plex.variable} ${plexMono.variable} ${serifBrand.variable}`}>
       <body>
         <TopNav />
-        <main className="px-4 py-4 max-w-[1500px] mx-auto">{children}</main>
-        <footer className="px-4 py-6 text-center text-[11px]" style={{ color: "var(--sw-muted)" }}>
-          Prototype — simulated Litify connection · synthetic test records only · fictional patients and providers ·
-          pipeline v0.1.0
+        <main className="mx-auto max-w-[1440px] px-6 py-6">{children}</main>
+        <footer
+          className="mx-auto max-w-[1440px] px-6 pb-8 pt-2 text-[12px]"
+          style={{ color: "var(--faint)" }}
+        >
+          Prototype · simulated Litify connection · synthetic records only — every patient and
+          provider is fictional · pipeline v0.1.0
         </footer>
       </body>
     </html>

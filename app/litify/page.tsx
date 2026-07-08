@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getManifest, logAuditEvent, Manifest } from "@/lib/demo";
-import { StatusChip } from "@/components/ui";
+import { PageHeader, StatusBadge } from "@/components/ui";
 
 function LitifySyncInner() {
   const [m, setM] = useState<Manifest | null>(null);
@@ -19,126 +19,139 @@ function LitifySyncInner() {
     });
   }, [preStage]);
 
-  if (!m) return <div className="p-8 text-muted">Loading…</div>;
+  if (!m) return <div className="py-24 text-center" style={{ color: "var(--faint)" }}>Loading…</div>;
 
   return (
-    <div className="grid gap-4">
-      <div className="flex items-center gap-3 flex-wrap">
-        <h1 className="text-[16px] font-bold" style={{ color: "var(--sw-navy-ink)" }}>Litify Sync</h1>
-        <span className="chip chip-neutral">SIMULATED CONNECTION</span>
-        <span className="text-[11.5px] text-muted">
-          Same payload shapes as production Salesforce REST — swap the connector, keep the platform.
+    <div className="grid gap-5">
+      <PageHeader
+        overline={m.matter.litifyMatterNumber}
+        title="Litify sync"
+        description="Simulated connection using the same payload shapes as production Salesforce REST — swap the connector, keep the platform."
+      >
+        <span className="badge badge-outline">
+          <span className="dot" style={{ background: "var(--warn)" }} />
+          Simulated environment
         </span>
-      </div>
+      </PageHeader>
 
-      <div className="grid lg:grid-cols-3 gap-4">
-        <div className="panel">
-          <div className="panel-h">Connection</div>
-          <table className="sw-table">
-            <tbody>
-              {[
-                ["Org", "seegerweiss--uat.sandbox.my.salesforce.com (mock)"],
-                ["Auth", "Connected App · OAuth 2.0 JWT bearer (simulated)"],
-                ["Integration user", "svc-case-automation@demo"],
-                ["API version", "v60.0"],
-                ["Matter object", "litify_pm__Matter__c (adjustable schema)"],
-                ["Health", "OK · 12 ms round-trip (mock)"],
-              ].map(([k, v]) => (
-                <tr key={k}>
-                  <td className="font-semibold w-[130px]" style={{ color: "var(--sw-navy-ink)" }}>{k}</td>
-                  <td className="text-[12px]">{v}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="grid gap-5 lg:grid-cols-5">
+        <div className="card lg:col-span-2 self-start">
+          <div className="card-h"><div className="card-title">Connection</div></div>
+          <div className="grid gap-3 px-5 py-4 text-[12.5px]">
+            {[
+              ["Org", "seegerweiss--uat.sandbox.my.salesforce.com"],
+              ["Auth", "Connected App · OAuth 2.0 JWT bearer"],
+              ["Integration user", "svc-case-automation@demo"],
+              ["API version", "v60.0"],
+              ["Matter object", "litify_pm__Matter__c (adjustable schema)"],
+            ].map(([k, v]) => (
+              <div key={k} className="flex items-baseline justify-between gap-4">
+                <span style={{ color: "var(--muted)" }}>{k}</span>
+                <span className="text-right font-medium" style={{ color: "var(--ink)" }}>{v}</span>
+              </div>
+            ))}
+            <div className="flex items-baseline justify-between gap-4">
+              <span style={{ color: "var(--muted)" }}>Health</span>
+              <span className="badge badge-ok"><span className="dot" />OK · 12 ms</span>
+            </div>
+          </div>
         </div>
 
-        <div className="panel lg:col-span-2">
-          <div className="panel-h">Inbound Pull Log (ContentDocumentLink → ContentVersion)</div>
-          <div className="overflow-x-auto">
-            <table className="sw-table">
-              <thead>
-                <tr><th>SOQL</th><th>Result</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="font-mono text-[10.5px] leading-4">
-                    SELECT ContentDocumentId FROM ContentDocumentLink<br />
-                    WHERE LinkedEntityId = &apos;{m.matter.id}&apos;
-                  </td>
-                  <td className="text-[12px]">{m.documents.length} linked files</td>
-                </tr>
-                {m.documents.map((d) => (
-                  <tr key={d.id}>
-                    <td className="font-mono text-[10.5px] leading-4">
-                      GET /sobjects/ContentVersion/{d.sfContentVersionId}/VersionData
-                    </td>
-                    <td className="text-[12px]">{d.title} — downloaded, sha256 recorded</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="card lg:col-span-3 self-start overflow-hidden">
+          <div className="card-h">
+            <div className="card-title">Inbound pull log</div>
+            <div className="card-sub">ContentDocumentLink → ContentVersion → VersionData</div>
+          </div>
+          <div className="grid gap-3 px-5 py-4">
+            <div className="mono-block">
+              SELECT ContentDocumentId FROM ContentDocumentLink{"\n"}
+              WHERE LinkedEntityId = &apos;{m.matter.id}&apos;
+              <span style={{ color: "var(--ok)" }}>  → {m.documents.length} linked files</span>
+            </div>
+            {m.documents.map((d) => (
+              <div key={d.id} className="mono-block">
+                GET /sobjects/ContentVersion/{d.sfContentVersionId}/VersionData
+                <span style={{ color: "var(--ok)" }}>  → 200 · sha256 recorded</span>
+                {"\n"}<span style={{ color: "var(--faint)" }}>{d.title}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="panel">
-        <div className="panel-h">Write-Back Staging — nothing pushes without explicit approval</div>
+      <div className="card overflow-hidden">
+        <div className="card-h">
+          <div>
+            <div className="card-title">Write-back staging</div>
+            <div className="card-sub">
+              Originals are never modified. Nothing pushes without explicit approval.
+            </div>
+          </div>
+        </div>
         <div className="overflow-x-auto">
-          <table className="sw-table">
+          <table className="table">
             <thead>
               <tr>
-                <th>Artifact</th><th>Write-back plan</th><th>Status</th><th>Action</th>
+                <th>Artifact</th>
+                <th>Write-back plan</th>
+                <th>Status</th>
+                <th className="!text-right">Action</th>
               </tr>
             </thead>
             <tbody>
               {m.documents.map((d) => (
                 <tr key={d.id}>
-                  <td>
-                    <div className="font-semibold" style={{ color: "var(--sw-navy-ink)" }}>
+                  <td className="max-w-[300px]">
+                    <div className="font-medium" style={{ color: "var(--ink)" }}>
                       AI Reviewed — {d.title}
                     </div>
-                    <div className="text-[11px] text-muted">
-                      original preserved unchanged · enriched uploaded as new ContentVersion
+                    <div className="mt-0.5 text-[12px]" style={{ color: "var(--muted)" }}>
+                      Enriched copy uploads as a new ContentVersion; {d.counts.total} findings attached.
                     </div>
                   </td>
-                  <td className="text-[11.5px] leading-5">
-                    1. POST /sobjects/ContentVersion (base64 enriched PDF)<br />
-                    2. POST /sobjects/ContentDocumentLink → {m.matter.id}<br />
-                    3. PATCH extracted fields (adjustable schema)<br />
-                    4. POST Task: &ldquo;AI medical record review completed — {d.counts.total} findings&rdquo;
-                  </td>
                   <td>
-                    {pushed[d.id]
-                      ? <span className="chip chip-auto">Written back (simulated)</span>
-                      : staged[d.id]
-                        ? <span className="chip chip-review">Staged — awaiting approval</span>
-                        : <StatusChip status={d.status} />}
+                    <ol className="grid gap-1 text-[12px]" style={{ color: "var(--muted)" }}>
+                      <li><span className="mono" style={{ color: "var(--text)" }}>POST /sobjects/ContentVersion</span> — enriched PDF</li>
+                      <li><span className="mono" style={{ color: "var(--text)" }}>POST /sobjects/ContentDocumentLink</span> — link to matter</li>
+                      <li><span className="mono" style={{ color: "var(--text)" }}>PATCH</span> extracted fields (adjustable schema)</li>
+                      <li><span className="mono" style={{ color: "var(--text)" }}>POST Task</span> — review-complete notification</li>
+                    </ol>
                   </td>
                   <td className="whitespace-nowrap">
+                    {pushed[d.id] ? (
+                      <span className="badge badge-ok"><span className="dot" />Pushed (simulated)</span>
+                    ) : staged[d.id] ? (
+                      <span className="badge badge-warn"><span className="dot" />Staged — awaiting approval</span>
+                    ) : (
+                      <StatusBadge status={d.status} />
+                    )}
+                  </td>
+                  <td className="whitespace-nowrap text-right">
                     {!staged[d.id] && !pushed[d.id] && (
-                      <button className="btn btn-outline !py-[3px]"
-                        onClick={() => setStaged((s) => ({ ...s, [d.id]: true }))}>Stage</button>
+                      <button className="btn btn-secondary btn-sm"
+                        onClick={() => setStaged((s) => ({ ...s, [d.id]: true }))}>
+                        Stage
+                      </button>
                     )}
                     {staged[d.id] && !pushed[d.id] && (
-                      <button className="btn btn-primary !py-[3px]"
+                      <button className="btn btn-primary btn-sm"
                         onClick={() => {
                           setPushed((p) => ({ ...p, [d.id]: true }));
                           logAuditEvent("litify.writeback", d.id,
                             `Enriched ContentVersion staged and approved for push (simulated) — ${d.counts.total} findings`);
-                        }}>Approve &amp; Push</button>
+                        }}>
+                        Approve and push
+                      </button>
                     )}
-                    {pushed[d.id] && <span className="text-[11px] text-muted">audit event logged</span>}
+                    {pushed[d.id] && (
+                      <span className="text-[12px]" style={{ color: "var(--faint)" }}>Audit event logged</span>
+                    )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-[11px] text-muted px-3 py-2">
-          Simulation contract: identical envelopes to Salesforce REST (query envelope, ContentVersion insert,
-          ContentDocumentLink insert). See <code>/api/litify/query</code> in this deployment.
-        </p>
       </div>
     </div>
   );
@@ -146,7 +159,7 @@ function LitifySyncInner() {
 
 export default function LitifySync() {
   return (
-    <Suspense fallback={<div className="p-8 text-muted">Loading…</div>}>
+    <Suspense fallback={<div className="py-24 text-center" style={{ color: "var(--faint)" }}>Loading…</div>}>
       <LitifySyncInner />
     </Suspense>
   );
