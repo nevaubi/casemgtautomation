@@ -6,7 +6,7 @@ import {
   Decision, DocMeta, Finding, getManifest, loadDocFindings, Manifest,
   pct, recordDecision,
 } from "@/lib/demo";
-import { ConfMeter, RoutingBadge, StatusBadge } from "@/components/ui";
+import { ConfMeter, RoutingLabel, StatusLabel } from "@/components/ui";
 
 type Tab = "findings" | "bookmarks" | "fields";
 const ROUTING_FILTERS = ["all", "auto", "review", "escalated", "negated"] as const;
@@ -40,8 +40,7 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
     return [...byCat.entries()];
   }, [findings, routingFilter]);
 
-  if (!m || !doc || !findings)
-    return <div className="py-24 text-center" style={{ color: "var(--faint)" }}>Loading…</div>;
+  if (!m || !doc || !findings) return <div className="py-32 text-center meta">Loading…</div>;
 
   const decide = async (f: Finding, decision: "approved" | "rejected") => {
     const next: Decision = f.decision === decision ? null : decision;
@@ -56,74 +55,59 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
   const decided = findings.filter((f) => f.decision).length;
 
   return (
-    <div className="grid gap-4">
+    <div className="space-y-8">
       {/* Document header */}
-      <div className="card flex flex-wrap items-center gap-x-6 gap-y-3 px-5 py-4">
+      <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
         <div className="min-w-0">
-          <div className="ovl mb-0.5">
+          <div className="meta-label mb-2">
             {m.matter.name} · {m.matter.litifyMatterNumber}
           </div>
-          <div className="flex items-center gap-3">
-            <h1 className="truncate text-[16px] font-semibold" style={{ color: "var(--ink)" }}>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <h1 className="text-2xl leading-tight" style={{ color: "var(--black)" }}>
               {doc.title}
             </h1>
-            <StatusBadge status={doc.status} />
+            <StatusLabel status={doc.status} />
           </div>
-          <div className="mt-0.5 text-[12.5px]" style={{ color: "var(--muted)" }}>
+          <p className="mt-1.5 text-[13px]" style={{ color: "var(--gray-500)" }}>
             {doc.pages} pages · {doc.ocrPages > 0
               ? `${doc.ocrPages} OCR page${doc.ocrPages > 1 ? "s" : ""} · mean confidence ${pct(doc.meanOcrConf)}`
               : "full text layer"} · processed in {doc.processingSeconds}s
-          </div>
+          </p>
         </div>
-        <div className="ml-auto flex items-center gap-3">
-          <div className="text-right">
-            <div className="text-[12px] font-medium tabular-nums" style={{ color: "var(--ink)" }}>
-              {decided} / {findings.length} reviewed
-            </div>
-            <div className="mt-1 h-1 w-[120px] rounded-full" style={{ background: "var(--line)" }}>
-              <div
-                className="h-full rounded-full"
-                style={{
-                  width: `${findings.length ? (decided / findings.length) * 100 : 0}%`,
-                  background: "var(--brand)",
-                }}
-              />
-            </div>
-          </div>
+        <div className="flex flex-wrap items-center gap-5">
+          <span className="meta tabular-nums" style={{ color: "var(--black)" }}>
+            {decided}/{findings.length} reviewed
+          </span>
           <a href={doc.enrichedPdf} target="_blank" className="btn btn-secondary">Open PDF ↗</a>
           <Link href={`/litify?stage=${doc.id}`} className="btn btn-primary">Stage write-back</Link>
         </div>
       </div>
 
-      <div className="grid gap-4 xl:[grid-template-columns:220px_minmax(0,1fr)_400px]">
-        {/* Matter documents rail */}
-        <div className="card self-start overflow-hidden">
-          <div className="card-h"><div className="card-title">In this matter</div></div>
-          <div className="py-1.5">
+      <div className="grid gap-6 xl:[grid-template-columns:220px_minmax(0,1fr)_420px]">
+        {/* Matter rail */}
+        <div className="self-start">
+          <div className="meta-label mb-4">In this matter</div>
+          <div style={{ borderTop: "1px solid var(--gray-200)" }}>
             {m.documents.map((d) => {
               const on = d.id === doc.id;
               return (
                 <Link
                   key={d.id}
                   href={`/workbench/${d.id}`}
-                  className="relative block px-4 py-2.5 transition-colors"
-                  style={on ? { background: "var(--brand-wash)" } : undefined}
+                  className="block py-3.5 transition-colors"
+                  style={{ borderBottom: "1px solid var(--gray-100)" }}
                 >
-                  {on && (
-                    <span
-                      className="absolute inset-y-1.5 left-0 w-[3px] rounded-r"
-                      style={{ background: "var(--brand)" }}
-                    />
-                  )}
                   <div
-                    className="text-[12.5px] font-medium leading-snug"
-                    style={{ color: on ? "var(--brand)" : "var(--ink)" }}
+                    className="text-[13.5px] font-medium leading-snug"
+                    style={{
+                      color: on ? "var(--black)" : "var(--gray-500)",
+                      textDecoration: on ? "underline" : "none",
+                      textUnderlineOffset: 4,
+                    }}
                   >
                     {d.docType}
                   </div>
-                  <div className="text-[11.5px]" style={{ color: "var(--muted)" }}>
-                    {d.pages} pages · {d.counts.total} findings
-                  </div>
+                  <div className="meta mt-1">{d.pages} pp · {d.counts.total} findings</div>
                 </Link>
               );
             })}
@@ -132,28 +116,29 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
 
         {/* PDF viewer */}
         <div className="card flex flex-col overflow-hidden" style={{ height: "76vh" }}>
-          <div className="card-h !py-2.5">
-            <div className="card-title">Enriched document</div>
-            <div className="flex items-center gap-1">
-              <span className="mr-2 text-[12px] tabular-nums" style={{ color: "var(--muted)" }}>
-                Page {page} of {doc.pages}
+          <div
+            className="flex items-center justify-between px-5 py-3"
+            style={{ borderBottom: "1px solid var(--gray-200)" }}
+          >
+            <span className="meta-label">Enriched document</span>
+            <span className="flex items-center gap-4">
+              <span className="meta tabular-nums">page {page} / {doc.pages}</span>
+              <span className="flex gap-2">
+                <button className="btn btn-secondary btn-sm" onClick={() => setPage((p) => Math.max(1, p - 1))}>
+                  ← prev
+                </button>
+                <button className="btn btn-secondary btn-sm"
+                  onClick={() => setPage((p) => Math.min(doc.pages, p + 1))}>
+                  next →
+                </button>
               </span>
-              <button className="btn btn-ghost btn-sm" onClick={() => setPage((p) => Math.max(1, p - 1))}>
-                ← Prev
-              </button>
-              <button
-                className="btn btn-ghost btn-sm"
-                onClick={() => setPage((p) => Math.min(doc.pages, p + 1))}
-              >
-                Next →
-              </button>
-            </div>
+            </span>
           </div>
           <iframe
             key={page}
             src={`${doc.enrichedPdf}#page=${page}&zoom=page-width`}
             className="w-full flex-1"
-            style={{ background: "#40474f" }}
+            style={{ background: "var(--gray-100)" }}
             title="Enriched PDF"
           />
         </div>
@@ -163,23 +148,18 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
           <div className="tabs">
             {(["findings", "bookmarks", "fields"] as Tab[]).map((t) => (
               <button key={t} className={tab === t ? "on" : ""} onClick={() => setTab(t)}>
-                {t === "findings" ? `Findings · ${findings.length}`
-                  : t === "bookmarks" ? "Bookmarks" : "Fields"}
+                {t === "findings" ? `findings (${findings.length})` : t}
               </button>
             ))}
           </div>
 
           {tab === "findings" && (
             <>
-              <div className="flex flex-wrap gap-1 px-3 py-2.5" style={{ borderBottom: "1px solid var(--line)" }}>
+              <div className="px-5 py-4" style={{ borderBottom: "1px solid var(--gray-200)" }}>
                 <div className="seg">
                   {ROUTING_FILTERS.map((r) => (
-                    <button
-                      key={r}
-                      className={routingFilter === r ? "on" : ""}
-                      onClick={() => setRoutingFilter(r)}
-                      style={{ textTransform: "capitalize" }}
-                    >
+                    <button key={r} className={routingFilter === r ? "on" : ""}
+                      onClick={() => setRoutingFilter(r)}>
                       {r}
                     </button>
                   ))}
@@ -189,64 +169,50 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
                 {grouped.map(([cat, items]) => (
                   <div key={cat}>
                     <div
-                      className="ovl sticky top-0 px-4 py-2"
-                      style={{ background: "var(--paper)", borderBottom: "1px solid var(--line)" }}
+                      className="meta-label sticky top-0 px-5 py-2.5"
+                      style={{ background: "var(--gray-50)", borderBottom: "1px solid var(--gray-100)" }}
                     >
                       {cat} · {items.length}
                     </div>
                     {items.map((f) => (
-                      <div
-                        key={f.idx}
-                        className="px-4 py-3"
-                        style={{ borderBottom: "1px solid var(--line)" }}
-                      >
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => setPage(f.page)}
-                            className="text-[13px] font-medium hover:underline"
-                            style={{ color: "var(--ink)" }}
-                          >
+                      <div key={f.idx} className="px-5 py-4"
+                        style={{ borderBottom: "1px solid var(--gray-100)" }}>
+                        <div className="flex items-center justify-between gap-3">
+                          <button onClick={() => setPage(f.page)}
+                            className="link text-left text-[14px] font-medium"
+                            style={{ color: "var(--black)" }}>
                             {f.term_label}
                           </button>
-                          <button
-                            onClick={() => setPage(f.page)}
-                            className="text-[12px] tabular-nums hover:underline"
-                            style={{ color: "var(--brand)" }}
-                          >
-                            p.{f.page}
-                          </button>
-                          <span className="ml-auto"><ConfMeter value={f.confidence} routing={f.routing} /></span>
+                          <ConfMeter value={f.confidence} routing={f.routing} />
                         </div>
-                        <div className="mt-1 text-[12px] leading-5" style={{ color: "var(--muted)" }}>
-                          Matched “{f.variant}” · {f.source === "ocr" ? `OCR ${pct(f.ocr_conf)}` : "text layer"}
-                        </div>
-                        <div
-                          className="mt-0.5 truncate text-[12px] italic leading-5"
-                          style={{ color: "var(--faint)" }}
-                          title={f.evidence}
-                        >
-                          …{f.evidence}…
-                        </div>
-                        <div className="mt-2 flex items-center gap-1.5">
-                          <RoutingBadge routing={f.routing} />
-                          <span className="ml-auto inline-flex items-center gap-1.5">
+                        <p className="mt-1.5 truncate text-[13px] leading-6"
+                          style={{ color: "var(--gray-500)" }} title={f.evidence}>
+                          “…{f.evidence}…”
+                        </p>
+                        <div className="mt-3 flex items-center justify-between gap-3">
+                          <span className="flex items-center gap-4">
+                            <RoutingLabel routing={f.routing} />
+                            <button onClick={() => setPage(f.page)} className="meta link tabular-nums">
+                              p.{f.page}
+                            </button>
+                            <span className="meta hidden 2xl:inline">
+                              {f.source === "ocr" ? `ocr ${pct(f.ocr_conf)}` : "text layer"}
+                            </span>
+                          </span>
+                          <span className="flex items-center gap-2">
                             {saving === f.idx ? (
-                              <span className="text-[11.5px]" style={{ color: "var(--faint)" }}>Saving…</span>
+                              <span className="meta">saving…</span>
                             ) : f.decision ? (
-                              <span className="badge badge-brand">
-                                <span className="dot" />{f.decision}
+                              <span className="meta" style={{ color: "var(--brand-bright)" }}>
+                                ✓ {f.decision}
                               </span>
                             ) : null}
-                            <button
-                              onClick={() => decide(f, "approved")}
-                              className={`btn btn-sm ${f.decision === "approved" ? "btn-primary" : "btn-secondary"}`}
-                            >
+                            <button onClick={() => decide(f, "approved")}
+                              className={`btn btn-sm ${f.decision === "approved" ? "btn-primary" : "btn-secondary"}`}>
                               Validate
                             </button>
-                            <button
-                              onClick={() => decide(f, "rejected")}
-                              className={`btn btn-sm ${f.decision === "rejected" ? "btn-primary" : "btn-ghost"}`}
-                            >
+                            <button onClick={() => decide(f, "rejected")}
+                              className={`btn btn-sm ${f.decision === "rejected" ? "btn-primary" : "btn-ghost"}`}>
                               Reject
                             </button>
                           </span>
@@ -256,35 +222,29 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
                   </div>
                 ))}
                 {grouped.length === 0 && (
-                  <div className="px-4 py-10 text-center text-[12.5px]" style={{ color: "var(--faint)" }}>
-                    No findings match this filter.
-                  </div>
+                  <div className="meta px-5 py-14 text-center">No findings match this filter.</div>
                 )}
               </div>
             </>
           )}
 
           {tab === "bookmarks" && (
-            <div className="overflow-y-auto px-4 py-3">
+            <div className="overflow-y-auto px-5 py-4">
               {[...new Set(findings.filter((f) => !f.negated).map((f) => f.category_label))].map((cat) => (
-                <div key={cat} className="mb-3">
-                  <div className="ovl mb-1">{cat}</div>
+                <div key={cat} className="mb-5">
+                  <div className="meta-label mb-2">{cat}</div>
                   {[...new Set(
                     findings.filter((f) => !f.negated && f.category_label === cat).map((f) => f.term_label)
                   )].map((term) => {
                     const hits = findings.filter((f) => !f.negated && f.term_label === term);
                     return (
-                      <div key={term} className="mb-1.5">
-                        <div className="text-[12.5px] font-medium" style={{ color: "var(--ink)" }}>
-                          {term} <span style={{ color: "var(--faint)" }}>· {hits.length}</span>
+                      <div key={term} className="mb-2.5">
+                        <div className="text-[13.5px] font-medium" style={{ color: "var(--black)" }}>
+                          {term} <span className="meta">· {hits.length}</span>
                         </div>
                         {[...new Set(hits.map((h) => h.page))].map((p) => (
-                          <button
-                            key={p}
-                            onClick={() => setPage(p)}
-                            className="block truncate py-[2px] pl-3 text-left text-[12px] hover:underline"
-                            style={{ color: "var(--brand)", maxWidth: "100%" }}
-                          >
+                          <button key={p} onClick={() => setPage(p)}
+                            className="link meta block max-w-full truncate py-0.5 pl-4 text-left">
                             p.{p} — {hits.find((h) => h.page === p)!.evidence.slice(0, 52)}…
                           </button>
                         ))}
@@ -293,7 +253,7 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
                   })}
                 </div>
               ))}
-              <p className="mt-2 text-[11.5px]" style={{ color: "var(--faint)" }}>
+              <p className="meta mt-3" style={{ color: "var(--gray-400)" }}>
                 Mirrors the outline embedded in the enriched PDF.
               </p>
             </div>
@@ -303,7 +263,7 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
             <div className="overflow-y-auto">
               <table className="table">
                 <thead>
-                  <tr><th>Target field</th><th>Extracted value</th></tr>
+                  <tr><th>target field</th><th>extracted value</th></tr>
                 </thead>
                 <tbody>
                   {[
@@ -319,13 +279,13 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
                     ["Records_Gap_Flag__c", "Deferred dose ~2022-10-18"],
                   ].map(([k, v]) => (
                     <tr key={k}>
-                      <td className="mono !py-3" style={{ color: "var(--brand)" }}>{k}</td>
-                      <td className="!py-3 text-[12.5px]">{v}</td>
+                      <td className="meta !py-3.5" style={{ color: "var(--brand)" }}>{k}</td>
+                      <td className="!py-3.5 text-[13px]">{v}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <p className="px-5 py-3 text-[11.5px]" style={{ color: "var(--faint)" }}>
+              <p className="meta px-6 py-4" style={{ color: "var(--gray-400)" }}>
                 Placeholder targets in the adjustable schema — remapped to the live org’s describe()
                 output at integration time. Nothing writes back without approval.
               </p>

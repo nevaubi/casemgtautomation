@@ -4,56 +4,47 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Routing, routingLabel } from "@/lib/demo";
 
-/* Routing → badge variant. Status colors appear only through this component
-   (and the meter fill), keeping the rest of the interface to one accent. */
-const ROUTING_VARIANT: Record<Routing, string> = {
-  auto: "badge-ok",
-  review: "badge-warn",
-  escalated: "badge-alert",
-  negated: "badge-quiet",
-};
-
 export const ROUTING_FILL: Record<Routing, string> = {
   auto: "var(--ok)",
   review: "var(--warn)",
-  escalated: "var(--alert)",
+  escalated: "var(--escal)",
   negated: "var(--quiet)",
 };
 
-export function RoutingBadge({ routing }: { routing: Routing }) {
+/** Status as dot + mono text — no pill fills, template-quiet. */
+export function DotLabel({
+  color,
+  children,
+  strong = false,
+}: {
+  color: string;
+  children: React.ReactNode;
+  strong?: boolean;
+}) {
   return (
-    <span className={`badge ${ROUTING_VARIANT[routing]}`}>
-      <span className="dot" />
-      {routingLabel[routing]}
+    <span className="dotlabel" style={{ color: strong ? "var(--black)" : "var(--gray-600)" }}>
+      <span className="dot" style={{ background: color }} />
+      {children}
     </span>
   );
 }
 
-export function StatusBadge({ status }: { status: string }) {
-  const variant =
-    status === "Auto-Processed" ? "badge-ok"
-    : status === "Needs Review" ? "badge-warn"
-    : "badge-quiet";
-  return (
-    <span className={`badge ${variant}`}>
-      <span className="dot" />
-      {status}
-    </span>
-  );
+export function RoutingLabel({ routing }: { routing: Routing }) {
+  return <DotLabel color={ROUTING_FILL[routing]}>{routingLabel[routing].toLowerCase()}</DotLabel>;
+}
+
+export function StatusLabel({ status }: { status: string }) {
+  const color =
+    status === "Auto-Processed" ? "var(--ok)"
+    : status === "Needs Review" ? "var(--warn)"
+    : "var(--quiet)";
+  return <DotLabel color={color}>{status.toLowerCase()}</DotLabel>;
 }
 
 /** Confidence meter with the 85% auto-accept threshold tick. */
-export function ConfMeter({
-  value,
-  routing,
-  showValue = true,
-}: {
-  value: number;
-  routing: Routing;
-  showValue?: boolean;
-}) {
+export function ConfMeter({ value, routing }: { value: number; routing: Routing }) {
   return (
-    <span className="inline-flex items-center gap-2">
+    <span className="inline-flex items-center gap-3">
       <span className="meter">
         <span
           className="meter-fill"
@@ -61,14 +52,9 @@ export function ConfMeter({
         />
         <span className="meter-tick" style={{ left: "85%" }} />
       </span>
-      {showValue && (
-        <span
-          className="text-[12px] font-medium tabular-nums"
-          style={{ color: "var(--muted)", minWidth: 30 }}
-        >
-          {(value * 100).toFixed(0)}%
-        </span>
-      )}
+      <span className="meta tabular-nums" style={{ color: "var(--black)", minWidth: 32 }}>
+        {(value * 100).toFixed(0)}%
+      </span>
     </span>
   );
 }
@@ -85,17 +71,19 @@ export function PageHeader({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3 pb-1">
-      <div className="min-w-0">
-        {overline && <div className="ovl mb-1">{overline}</div>}
-        <h1 className="text-[19px] font-semibold leading-tight" style={{ color: "var(--ink)" }}>
+    <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+      <div className="min-w-0 max-w-[64ch]">
+        {overline && <div className="meta-label mb-2">{overline}</div>}
+        <h1 className="text-3xl leading-tight" style={{ color: "var(--black)" }}>
           {title}
         </h1>
         {description && (
-          <p className="text-[13px] mt-0.5" style={{ color: "var(--muted)" }}>{description}</p>
+          <p className="mt-2 text-[14px] leading-6" style={{ color: "var(--gray-500)" }}>
+            {description}
+          </p>
         )}
       </div>
-      {children && <div className="flex items-center gap-2">{children}</div>}
+      {children && <div className="flex flex-wrap items-center gap-3">{children}</div>}
     </div>
   );
 }
@@ -109,45 +97,42 @@ const NAV = [
 
 export function TopNav() {
   const path = usePathname();
-  const active = (href: string) =>
-    href === "/" ? path === "/" : path.startsWith(href);
+  const active = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
   return (
     <header
-      className="sticky top-0 z-40"
-      style={{ background: "var(--surface)", borderBottom: "1px solid var(--line)" }}
+      className="sticky top-0 z-50 backdrop-blur-lg"
+      style={{ background: "rgba(255,255,255,0.85)", borderBottom: "1px solid var(--gray-200)" }}
     >
-      <div className="mx-auto flex h-14 max-w-[1440px] items-stretch px-6">
-        <Link href="/" className="flex items-center gap-3 pr-6">
-          <span
-            className="font-serif-brand text-[16px] font-semibold tracking-[0.02em]"
-            style={{ color: "var(--brand)" }}
-          >
-            Seeger&thinsp;Weiss
-            <span className="ml-1 text-[10px] font-medium tracking-[0.12em] align-top"
-              style={{ color: "var(--faint)" }}>LLP</span>
+      <div className="mx-auto flex h-16 max-w-[1408px] items-center gap-8 px-8">
+        <Link href="/" className="flex items-baseline gap-2.5">
+          <span className="text-[17px] font-semibold tracking-tight" style={{ color: "var(--black)" }}>
+            Seeger Weiss
           </span>
-          <span aria-hidden className="h-5 w-px" style={{ background: "var(--line-strong)" }} />
-          <span className="text-[13px] font-medium" style={{ color: "var(--ink)" }}>
-            Case Automation
-          </span>
+          <span className="meta">/ case automation</span>
         </Link>
 
-        <nav className="hidden md:flex items-stretch">
-          {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className={`navtab ${active(n.href) ? "on" : ""}`}>
-              {n.label}
-            </Link>
-          ))}
+        <nav className="hidden md:block">
+          <ul role="list" className="flex items-center gap-6">
+            {NAV.map((n) => (
+              <li key={n.href}>
+                <Link href={n.href} className={`navlink ${active(n.href) ? "on" : ""}`}>
+                  {n.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
-          <span className="badge badge-outline">
-            <span className="dot" style={{ background: "var(--warn)" }} />
-            Simulated Litify environment
-          </span>
+        <div className="ml-auto flex items-center gap-5">
           <span
-            className="flex h-7 w-7 items-center justify-center rounded-full text-[11px] font-semibold"
-            style={{ background: "var(--brand-wash)", color: "var(--brand)" }}
+            className="hidden h-5 w-px sm:block"
+            style={{ background: "var(--gray-200)" }}
+            aria-hidden
+          />
+          <DotLabel color="var(--warn)">simulated litify env</DotLabel>
+          <span
+            className="flex h-8 w-8 items-center justify-center rounded-full text-[11px] font-medium text-white"
+            style={{ background: "var(--black)" }}
             title="Ops Reviewer (demo)"
           >
             OP

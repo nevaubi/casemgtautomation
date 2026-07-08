@@ -6,7 +6,7 @@ import {
   Decision, DocMeta, Finding, getManifest, loadDocFindings, Manifest,
   pct, recordDecision,
 } from "@/lib/demo";
-import { ConfMeter, PageHeader, RoutingBadge } from "@/components/ui";
+import { ConfMeter, DotLabel, PageHeader, RoutingLabel } from "@/components/ui";
 
 interface QueueItem { doc: DocMeta; f: Finding; key: string }
 
@@ -45,101 +45,89 @@ export default function ReviewQueue() {
     setSaving(null);
   };
 
-  if (!m) return <div className="py-24 text-center" style={{ color: "var(--faint)" }}>Loading…</div>;
+  if (!m) return <div className="py-32 text-center meta">Loading…</div>;
 
   return (
-    <div className="grid gap-5">
+    <div className="space-y-10">
       <PageHeader
         overline={m.matter.litifyMatterNumber}
         title="Review queue"
-        description="Findings the pipeline wasn’t confident enough to accept, lowest confidence first. Decisions persist and feed threshold tuning."
+        description="Findings the pipeline wasn’t confident enough to accept, lowest confidence first. Decisions persist to the findings store and feed threshold tuning."
       >
-        <span className="badge badge-warn"><span className="dot" />{remaining.length} awaiting</span>
-        <span className="badge badge-ok"><span className="dot" />{resolved.length} resolved</span>
+        <DotLabel color="var(--warn)" strong>{remaining.length} awaiting</DotLabel>
+        <DotLabel color="var(--ok)" strong>{resolved.length} resolved</DotLabel>
       </PageHeader>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Finding</th>
-                <th>Location</th>
-                <th>Evidence</th>
-                <th>Confidence</th>
-                <th className="!text-right">Decision</th>
-              </tr>
-            </thead>
-            <tbody>
-              {all.map((item) => {
-                const { doc, f, key } = item;
-                const why = `Compound confidence ${pct(f.confidence)} — match ${pct(
-                  f.match_quality
-                )} × OCR ${pct(f.ocr_conf)}${f.source === "ocr" ? ", scanned page" : ""}`;
-                return (
-                  <tr key={key} style={f.decision ? { opacity: 0.5 } : undefined}>
-                    <td className="max-w-[280px]">
-                      <div className="font-medium" style={{ color: "var(--ink)" }}>{f.term_label}</div>
-                      <div className="mt-0.5 text-[12px]" style={{ color: "var(--muted)" }}>
-                        Matched “{f.variant}” · {why}
-                      </div>
-                      <div className="mt-1.5"><RoutingBadge routing={f.routing} /></div>
-                    </td>
-                    <td className="whitespace-nowrap">
-                      <Link
-                        href={`/workbench/${doc.id}`}
-                        className="font-medium hover:underline"
-                        style={{ color: "var(--brand)" }}
-                      >
-                        {doc.docType}
-                      </Link>
-                      <div className="text-[12px]" style={{ color: "var(--muted)" }}>
-                        Page {f.page} · {f.source === "ocr" ? "OCR" : "text layer"}
-                      </div>
-                    </td>
-                    <td className="max-w-[300px]">
-                      <span className="text-[12.5px] italic leading-5" style={{ color: "var(--muted)" }}>
-                        …{f.evidence}…
-                      </span>
-                    </td>
-                    <td className="whitespace-nowrap">
-                      <ConfMeter value={f.confidence} routing={f.routing} />
-                    </td>
-                    <td className="whitespace-nowrap text-right">
-                      {f.decision ? (
-                        <span className="badge badge-brand">
-                          <span className="dot" />
-                          {f.decision}
-                        </span>
-                      ) : saving === key ? (
-                        <span className="text-[12px]" style={{ color: "var(--faint)" }}>Saving…</span>
-                      ) : (
-                        <span className="inline-flex gap-1.5">
-                          <button className="btn btn-primary btn-sm" onClick={() => act(item, "approved")}>
-                            Approve
-                          </button>
-                          <button className="btn btn-secondary btn-sm" onClick={() => act(item, "corrected")}>
-                            Correct
-                          </button>
-                          <button className="btn btn-ghost btn-sm" onClick={() => act(item, "escalated")}>
-                            Escalate
-                          </button>
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-              {all.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="py-14 text-center" style={{ color: "var(--faint)" }}>
-                    Queue is empty — every finding cleared the auto-accept threshold.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+      <div className="space-y-5">
+        {all.map((item) => {
+          const { doc, f, key } = item;
+          return (
+            <article
+              key={key}
+              className="card-rest p-6"
+              style={f.decision ? { opacity: 0.55 } : undefined}
+            >
+              <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-3">
+                <div className="min-w-0 max-w-[52ch]">
+                  <h3 className="text-lg leading-snug" style={{ color: "var(--black)" }}>
+                    {f.term_label}
+                  </h3>
+                  <p className="mt-1 text-[13px]" style={{ color: "var(--gray-500)" }}>
+                    Matched “{f.variant}” — compound confidence {pct(f.confidence)} (match{" "}
+                    {pct(f.match_quality)} × OCR {pct(f.ocr_conf)}
+                    {f.source === "ocr" ? ", scanned page" : ""})
+                  </p>
+                  <p
+                    className="mt-3 border-l-2 pl-4 text-[13.5px] italic leading-6"
+                    style={{ color: "var(--gray-600)", borderColor: "var(--gray-200)" }}
+                  >
+                    …{f.evidence}…
+                  </p>
+                </div>
+                <div className="flex flex-col items-end gap-3">
+                  <ConfMeter value={f.confidence} routing={f.routing} />
+                  {f.decision ? (
+                    <span className="meta" style={{ color: "var(--brand-bright)" }}>
+                      ✓ {f.decision}
+                      {f.decided_by ? ` · ${f.decided_by}` : ""}
+                    </span>
+                  ) : saving === key ? (
+                    <span className="meta">saving…</span>
+                  ) : (
+                    <span className="flex gap-2">
+                      <button className="btn btn-primary btn-sm" onClick={() => act(item, "approved")}>
+                        Approve
+                      </button>
+                      <button className="btn btn-secondary btn-sm" onClick={() => act(item, "corrected")}>
+                        Correct
+                      </button>
+                      <button className="btn btn-ghost btn-sm" onClick={() => act(item, "escalated")}>
+                        Escalate
+                      </button>
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div
+                className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t pt-4"
+                style={{ borderColor: "var(--gray-100)" }}
+              >
+                <span className="flex items-center gap-5">
+                  <RoutingLabel routing={f.routing} />
+                  <Link href={`/workbench/${doc.id}`} className="link meta relative z-20">
+                    {doc.docType.toLowerCase()} → p.{f.page}
+                  </Link>
+                </span>
+                <span className="meta">{f.source === "ocr" ? "ocr source" : "text layer"}</span>
+              </div>
+            </article>
+          );
+        })}
+        {all.length === 0 && (
+          <div className="card-rest meta py-16 text-center">
+            Queue is empty — every finding cleared the auto-accept threshold.
+          </div>
+        )}
       </div>
     </div>
   );

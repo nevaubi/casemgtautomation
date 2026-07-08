@@ -1,301 +1,239 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   Seeger Weiss · Case Automation — design tokens
-   One accent (brand navy). Status colors appear only as dot-badges and
-   meter fills. Type: IBM Plex Sans (UI) · IBM Plex Mono (data) · serif
-   reserved for the brand lockup.
+   Seeger Weiss · Case Automation
+   Design language adapted from a clean editorial system: near-monochrome
+   palette with one accent, Inter for UI + IBM Plex Mono for functional
+   metadata, sharp low-radius surfaces with gray-50 resting fills that
+   invert to white on hover, and rounded-full pill actions.
    ───────────────────────────────────────────────────────────────────── */
 :root {
-  --paper: #f6f8fa;
-  --surface: #ffffff;
-  --line: #e4e9ef;
-  --line-strong: #cfd8e3;
+  --black: #0d0e12;
+  --white: #ffffff;
 
-  --ink: #10233a;
-  --text: #3a4a5c;
-  --muted: #69788a;
-  --faint: #8b98a8;
+  --gray-50: #f6f6f8;
+  --gray-100: #eeeef1;
+  --gray-200: #e3e4e8;
+  --gray-300: #bbbdc9;
+  --gray-400: #9499ad;
+  --gray-500: #727892;
+  --gray-600: #515870;
+  --gray-700: #383d51;
+  --gray-900: #1b1d27;
 
-  --brand: #0f4a74;
-  --brand-hover: #0c3b5e;
-  --brand-wash: #eef4f9;
+  --brand: #0f4a74;        /* firm navy — the single accent */
+  --brand-bright: #0052ff; /* hover shift */
 
-  --ok: #17724a;      --ok-bg: #eaf6f0;
-  --warn: #94660c;    --warn-bg: #faf3e0;
-  --alert: #b03e20;   --alert-bg: #faece7;
-  --quiet: #5b6b7c;   --quiet-bg: #eef2f6;
-
-  --shadow-card: 0 1px 2px rgba(16, 35, 58, 0.05);
-  --radius: 10px;
+  --ok: #329454;
+  --warn: #d28a04;
+  --alert: #cc2819;
+  --escal: #e57322;
+  --quiet: #9499ad;
 }
 
 @theme inline {
-  --font-sans: var(--font-plex), "Helvetica Neue", Arial, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
-  --color-paper: var(--paper);
-  --color-surface: var(--surface);
-  --color-line: var(--line);
-  --color-ink: var(--ink);
-  --color-body: var(--text);
-  --color-muted: var(--muted);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --color-black: var(--black);
   --color-brand: var(--brand);
+  --default-transition-duration: 200ms;
+}
+
+@layer base {
+  h1, h2, h3, h4 { @apply font-medium tracking-tight; }
 }
 
 html, body { height: 100%; }
 
 body {
-  background: var(--paper);
-  color: var(--text);
-  font-family: var(--font-plex), "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px;
-  line-height: 1.55;
+  background: var(--white);
+  color: var(--gray-600);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
-.font-serif-brand {
-  font-family: var(--font-serif-brand), Georgia, "Times New Roman", serif;
-}
-
-/* ── Cards ─────────────────────────────────────────────────────────── */
+/* ── Surfaces: sharp corners, hairline borders, resting-gray inversion ── */
 .card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-card);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 2px;
 }
-.card-h {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--line);
+.card-rest {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 2px;
+  transition: background-color 200ms;
 }
-.card-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink);
+.card-rest:hover { background: var(--white); }
+
+/* ── Mono metadata voice ───────────────────────────────────────────── */
+.meta {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
   letter-spacing: -0.01em;
+  color: var(--gray-500);
 }
-.card-sub { font-size: 12px; color: var(--muted); font-weight: 400; }
-
-/* ── Overline label ────────────────────────────────────────────────── */
-.ovl {
+.meta-label {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--faint);
+  letter-spacing: 0.05em;
+  color: var(--gray-400);
 }
 
-/* ── Tables ────────────────────────────────────────────────────────── */
-.table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.table th {
-  text-align: left;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--faint);
-  padding: 10px 20px;
-  border-bottom: 1px solid var(--line);
-  white-space: nowrap;
-}
-.table td {
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--line);
-  vertical-align: top;
-  color: var(--text);
-}
-.table tbody tr:last-child td { border-bottom: none; }
-.table tbody tr { transition: background 100ms ease; }
-.table tbody tr:hover { background: #fafbfd; }
-.table .num { font-variant-numeric: tabular-nums; }
-.table th.num, .table td.num { text-align: right; }
-
-/* ── Badges: dot + tinted pill ─────────────────────────────────────── */
-.badge {
+/* ── Dot status labels (no pill fills — text + dot only) ───────────── */
+.dotlabel {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
   font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  padding: 4px 10px;
-  border-radius: 999px;
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
-.badge .dot { width: 6px; height: 6px; border-radius: 999px; flex: none; }
-.badge-ok     { color: var(--ok);    background: var(--ok-bg); }
-.badge-ok .dot     { background: var(--ok); }
-.badge-warn   { color: var(--warn);  background: var(--warn-bg); }
-.badge-warn .dot   { background: var(--warn); }
-.badge-alert  { color: var(--alert); background: var(--alert-bg); }
-.badge-alert .dot  { background: var(--alert); }
-.badge-quiet  { color: var(--quiet); background: var(--quiet-bg); }
-.badge-quiet .dot  { background: var(--quiet); }
-.badge-brand  { color: var(--brand); background: var(--brand-wash); }
-.badge-brand .dot  { background: var(--brand); }
-.badge-outline {
-  color: var(--muted);
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  padding: 3px 10px;
-}
+.dotlabel .dot { width: 7px; height: 7px; border-radius: 999px; flex: none; }
 
-/* ── Confidence meter (signature element): fill + threshold tick ──── */
-.meter {
-  position: relative;
-  display: inline-block;
-  width: 72px;
-  height: 4px;
-  border-radius: 999px;
-  background: var(--line);
-  overflow: visible;
-  vertical-align: middle;
-}
-.meter-fill {
-  position: absolute;
-  inset: 0 auto 0 0;
-  border-radius: 999px;
-  height: 100%;
-}
-.meter-tick {
-  position: absolute;
-  top: -3px;
-  bottom: -3px;
-  width: 1.5px;
-  background: var(--line-strong);
-}
-
-/* ── Buttons ───────────────────────────────────────────────────────── */
+/* ── Pill buttons ──────────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  height: 32px;
-  padding: 0 14px;
-  border-radius: 8px;
-  font-size: 12.5px;
+  gap: 8px;
+  border-radius: 999px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+  height: 38px;
+  padding: 0 20px;
   white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 200ms, color 200ms, border-color 200ms;
+  border: 1px solid transparent;
 }
-.btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-.btn-primary { background: var(--brand); color: #fff; }
-.btn-primary:hover { background: var(--brand-hover); }
-.btn-secondary {
-  background: var(--surface);
-  color: var(--ink);
-  border-color: var(--line-strong);
-}
-.btn-secondary:hover { border-color: var(--brand); color: var(--brand); }
-.btn-ghost { background: transparent; color: var(--muted); }
-.btn-ghost:hover { background: var(--quiet-bg); color: var(--ink); }
-.btn-sm { height: 26px; padding: 0 10px; font-size: 12px; border-radius: 7px; }
+.btn:focus-visible { outline: 2px solid var(--brand-bright); outline-offset: 2px; }
+.btn-primary { background: var(--black); color: var(--white); }
+.btn-primary:hover { background: var(--brand-bright); }
+.btn-secondary { background: var(--white); color: var(--black); border-color: var(--gray-200); }
+.btn-secondary:hover { border-color: var(--black); }
+.btn-ghost { background: transparent; color: var(--gray-500); }
+.btn-ghost:hover { color: var(--black); background: var(--gray-100); }
+.btn-sm { height: 30px; padding: 0 14px; font-size: 12px; }
+
+/* ── Text links ────────────────────────────────────────────────────── */
+.link { color: inherit; transition: color 200ms; }
+.link:hover { color: var(--brand-bright); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── Inputs ────────────────────────────────────────────────────────── */
 .input {
-  height: 32px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid var(--line-strong);
-  background: var(--surface);
-  font-size: 12.5px;
-  color: var(--ink);
-  transition: border-color 120ms ease, box-shadow 120ms ease;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  font-size: 13px;
+  color: var(--black);
+  transition: border-color 200ms;
 }
-.input::placeholder { color: var(--faint); }
-.input:focus {
-  outline: none;
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px var(--brand-wash);
-}
+.input::placeholder { color: var(--gray-400); }
+.input:focus { outline: none; border-color: var(--black); }
 
-/* ── Segmented control ─────────────────────────────────────────────── */
-.seg {
-  display: inline-flex;
-  background: var(--quiet-bg);
-  border-radius: 8px;
-  padding: 2px;
-  gap: 2px;
-}
+/* ── Segmented filter: mono pill toggles ───────────────────────────── */
+.seg { display: inline-flex; gap: 6px; }
 .seg button {
-  height: 28px;
-  padding: 0 12px;
-  border-radius: 6px;
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--muted);
-  transition: background 120ms ease, color 120ms ease;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--gray-500);
+  transition: all 200ms;
+  white-space: nowrap;
 }
-.seg button:hover { color: var(--ink); }
-.seg button.on {
-  background: var(--surface);
-  color: var(--ink);
-  box-shadow: 0 1px 2px rgba(16, 35, 58, 0.08);
+.seg button:hover { border-color: var(--gray-400); color: var(--black); }
+.seg button.on { background: var(--black); border-color: var(--black); color: var(--white); }
+
+/* ── Tables: hairline rows, mono headers ───────────────────────────── */
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-400);
+  text-align: left;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--gray-200);
+  white-space: nowrap;
+}
+.table td {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--gray-100);
+  vertical-align: top;
+}
+.table tbody tr:last-child td { border-bottom: none; }
+.table tbody tr { transition: background-color 200ms; }
+.table tbody tr:hover { background: var(--gray-50); }
+.table .num { font-variant-numeric: tabular-nums; }
+.table th.num, .table td.num { text-align: right; }
+
+/* ── Confidence meter: hairline track, black threshold tick ────────── */
+.meter {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 3px;
+  background: var(--gray-200);
+  vertical-align: middle;
+}
+.meter-fill { position: absolute; inset: 0 auto 0 0; height: 100%; }
+.meter-tick {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 1px;
+  background: var(--black);
 }
 
-/* ── Tabs (underline) ──────────────────────────────────────────────── */
-.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); padding: 0 12px; }
+/* ── Tabs: mono, underline active ──────────────────────────────────── */
+.tabs { display: flex; gap: 20px; border-bottom: 1px solid var(--gray-200); padding: 0 24px; }
 .tabs button {
-  padding: 10px 10px;
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--muted);
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--gray-500);
+  padding: 14px 0 12px;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
-  transition: color 120ms ease, border-color 120ms ease;
+  transition: color 200ms, border-color 200ms;
+  white-space: nowrap;
 }
-.tabs button:hover { color: var(--ink); }
-.tabs button.on { color: var(--brand); border-bottom-color: var(--brand); }
+.tabs button:hover { color: var(--black); }
+.tabs button.on { color: var(--black); border-bottom-color: var(--black); }
 
-/* ── Top navigation ────────────────────────────────────────────────── */
-.navtab {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  height: 100%;
-  padding: 0 14px;
+/* ── Nav ───────────────────────────────────────────────────────────── */
+.navlink {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
   font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  transition: color 120ms ease;
-}
-.navtab:hover { color: var(--ink); }
-.navtab.on { color: var(--ink); }
-.navtab.on::after {
-  content: "";
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 0;
-  height: 2px;
-  border-radius: 2px 2px 0 0;
-  background: var(--brand);
-}
-
-/* ── Mono data block ───────────────────────────────────────────────── */
-.mono {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 11.5px;
   letter-spacing: -0.01em;
+  color: var(--gray-600);
+  transition: color 200ms;
 }
+.navlink:hover { color: var(--black); text-decoration: underline; text-underline-offset: 4px; }
+.navlink.on { color: var(--black); text-decoration: underline; text-underline-offset: 4px; }
+
+/* ── Mono code block ───────────────────────────────────────────────── */
 .mono-block {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 11.5px;
-  line-height: 1.7;
-  background: #f8fafc;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 10px 12px;
-  color: var(--text);
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 2px;
+  padding: 14px 18px;
+  color: var(--gray-600);
   overflow-x: auto;
 }
 

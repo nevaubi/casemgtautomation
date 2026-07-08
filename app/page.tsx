@@ -3,17 +3,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AuditEvent, getManifest, loadAuditEvents, Manifest, pct } from "@/lib/demo";
-import { PageHeader, ROUTING_FILL, StatusBadge } from "@/components/ui";
+import { DotLabel, PageHeader, ROUTING_FILL, StatusLabel } from "@/components/ui";
 
 export default function Dashboard() {
   const [m, setM] = useState<Manifest | null>(null);
   const [audit, setAudit] = useState<AuditEvent[]>([]);
   useEffect(() => {
     getManifest().then(setM);
-    loadAuditEvents(12).then(setAudit);
+    loadAuditEvents(10).then(setAudit);
   }, []);
 
-  if (!m) return <div className="py-24 text-center" style={{ color: "var(--faint)" }}>Loading…</div>;
+  if (!m) return <div className="py-32 text-center meta">Loading…</div>;
 
   const totals = m.documents.reduce(
     (a, d) => ({
@@ -29,150 +29,135 @@ export default function Dashboard() {
   );
   const straightThrough = totals.total ? totals.auto / totals.total : 0;
 
-  const stats: [string, string | number, string][] = [
-    ["Documents", m.documents.length, `${totals.pages} pages processed`],
-    ["Findings", totals.total, `across ${m.documents.length} records`],
-    ["Straight-through", pct(straightThrough), "auto-accepted at ≥ 85%"],
-    ["Awaiting review", totals.review + totals.escalated, "confidence 60–85%"],
-    ["Pipeline time", `${totals.secs.toFixed(1)}s`, "OCR + match + annotate"],
+  const stats: [string, string | number][] = [
+    ["documents", m.documents.length],
+    ["pages", totals.pages],
+    ["findings", totals.total],
+    ["straight-through", pct(straightThrough)],
+    ["awaiting review", totals.review + totals.escalated],
+    ["pipeline time", `${totals.secs.toFixed(1)}s`],
   ];
 
   const routingRows: [string, number, string][] = [
-    ["Auto-accepted", totals.auto, ROUTING_FILL.auto],
-    ["Needs review", totals.review, ROUTING_FILL.review],
-    ["Escalated", totals.escalated, ROUTING_FILL.escalated],
-    ["Negated context", totals.negated, ROUTING_FILL.negated],
+    ["auto-accepted", totals.auto, ROUTING_FILL.auto],
+    ["needs review", totals.review, ROUTING_FILL.review],
+    ["escalated", totals.escalated, ROUTING_FILL.escalated],
+    ["negated context", totals.negated, ROUTING_FILL.negated],
   ];
 
   return (
-    <div className="grid gap-5">
+    <div className="space-y-12">
       <PageHeader
         overline={`${m.matter.litifyMatterNumber} · ${m.matter.team}`}
         title={m.matter.name}
         description={m.matter.caption}
       >
-        <StatusBadge status={m.matter.status} />
+        <StatusLabel status={m.matter.status} />
         <Link href="/worklist" className="btn btn-secondary">Open work list</Link>
         <Link href="/litify" className="btn btn-primary">Litify sync</Link>
       </PageHeader>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
-        {stats.map(([label, value, sub]) => (
-          <div key={label} className="card px-5 py-4">
-            <div className="text-[12px] font-medium" style={{ color: "var(--muted)" }}>{label}</div>
+      {/* Stat band: big numbers over mono labels, hairline separators */}
+      <div
+        className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6"
+        style={{ borderTop: "1px solid var(--gray-200)", borderBottom: "1px solid var(--gray-200)" }}
+      >
+        {stats.map(([label, value], i) => (
+          <div
+            key={label}
+            className="px-6 py-7"
+            style={i > 0 ? { borderLeft: "1px solid var(--gray-100)" } : undefined}
+          >
             <div
-              className="mt-1 text-[26px] font-semibold leading-none tabular-nums"
-              style={{ color: "var(--ink)" }}
+              className="text-[32px] font-medium leading-none tracking-tight tabular-nums"
+              style={{ color: "var(--black)" }}
             >
               {value}
             </div>
-            <div className="mt-2 text-[12px]" style={{ color: "var(--faint)" }}>{sub}</div>
+            <div className="meta-label mt-3">{label}</div>
           </div>
         ))}
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-3">
-        {/* Documents */}
-        <div className="card lg:col-span-2 overflow-hidden">
-          <div className="card-h">
-            <div>
-              <div className="card-title">Matter documents</div>
-              <div className="card-sub">Pulled from Litify (simulated) · pipeline v{m.pipelineVersion}</div>
-            </div>
+      <div className="grid gap-12 lg:grid-cols-3">
+        {/* Documents as resting-gray article cards */}
+        <div className="lg:col-span-2">
+          <div className="mb-6 flex items-baseline justify-between">
+            <h2 className="text-xl" style={{ color: "var(--black)" }}>Matter documents</h2>
+            <span className="meta">pulled from litify (simulated)</span>
           </div>
-          <div className="overflow-x-auto">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Document</th>
-                  <th className="num">Pages</th>
-                  <th className="num">Findings</th>
-                  <th>Status</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {m.documents.map((d) => (
-                  <tr key={d.id}>
-                    <td>
-                      <Link
-                        href={`/workbench/${d.id}`}
-                        className="font-medium hover:underline"
-                        style={{ color: "var(--ink)" }}
-                      >
-                        {d.title}
-                      </Link>
-                      <div className="mt-0.5 text-[12px]" style={{ color: "var(--muted)" }}>
-                        {d.facility} · received {d.received}
-                        {d.ocrPages > 0 && ` · ${d.ocrPages} OCR page${d.ocrPages > 1 ? "s" : ""}`}
-                      </div>
-                    </td>
-                    <td className="num">{d.pages}</td>
-                    <td className="num">
-                      {d.counts.total}
-                      {d.counts.review + d.counts.escalated > 0 && (
-                        <span className="ml-1 text-[12px]" style={{ color: "var(--warn)" }}>
-                          · {d.counts.review + d.counts.escalated} flagged
-                        </span>
-                      )}
-                    </td>
-                    <td><StatusBadge status={d.status} /></td>
-                    <td className="text-right">
-                      <Link href={`/workbench/${d.id}`} className="btn btn-secondary btn-sm">
-                        Open
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="space-y-5">
+            {m.documents.map((d) => (
+              <article key={d.id} className="card-rest relative flex flex-col p-6">
+                <Link href={`/workbench/${d.id}`} className="absolute inset-0 z-10" aria-label={d.title} />
+                <div className="flex items-start justify-between gap-6">
+                  <div className="min-w-0">
+                    <h3 className="text-lg leading-snug" style={{ color: "var(--black)" }}>
+                      {d.title}
+                    </h3>
+                    <p className="mt-1 text-[13px]" style={{ color: "var(--gray-500)" }}>
+                      {d.facility} · received {d.received}
+                      {d.ocrPages > 0 && ` · ${d.ocrPages} OCR page${d.ocrPages > 1 ? "s" : ""}`}
+                    </p>
+                  </div>
+                  <StatusLabel status={d.status} />
+                </div>
+                <div
+                  className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t pt-4"
+                  style={{ borderColor: "var(--gray-100)" }}
+                >
+                  <span className="meta">
+                    {d.pages} pages · {d.counts.total} findings
+                    {d.counts.review + d.counts.escalated > 0 &&
+                      ` · ${d.counts.review + d.counts.escalated} flagged`}
+                  </span>
+                  <span className="meta">{d.sfContentVersionId}</span>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
 
         {/* Right rail */}
-        <div className="grid gap-5 content-start">
-          <div className="card">
-            <div className="card-h"><div className="card-title">Routing</div></div>
-            <div className="grid gap-4 px-5 py-4">
+        <div className="space-y-12">
+          <div>
+            <h2 className="mb-6 text-xl" style={{ color: "var(--black)" }}>Routing</h2>
+            <div className="space-y-5">
               {routingRows.map(([label, n, color]) => (
                 <div key={label}>
-                  <div className="mb-1.5 flex items-baseline justify-between text-[12.5px]">
-                    <span className="inline-flex items-center gap-2" style={{ color: "var(--text)" }}>
-                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} />
-                      {label}
-                    </span>
-                    <span className="font-medium tabular-nums" style={{ color: "var(--ink)" }}>{n}</span>
+                  <div className="mb-2 flex items-baseline justify-between">
+                    <DotLabel color={color}>{label}</DotLabel>
+                    <span className="meta tabular-nums" style={{ color: "var(--black)" }}>{n}</span>
                   </div>
-                  <div className="h-1 w-full rounded-full" style={{ background: "var(--line)" }}>
+                  <div className="h-[3px] w-full" style={{ background: "var(--gray-100)" }}>
                     <div
-                      className="h-full rounded-full"
+                      className="h-full"
                       style={{ width: pct(totals.total ? n / totals.total : 0), background: color }}
                     />
                   </div>
                 </div>
               ))}
-              <p className="text-[12px] leading-5" style={{ color: "var(--faint)" }}>
-                Auto-accept at ≥ 85% confidence; 60–85% routes to human review; below 60% or on
+              <p className="pt-1 text-[13px] leading-6" style={{ color: "var(--gray-400)" }}>
+                Auto-accept at ≥ 85% confidence. 60–85% routes to human review; below that, or on
                 extractor disagreement, findings escalate.
               </p>
             </div>
           </div>
 
-          <div className="card">
-            <div className="card-h">
-              <div className="card-title">Recent activity</div>
-              <div className="card-sub">{audit.length > 0 ? "live" : "pipeline summary"}</div>
+          <div>
+            <div className="mb-6 flex items-baseline justify-between">
+              <h2 className="text-xl" style={{ color: "var(--black)" }}>Activity</h2>
+              <span className="meta">{audit.length > 0 ? "live" : "summary"}</span>
             </div>
-            <div>
+            <div style={{ borderTop: "1px solid var(--gray-200)" }}>
               {(audit.length > 0
-                ? audit.slice(0, 8).map((r) => ({
+                ? audit.slice(0, 7).map((r) => ({
                     key: String(r.id),
                     event: r.event,
                     detail: r.detail ?? "",
-                    meta: `${r.actor ?? ""} · ${new Date(r.created_at).toLocaleString(undefined, {
+                    when: new Date(r.created_at).toLocaleString(undefined, {
                       month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
-                    })}`,
+                    }),
                     tone: r.event.startsWith("review.") ? "var(--warn)"
                       : r.event === "litify.writeback" ? "var(--brand)" : "var(--ok)",
                   }))
@@ -180,21 +165,22 @@ export default function Dashboard() {
                     key: d.id,
                     event: "pipeline.completed",
                     detail: `${d.counts.total} findings in ${d.processingSeconds}s`,
-                    meta: "pipeline v0.1.0",
+                    when: "—",
                     tone: "var(--ok)",
                   }))
               ).map((r) => (
                 <div
                   key={r.key}
-                  className="flex gap-3 px-5 py-3"
-                  style={{ borderBottom: "1px solid var(--line)" }}
+                  className="py-4"
+                  style={{ borderBottom: "1px solid var(--gray-100)" }}
                 >
-                  <span className="mt-[7px] h-1.5 w-1.5 flex-none rounded-full" style={{ background: r.tone }} />
-                  <div className="min-w-0">
-                    <div className="mono text-[11.5px]" style={{ color: "var(--ink)" }}>{r.event}</div>
-                    <div className="truncate text-[12px]" style={{ color: "var(--muted)" }}>{r.detail}</div>
-                    <div className="text-[11.5px]" style={{ color: "var(--faint)" }}>{r.meta}</div>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <DotLabel color={r.tone} strong>{r.event}</DotLabel>
+                    <span className="meta">{r.when}</span>
                   </div>
+                  <p className="mt-1 truncate pl-[14px] text-[13px]" style={{ color: "var(--gray-500)" }}>
+                    {r.detail}
+                  </p>
                 </div>
               ))}
             </div>

@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getManifest, logAuditEvent, Manifest } from "@/lib/demo";
-import { PageHeader, StatusBadge } from "@/components/ui";
+import { DotLabel, PageHeader, StatusLabel } from "@/components/ui";
 
 function LitifySyncInner() {
   const [m, setM] = useState<Manifest | null>(null);
@@ -19,50 +19,56 @@ function LitifySyncInner() {
     });
   }, [preStage]);
 
-  if (!m) return <div className="py-24 text-center" style={{ color: "var(--faint)" }}>Loading…</div>;
+  if (!m) return <div className="py-32 text-center meta">Loading…</div>;
 
   return (
-    <div className="grid gap-5">
+    <div className="space-y-12">
       <PageHeader
         overline={m.matter.litifyMatterNumber}
         title="Litify sync"
         description="Simulated connection using the same payload shapes as production Salesforce REST — swap the connector, keep the platform."
       >
-        <span className="badge badge-outline">
-          <span className="dot" style={{ background: "var(--warn)" }} />
-          Simulated environment
-        </span>
+        <DotLabel color="var(--warn)" strong>simulated environment</DotLabel>
       </PageHeader>
 
-      <div className="grid gap-5 lg:grid-cols-5">
-        <div className="card lg:col-span-2 self-start">
-          <div className="card-h"><div className="card-title">Connection</div></div>
-          <div className="grid gap-3 px-5 py-4 text-[12.5px]">
+      <div className="grid gap-12 lg:grid-cols-5">
+        <div className="lg:col-span-2">
+          <h2 className="mb-6 text-xl" style={{ color: "var(--black)" }}>Connection</h2>
+          <div style={{ borderTop: "1px solid var(--gray-200)" }}>
             {[
-              ["Org", "seegerweiss--uat.sandbox.my.salesforce.com"],
-              ["Auth", "Connected App · OAuth 2.0 JWT bearer"],
-              ["Integration user", "svc-case-automation@demo"],
-              ["API version", "v60.0"],
-              ["Matter object", "litify_pm__Matter__c (adjustable schema)"],
+              ["org", "seegerweiss--uat.sandbox.my.salesforce.com"],
+              ["auth", "Connected App · OAuth 2.0 JWT bearer"],
+              ["integration user", "svc-case-automation@demo"],
+              ["api version", "v60.0"],
+              ["matter object", "litify_pm__Matter__c (adjustable schema)"],
             ].map(([k, v]) => (
-              <div key={k} className="flex items-baseline justify-between gap-4">
-                <span style={{ color: "var(--muted)" }}>{k}</span>
-                <span className="text-right font-medium" style={{ color: "var(--ink)" }}>{v}</span>
+              <div
+                key={k}
+                className="flex items-baseline justify-between gap-6 py-3.5"
+                style={{ borderBottom: "1px solid var(--gray-100)" }}
+              >
+                <span className="meta-label">{k}</span>
+                <span className="text-right text-[13px]" style={{ color: "var(--black)" }}>{v}</span>
               </div>
             ))}
-            <div className="flex items-baseline justify-between gap-4">
-              <span style={{ color: "var(--muted)" }}>Health</span>
-              <span className="badge badge-ok"><span className="dot" />OK · 12 ms</span>
+            <div
+              className="flex items-baseline justify-between gap-6 py-3.5"
+              style={{ borderBottom: "1px solid var(--gray-100)" }}
+            >
+              <span className="meta-label">health</span>
+              <DotLabel color="var(--ok)" strong>ok · 12 ms</DotLabel>
             </div>
           </div>
         </div>
 
-        <div className="card lg:col-span-3 self-start overflow-hidden">
-          <div className="card-h">
-            <div className="card-title">Inbound pull log</div>
-            <div className="card-sub">ContentDocumentLink → ContentVersion → VersionData</div>
+        <div className="lg:col-span-3">
+          <div className="mb-6 flex items-baseline justify-between">
+            <h2 className="text-xl" style={{ color: "var(--black)" }}>Inbound pull log</h2>
+            <span className="meta hidden sm:block">
+              ContentDocumentLink → ContentVersion → VersionData
+            </span>
           </div>
-          <div className="grid gap-3 px-5 py-4">
+          <div className="space-y-4">
             <div className="mono-block">
               SELECT ContentDocumentId FROM ContentDocumentLink{"\n"}
               WHERE LinkedEntityId = &apos;{m.matter.id}&apos;
@@ -71,86 +77,68 @@ function LitifySyncInner() {
             {m.documents.map((d) => (
               <div key={d.id} className="mono-block">
                 GET /sobjects/ContentVersion/{d.sfContentVersionId}/VersionData
-                <span style={{ color: "var(--ok)" }}>  → 200 · sha256 recorded</span>
-                {"\n"}<span style={{ color: "var(--faint)" }}>{d.title}</span>
+                <span style={{ color: "var(--ok)" }}>  → 200</span>
+                {"\n"}<span style={{ color: "var(--gray-400)" }}>{d.title} · sha256 recorded</span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="card-h">
-          <div>
-            <div className="card-title">Write-back staging</div>
-            <div className="card-sub">
-              Originals are never modified. Nothing pushes without explicit approval.
-            </div>
-          </div>
+      <div>
+        <div className="mb-2 flex items-baseline justify-between">
+          <h2 className="text-xl" style={{ color: "var(--black)" }}>Write-back staging</h2>
         </div>
-        <div className="overflow-x-auto">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Artifact</th>
-                <th>Write-back plan</th>
-                <th>Status</th>
-                <th className="!text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {m.documents.map((d) => (
-                <tr key={d.id}>
-                  <td className="max-w-[300px]">
-                    <div className="font-medium" style={{ color: "var(--ink)" }}>
-                      AI Reviewed — {d.title}
-                    </div>
-                    <div className="mt-0.5 text-[12px]" style={{ color: "var(--muted)" }}>
-                      Enriched copy uploads as a new ContentVersion; {d.counts.total} findings attached.
-                    </div>
-                  </td>
-                  <td>
-                    <ol className="grid gap-1 text-[12px]" style={{ color: "var(--muted)" }}>
-                      <li><span className="mono" style={{ color: "var(--text)" }}>POST /sobjects/ContentVersion</span> — enriched PDF</li>
-                      <li><span className="mono" style={{ color: "var(--text)" }}>POST /sobjects/ContentDocumentLink</span> — link to matter</li>
-                      <li><span className="mono" style={{ color: "var(--text)" }}>PATCH</span> extracted fields (adjustable schema)</li>
-                      <li><span className="mono" style={{ color: "var(--text)" }}>POST Task</span> — review-complete notification</li>
-                    </ol>
-                  </td>
-                  <td className="whitespace-nowrap">
-                    {pushed[d.id] ? (
-                      <span className="badge badge-ok"><span className="dot" />Pushed (simulated)</span>
-                    ) : staged[d.id] ? (
-                      <span className="badge badge-warn"><span className="dot" />Staged — awaiting approval</span>
-                    ) : (
-                      <StatusBadge status={d.status} />
-                    )}
-                  </td>
-                  <td className="whitespace-nowrap text-right">
-                    {!staged[d.id] && !pushed[d.id] && (
-                      <button className="btn btn-secondary btn-sm"
-                        onClick={() => setStaged((s) => ({ ...s, [d.id]: true }))}>
-                        Stage
-                      </button>
-                    )}
-                    {staged[d.id] && !pushed[d.id] && (
-                      <button className="btn btn-primary btn-sm"
-                        onClick={() => {
-                          setPushed((p) => ({ ...p, [d.id]: true }));
-                          logAuditEvent("litify.writeback", d.id,
-                            `Enriched ContentVersion staged and approved for push (simulated) — ${d.counts.total} findings`);
-                        }}>
-                        Approve and push
-                      </button>
-                    )}
-                    {pushed[d.id] && (
-                      <span className="text-[12px]" style={{ color: "var(--faint)" }}>Audit event logged</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <p className="mb-6 text-[13px]" style={{ color: "var(--gray-500)" }}>
+          Originals are never modified. Nothing pushes without explicit approval.
+        </p>
+        <div className="space-y-5">
+          {m.documents.map((d) => (
+            <article key={d.id} className="card-rest p-6">
+              <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-4">
+                <div className="min-w-0 max-w-[52ch]">
+                  <h3 className="text-lg leading-snug" style={{ color: "var(--black)" }}>
+                    AI Reviewed — {d.title}
+                  </h3>
+                  <p className="mt-1 text-[13px]" style={{ color: "var(--gray-500)" }}>
+                    Enriched copy uploads as a new ContentVersion; {d.counts.total} findings attached.
+                  </p>
+                  <div className="mono-block mt-4 !bg-white">
+                    1 POST /sobjects/ContentVersion        <span style={{ color: "var(--gray-400)" }}>enriched pdf</span>{"\n"}
+                    2 POST /sobjects/ContentDocumentLink   <span style={{ color: "var(--gray-400)" }}>link to matter</span>{"\n"}
+                    3 PATCH extracted fields               <span style={{ color: "var(--gray-400)" }}>adjustable schema</span>{"\n"}
+                    4 POST Task                            <span style={{ color: "var(--gray-400)" }}>review-complete notice</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-4">
+                  {pushed[d.id] ? (
+                    <DotLabel color="var(--ok)" strong>pushed (simulated)</DotLabel>
+                  ) : staged[d.id] ? (
+                    <DotLabel color="var(--warn)" strong>staged — awaiting approval</DotLabel>
+                  ) : (
+                    <StatusLabel status={d.status} />
+                  )}
+                  {!staged[d.id] && !pushed[d.id] && (
+                    <button className="btn btn-secondary"
+                      onClick={() => setStaged((s) => ({ ...s, [d.id]: true }))}>
+                      Stage
+                    </button>
+                  )}
+                  {staged[d.id] && !pushed[d.id] && (
+                    <button className="btn btn-primary"
+                      onClick={() => {
+                        setPushed((p) => ({ ...p, [d.id]: true }));
+                        logAuditEvent("litify.writeback", d.id,
+                          `Enriched ContentVersion staged and approved for push (simulated) — ${d.counts.total} findings`);
+                      }}>
+                      Approve and push
+                    </button>
+                  )}
+                  {pushed[d.id] && <span className="meta">audit event logged</span>}
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </div>
@@ -159,7 +147,7 @@ function LitifySyncInner() {
 
 export default function LitifySync() {
   return (
-    <Suspense fallback={<div className="py-24 text-center" style={{ color: "var(--faint)" }}>Loading…</div>}>
+    <Suspense fallback={<div className="py-32 text-center meta">Loading…</div>}>
       <LitifySyncInner />
     </Suspense>
   );
