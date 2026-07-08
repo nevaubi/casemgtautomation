@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/* ── Seeger Weiss brand system (sampled from provided wordmark) ───────────── */
+:root {
+  --sw-navy: #0f4a74;        /* primary brand navy */
+  --sw-navy-deep: #0a3552;   /* hover / active chrome */
+  --sw-navy-ink: #102a43;    /* headings on light */
+  --sw-steel: #c3d2dd;       /* derived light accent */
+  --sw-mist: #e8eff4;        /* panel tint */
+  --sw-bg: #f3f6f9;          /* app background */
+  --sw-border: #d8e1e9;
+  --sw-text: #24313d;
+  --sw-muted: #5b6b7a;
+  --sw-auto: #2f7d32;        /* routing: auto-accepted */
+  --sw-auto-bg: #e5f2e6;
+  --sw-review: #9a6b13;      /* routing: needs review */
+  --sw-review-bg: #fdf3dd;
+  --sw-escalated: #b1441e;   /* routing: agent-escalated */
+  --sw-escalated-bg: #fbe8df;
+  --sw-negated: #46617a;     /* negation context */
+  --sw-negated-bg: #e3ebf2;
+}
+
+@theme inline {
+  --color-navy: var(--sw-navy);
+  --color-navy-deep: var(--sw-navy-deep);
+  --color-ink: var(--sw-navy-ink);
+  --color-steel: var(--sw-steel);
+  --color-mist: var(--sw-mist);
+  --color-appbg: var(--sw-bg);
+  --color-line: var(--sw-border);
+  --color-body: var(--sw-text);
+  --color-muted: var(--sw-muted);
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--sw-bg);
+  color: var(--sw-text);
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wordmark {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+
+/* dense enterprise table */
+.sw-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.sw-table th {
+  text-align: left; font-weight: 600; color: var(--sw-muted);
+  text-transform: uppercase; letter-spacing: 0.05em; font-size: 10.5px;
+  padding: 7px 10px; border-bottom: 1px solid var(--sw-border);
+  background: var(--sw-mist); white-space: nowrap;
+}
+.sw-table td {
+  padding: 7px 10px; border-bottom: 1px solid var(--sw-border);
+  vertical-align: top;
+}
+.sw-table tbody tr:hover { background: #fafcfe; }
+
+.panel {
+  background: #fff; border: 1px solid var(--sw-border); border-radius: 4px;
+}
+.panel-h {
+  padding: 8px 12px; border-bottom: 1px solid var(--sw-border);
+  font-weight: 600; color: var(--sw-navy-ink); font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--sw-mist); border-radius: 4px 4px 0 0;
+}
+
+.chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
+}
+.chip-auto { color: var(--sw-auto); background: var(--sw-auto-bg); }
+.chip-review { color: var(--sw-review); background: var(--sw-review-bg); }
+.chip-escalated { color: var(--sw-escalated); background: var(--sw-escalated-bg); }
+.chip-negated { color: var(--sw-negated); background: var(--sw-negated-bg); }
+.chip-neutral { color: var(--sw-navy); background: var(--sw-mist); }
+
+.confbar { height: 5px; background: var(--sw-mist); border-radius: 2px; overflow: hidden; min-width: 54px; }
+.confbar > div { height: 100%; border-radius: 2px; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 3px;
+  border: 1px solid transparent; transition: background 120ms;
+}
+.btn-primary { background: var(--sw-navy); color: #fff; }
+.btn-primary:hover { background: var(--sw-navy-deep); }
+.btn-outline { background: #fff; color: var(--sw-navy); border-color: var(--sw-navy); }
+.btn-outline:hover { background: var(--sw-mist); }
+.btn-ghost { background: transparent; color: var(--sw-muted); border-color: var(--sw-border); }
+.btn-ghost:hover { background: var(--sw-mist); }
+
+.navlink {
+  padding: 0 14px; height: 100%; display: inline-flex; align-items: center;
+  color: #cfe0ec; font-weight: 600; font-size: 12.5px; letter-spacing: 0.02em;
+  border-bottom: 3px solid transparent;
+}
+.navlink:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.navlink.active { color: #fff; border-bottom-color: #fff; background: rgba(255,255,255,0.08); }
+
+.kpi { padding: 14px 16px; }
+.kpi .v { font-size: 26px; font-weight: 700; color: var(--sw-navy-ink); line-height: 1.1; }
+.kpi .l { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--sw-muted); margin-top: 4px; }

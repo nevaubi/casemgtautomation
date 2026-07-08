@@ -1,0 +1,564 @@
+{
+  "source_pdf": "mock_record_02_pharmacy_scanned.pdf",
+  "enriched_pdf": "AI Reviewed - mock_record_02_pharmacy_scanned.pdf",
+  "pages": [
+    {
+      "number": 1,
+      "source": "ocr",
+      "mean_conf": 0.9058,
+      "words": 221
+    },
+    {
+      "number": 2,
+      "source": "ocr",
+      "mean_conf": 0.785,
+      "words": 261
+    },
+    {
+      "number": 3,
+      "source": "ocr",
+      "mean_conf": 0.9403,
+      "words": 96
+    }
+  ],
+  "counts": {
+    "total": 22,
+    "auto": 15,
+    "review": 7,
+    "escalated": 0,
+    "negated": 0
+  },
+  "processing_seconds": 17.66,
+  "findings": [
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "OF 3 NDC: 00185-0742-01 REFILLS REMAINING: 2 NOTE: INJECTABLE CONTRACEPTIVE (DEPO-PROVERA 150 MG/ML) ADMINISTERED AT PRESCRIBER OFFICE PER",
+      "rects": [
+        [
+          74.88,
+          432.71999999999997,
+          124.32,
+          439.2
+        ],
+        [
+          129.84,
+          433.91999999999996,
+          194.64,
+          440.4
+        ]
+      ],
+      "confidence": 0.9024,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "sumatriptan succinate",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.935,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "NEEDED NDC: 53746-0131-05 REFILLS REMAINING: 2 7756934 10/29/2022 SUMATRIPTAN SUCCINATE 50 MG TAB 9 30 GRANT, SOFIA DO",
+      "rects": [
+        [
+          148.56,
+          254.16,
+          203.51999999999998,
+          260.4
+        ],
+        [
+          209.04,
+          255.12,
+          253.44,
+          261.12
+        ]
+      ],
+      "confidence": 0.8789,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "sumatriptan succinate",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.925,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "DAY NDC: 00378-0221-93 REFILLS REMAINING: 1 7761187 11/28/2022 SUMATRIPTAN SUCCINATE 50 MG: TAB 9 30 GRANT, SOFIA DO",
+      "rects": [
+        [
+          147.6,
+          307.2,
+          202.56,
+          313.68
+        ],
+        [
+          208.07999999999998,
+          308.4,
+          252.48,
+          314.4
+        ]
+      ],
+      "confidence": 0.8695,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.86,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "NDC: 00185-0742-01 REFILLS REMAINING: 2 NOTE: INJECTABLE CONTRACEPTIVE (DEPO-PROVERA 150 MG/ML) ADMINISTERED AT PRESCRIBER OFFICE PER PATIENT",
+      "rects": [
+        [
+          202.32,
+          434.88,
+          265.44,
+          441.84
+        ]
+      ],
+      "confidence": 0.8084,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.9,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "1 NDC: 00378-0221-93 REFILLS REMAINING: 0 7769452 12/17/2022 ACETAZOLAMIDE 250 MG. TAB 120 30. NATARAJAN, PRIYA MD",
+      "rects": [
+        [
+          146.16,
+          349.44,
+          211.44,
+          355.91999999999996
+        ]
+      ],
+      "confidence": 0.846,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.91,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "DAILY NDC: 00185-0742-01 REFILLS REMAINING: 3 7781203 01/16/2023 ACETAZOLAMIDE 250 MG TAB 120 30 NATARAJAN, PRIYA MD",
+      "rects": [
+        [
+          145.44,
+          391.91999999999996,
+          210.48,
+          398.4
+        ]
+      ],
+      "confidence": 0.8554,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "00185-0742-01",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.9,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "TABLETS (500 MG) BY MOUTH TWICE DAILY NDC: 00185-0742-01 REFILLS REMAINING: 3 7781203 01/16/2023 ACETAZOLAMIDE 250 MG",
+      "rects": [
+        [
+          171.84,
+          370.8,
+          235.67999999999998,
+          377.52
+        ]
+      ],
+      "confidence": 0.846,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "00185-0742-01",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.92,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "PRIYA MD : REFILL 1 OF 3 NDC: 00185-0742-01 REFILLS REMAINING: 2 NOTE: INJECTABLE CONTRACEPTIVE (DEPO-PROVERA 150",
+      "rects": [
+        [
+          170.88,
+          413.28,
+          234.95999999999998,
+          420.0
+        ]
+      ],
+      "confidence": 0.8648,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "imitrex",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "9 30 GRANT, SOFIA DO ! GENERIC FOR: IMITREX SIG: TAKE 1 TABLET AT ONSET OF HEADACHE;",
+      "rects": [
+        [
+          214.07999999999998,
+          266.15999999999997,
+          248.39999999999998,
+          271.92
+        ]
+      ],
+      "confidence": 0.9024,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "00378-0221-93",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.92,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "ONSET OF HEADACHE; MAX 2 PER DAY NDC: 00378-0221-93 REFILLS REMAINING: 1 7761187 11/28/2022 SUMATRIPTAN SUCCINATE 50",
+      "rects": [
+        [
+          173.51999999999998,
+          286.32,
+          237.12,
+          293.03999999999996
+        ]
+      ],
+      "confidence": 0.8648,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "00378-0221-93",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.92,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "GRANT, SOFIA DO REFILL 1 OF 1 NDC: 00378-0221-93 REFILLS REMAINING: 0 7769452 12/17/2022 ACETAZOLAMIDE 250 MG.",
+      "rects": [
+        [
+          172.56,
+          328.8,
+          236.39999999999998,
+          335.52
+        ]
+      ],
+      "confidence": 0.8648,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "ibuprofen",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "PATIENT (RECORDS RELEASE FORM ON FILE) 7742810 09/07/2022 IBUPROFEN 600 MG TAB 60 30. GRANT, SOFIA DO",
+      "rects": [
+        [
+          149.76,
+          201.12,
+          194.64,
+          207.35999999999999
+        ]
+      ],
+      "confidence": 0.9024,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "motrin",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "TAB 60 30. GRANT, SOFIA DO GENERIC FOR: MOTRIN SIG: TAKE 1 TABLET BY MOUTH EVERY 6",
+      "rects": [
+        [
+          214.32,
+          213.35999999999999,
+          244.56,
+          218.88
+        ]
+      ],
+      "confidence": 0.9024,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "53746-0131-05",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.92,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "BY MOUTH EVERY 6 HOURS AS NEEDED NDC: 53746-0131-05 REFILLS REMAINING: 2 7756934 10/29/2022 SUMATRIPTAN SUCCINATE 50",
+      "rects": [
+        [
+          174.48,
+          233.28,
+          238.32,
+          240.23999999999998
+        ]
+      ],
+      "confidence": 0.8648,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 1,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "IMITREX SIG: TAKE 1 TABLET AT ONSET OF HEADACHE; MAX 2 PER DAY NDC: 00378-0221-93 REFILLS REMAINING:",
+      "rects": [
+        [
+          304.08,
+          277.92,
+          347.52,
+          285.12
+        ]
+      ],
+      "confidence": 0.8238,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "sumatriptan succinate",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.94,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "DATE 10/29/22 | DANA L. WHITFIELD | | SUMATRIPTAN SUCCINATE 50 MG TABLET QTY: -9 | DO NOT",
+      "rects": [
+        [
+          59.04,
+          313.44,
+          114.0,
+          319.44
+        ],
+        [
+          119.52,
+          312.71999999999997,
+          164.16,
+          318.71999999999997
+        ]
+      ],
+      "confidence": 0.8836,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.92,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "DATE 12/17/22 DANA L. WHITFIELD : | | ACETAZOLAMIDE 250 MG TABLET QTy: 120 | | |",
+      "rects": [
+        [
+          56.4,
+          175.44,
+          121.67999999999999,
+          181.68
+        ]
+      ],
+      "confidence": 0.8648,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.9,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "05/2024 | COUNSELING RECORD: 12/17/2022 PATIENT COUNSELED ON ACETAZOLAMIDE - NEW THERAPY. DISCUSSED PARESTHESIA, HYDRATION, TAKE WITH",
+      "rects": [
+        [
+          221.28,
+          416.64,
+          286.56,
+          422.88
+        ]
+      ],
+      "confidence": 0.846,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "00185-0742-01",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.91,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "NATARAJAN \u00ae REFILLS: 3 BY 12/17/2023 | NDC 00185-0742-01 LOT AC2291 EXP 08/2024 | CAUTION: MAY CAUSE",
+      "rects": [
+        [
+          78.0,
+          227.76,
+          142.07999999999998,
+          234.23999999999998
+        ]
+      ],
+      "confidence": 0.8554,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "sumatriptan",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.9,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "-- R. DELGADO, RPH 10/29/2022 PATIENT COUNSELED ON SUMATRIPTAN - NEW THERAPY. DISCUSSED MAX DAILY DOSE AND",
+      "rects": [
+        [
+          222.48,
+          448.56,
+          277.2,
+          454.56
+        ]
+      ],
+      "confidence": 0.846,
+      "routing": "review"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "00378-0221-93",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.92,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "| | | | | | | NDC 00378-0221-93 LOT SM8813 EXP 05/2024 | COUNSELING RECORD: 12/17/2022",
+      "rects": [
+        [
+          80.39999999999999,
+          375.84,
+          144.23999999999998,
+          382.56
+        ]
+      ],
+      "confidence": 0.8648,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 2,
+      "match_quality": 0.8622,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "| | TAKE 1 TABLET AT ONSET OF HEADACHE. MAX 2 TABLETS PER DAY. | | |",
+      "rects": [
+        [
+          190.07999999999998,
+          332.88,
+          233.51999999999998,
+          338.64
+        ]
+      ],
+      "confidence": 0.778,
+      "routing": "review"
+    }
+  ]
+}

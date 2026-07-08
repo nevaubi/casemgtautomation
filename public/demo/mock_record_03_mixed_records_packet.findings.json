@@ -1,0 +1,2748 @@
+{
+  "source_pdf": "mock_record_03_mixed_records_packet.pdf",
+  "enriched_pdf": "AI Reviewed - mock_record_03_mixed_records_packet.pdf",
+  "pages": [
+    {
+      "number": 1,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 102
+    },
+    {
+      "number": 2,
+      "source": "ocr",
+      "mean_conf": 0.9403,
+      "words": 110
+    },
+    {
+      "number": 3,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 201
+    },
+    {
+      "number": 4,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 182
+    },
+    {
+      "number": 5,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 164
+    },
+    {
+      "number": 6,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 210
+    },
+    {
+      "number": 7,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 164
+    },
+    {
+      "number": 8,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 160
+    },
+    {
+      "number": 9,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 162
+    },
+    {
+      "number": 10,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 158
+    },
+    {
+      "number": 11,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 103
+    },
+    {
+      "number": 12,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 70
+    }
+  ],
+  "counts": {
+    "total": 100,
+    "auto": 98,
+    "review": 0,
+    "escalated": 0,
+    "negated": 2
+  },
+  "processing_seconds": 4.7,
+  "findings": [
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo shot",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.96,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "visit: Bad headaches, about 3 weeks Current medications: Depo shot (birth control) since 2021; multivitamin Allergies: None Northgate",
+      "rects": [
+        [
+          172.07999999999998,
+          255.35999999999999,
+          193.2,
+          263.76
+        ],
+        [
+          195.84,
+          254.64,
+          213.12,
+          261.84
+        ]
+      ],
+      "confidence": 0.9024,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.95,
+      "source": "ocr",
+      "negated": false,
+      "evidence": "(spouse) Phone: (217) 555-0177 Reason for visit: Bad headaches, about 3 weeks Current medications: Depo shot (birth",
+      "rects": [
+        [
+          189.84,
+          226.07999999999998,
+          235.2,
+          233.76
+        ]
+      ],
+      "confidence": 0.893,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 3,
+      "match_quality": 0.952,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Headache, new pattern (R51.9). 2) Long-term use of injectable contraceptive. Plan: Start ibuprofen 600 mg PO q6h PRN",
+      "rects": [
+        [
+          340.6199645996094,
+          182.9249725341797,
+          378.63592529296875,
+          195.2909698486328
+        ],
+        [
+          381.137939453125,
+          182.9249725341797,
+          437.1629638671875,
+          195.2909698486328
+        ]
+      ],
+      "confidence": 0.9425,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "tinnitus",
+      "term_label": "Pulsatile tinnitus",
+      "variant": "pulsatile tinnitus",
+      "page": 3,
+      "match_quality": 0.9415,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "in the morning and with bending forward. Occasional pulsatile tinnitus. No fever, no neck stiffness. Reports current use",
+      "rects": [
+        [
+          107.01600646972656,
+          126.92497253417969,
+          140.02801513671875,
+          139.2909698486328
+        ],
+        [
+          142.52999877929688,
+          126.92497253417969,
+          173.5439910888672,
+          139.2909698486328
+        ]
+      ],
+      "confidence": 0.9321,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "neck stiffness. Reports current use of injectable contraception (Depo-Provera 150 mg/mL IM every 3 months since April",
+      "rects": [
+        [
+          475.68304443359375,
+          126.92497253417969,
+          537.6930541992188,
+          139.36297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "ibuprofen",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "2) Long-term use of injectable contraceptive. Plan: Start ibuprofen 600 mg PO q6h PRN (#60, 2 refills).",
+      "rects": [
+        [
+          106.01699829101562,
+          198.469970703125,
+          147.5159912109375,
+          210.86297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "\u2014 09/06/2022 (New Patient, Est. Care) Chief Complaint: Headaches \u00d7 3 weeks. HPI: 31-year-old female with ~3",
+      "rects": [
+        [
+          134.50201416015625,
+          98.92497253417969,
+          180.02398681640625,
+          111.29097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "31-year-old female with ~3 weeks of daily pressure-like headaches, worse in the morning and with bending forward.",
+      "rects": [
+        [
+          302.324951171875,
+          114.42497253417969,
+          348.85498046875,
+          126.79097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 3,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "visualized adequately in office. Neck supple. Assessment: 1) Headache, new pattern (R51.9). 2) Long-term use of injectable",
+      "rects": [
+        [
+          129.02101135253906,
+          182.9249725341797,
+          172.5449981689453,
+          195.2909698486328
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 3,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "600 mg PO q6h PRN (#60, 2 refills). Headache diary. Return 6\u20138 weeks or sooner if worsening;",
+      "rects": [
+        [
+          298.56292724609375,
+          198.4249725341797,
+          339.5849304199219,
+          210.7909698486328
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 3,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "immediately. Discussed possible association of hormonal contraceptives with headache; will coordinate with GYN if symptoms persist. Electronically",
+      "rects": [
+        [
+          60.0,
+          223.4249725341797,
+          102.0300064086914,
+          235.7909698486328
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "transient visual obscurations",
+      "page": 4,
+      "match_quality": 0.9571,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "over the past 2 weeks \u2014 concerning for transient visual obscurations. Ibuprofen partially effective. Deferred her injectable contraceptive dose",
+      "rects": [
+        [
+          221.07296752929688,
+          126.92497253417969,
+          255.58795166015625,
+          139.2909698486328
+        ],
+        [
+          258.0899658203125,
+          126.92497253417969,
+          281.09393310546875,
+          139.2909698486328
+        ],
+        [
+          283.595947265625,
+          126.92497253417969,
+          337.1189270019531,
+          139.2909698486328
+        ]
+      ],
+      "confidence": 0.9475,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "transient visual obscurations",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Neuro non-focal. Assessment: 1) Chronic daily headache with transient visual obscurations \u2014 papilledema must be excluded. 2) Injectable contraceptive",
+      "rects": [
+        [
+          244.0679931640625,
+          182.9249725341797,
+          278.5830078125,
+          195.2909698486328
+        ],
+        [
+          281.0849609375,
+          182.9249725341797,
+          304.0889587402344,
+          195.2909698486328
+        ],
+        [
+          306.5909729003906,
+          182.9249725341797,
+          357.6119689941406,
+          195.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "transient visual obscurations. Ibuprofen partially effective. Deferred her injectable contraceptive dose that was due mid-October pending evaluation. Denies",
+      "rects": [
+        [
+          505.1940612792969,
+          126.92497253417969,
+          543.2100830078125,
+          139.2909698486328
+        ],
+        [
+          60.0,
+          139.4249725341797,
+          113.52300262451172,
+          151.7909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "visual obscurations \u2014 papilledema must be excluded. 2) Injectable contraceptive use \u2014 hold pending workup. Plan: Rx sumatriptan",
+      "rects": [
+        [
+          508.6770324707031,
+          182.9249725341797,
+          547.197021484375,
+          195.2909698486328
+        ],
+        [
+          60.0,
+          195.4249725341797,
+          113.52300262451172,
+          207.7909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "dimming vision",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "most days, severity 6\u20137/10, with brief episodes of dimming vision when standing (seconds, both eyes) over the past",
+      "rects": [
+        [
+          346.1667785644531,
+          114.42497253417969,
+          380.16876220703125,
+          126.79097747802734
+        ],
+        [
+          382.6293029785156,
+          114.42497253417969,
+          405.6332702636719,
+          126.79097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "sumatriptan",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "contraceptive use \u2014 hold pending workup. Plan: Rx sumatriptan 50 mg PO at headache onset, max 2",
+      "rects": [
+        [
+          98.00700378417969,
+          210.969970703125,
+          149.51400756835938,
+          223.36297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "ibuprofen",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "2 weeks \u2014 concerning for transient visual obscurations. Ibuprofen partially effective. Deferred her injectable contraceptive dose that",
+      "rects": [
+        [
+          339.6209411621094,
+          126.92497253417969,
+          377.6459655761719,
+          139.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "papilledema",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Chronic daily headache with transient visual obscurations \u2014 papilledema must be excluded. 2) Injectable contraceptive use \u2014",
+      "rects": [
+        [
+          371.6159973144531,
+          182.9249725341797,
+          420.13494873046875,
+          195.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "papilledema",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Northgate Eye Associates for dilated fundus examination. If papilledema confirmed, refer neurology. Patient counseled on warning signs;",
+      "rects": [
+        [
+          238.5869598388672,
+          223.4249725341797,
+          287.1059265136719,
+          235.7909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "ONLY Progress Note \u2014 10/28/2022 (Follow-up) Chief Complaint: Headaches worsening; new visual symptoms. HPI: Headaches now most",
+      "rects": [
+        [
+          134.50201416015625,
+          98.92497253417969,
+          180.02398681640625,
+          111.29097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Chief Complaint: Headaches worsening; new visual symptoms. HPI: Headaches now most days, severity 6\u20137/10, with brief episodes",
+      "rects": [
+        [
+          80.46053314208984,
+          114.42497253417969,
+          125.9825439453125,
+          126.79097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 4,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "with correction. Neuro non-focal. Assessment: 1) Chronic daily headache with transient visual obscurations \u2014 papilledema must be",
+      "rects": [
+        [
+          183.53399658203125,
+          182.9249725341797,
+          223.06199645996094,
+          195.2909698486328
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 4,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "workup. Plan: Rx sumatriptan 50 mg PO at headache onset, max 2 tabs/day (#9, 1 refill). Urgent",
+      "rects": [
+        [
+          206.53799438476562,
+          210.969970703125,
+          248.05496215820312,
+          223.36297607421875
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "optic disc edema",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "no APD IOP (mmHg) 16 17 Dilated fundus Optic disc edema, Frisen grade 2 Optic disc edema, Frisen grade",
+      "rects": [
+        [
+          200.39999389648438,
+          201.99996948242188,
+          219.07199096679688,
+          212.99197387695312
+        ],
+        [
+          221.29598999023438,
+          201.99996948242188,
+          235.51998901367188,
+          212.99197387695312
+        ],
+        [
+          237.74398803710938,
+          201.99996948242188,
+          264.4239807128906,
+          212.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "optic disc edema",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Dilated fundus Optic disc edema, Frisen grade 2 Optic disc edema, Frisen grade 2; small flame hemorrhage inferio Visual",
+      "rects": [
+        [
+          380.3999938964844,
+          201.99996948242188,
+          399.0719909667969,
+          212.99197387695312
+        ],
+        [
+          401.2959899902344,
+          201.99996948242188,
+          415.5199890136719,
+          212.99197387695312
+        ],
+        [
+          417.7439880371094,
+          201.99996948242188,
+          444.4239807128906,
+          212.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "transient visual obscurations",
+      "page": 5,
+      "match_quality": 0.9571,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Care) \u2014 rule out papilledema; chronic headache with transient visual obscurations. OD (Right) OS (Left) Visual acuity (corrected) 20/25",
+      "rects": [
+        [
+          450.1229248046875,
+          98.92497253417969,
+          484.637939453125,
+          111.29097747802734
+        ],
+        [
+          487.13995361328125,
+          98.92497253417969,
+          510.1439208984375,
+          111.29097747802734
+        ],
+        [
+          60.0,
+          111.42497253417969,
+          113.52300262451172,
+          123.79097747802734
+        ]
+      ],
+      "confidence": 0.9475,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "enlarged blind spot",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "small flame hemorrhage inferio Visual field (Humphrey 24-2) Enlarged blind spot Enlarged blind spot Assessment: Bilateral papilledema (H47.10) in",
+      "rects": [
+        [
+          200.39999389648438,
+          219.99996948242188,
+          232.41598510742188,
+          230.99197387695312
+        ],
+        [
+          234.63998413085938,
+          219.99996948242188,
+          251.53598022460938,
+          230.99197387695312
+        ],
+        [
+          253.75997924804688,
+          219.99996948242188,
+          268.8799743652344,
+          230.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "enlarged blind spot",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "inferio Visual field (Humphrey 24-2) Enlarged blind spot Enlarged blind spot Assessment: Bilateral papilledema (H47.10) in a 31-year-old female",
+      "rects": [
+        [
+          380.3999938964844,
+          219.99996948242188,
+          412.4159851074219,
+          230.99197387695312
+        ],
+        [
+          414.6399841308594,
+          219.99996948242188,
+          431.5359802246094,
+          230.99197387695312
+        ],
+        [
+          433.7599792480469,
+          219.99996948242188,
+          448.8799743652344,
+          230.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "lumbar-puncture",
+      "term_label": "Lumbar puncture",
+      "variant": "lumbar puncture",
+      "page": 5,
+      "match_quality": 0.9415,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Recommend neuroimaging (MRI brain with MRV) prior to lumbar puncture. Report faxed to PCP and neurology today. Electronically",
+      "rects": [
+        [
+          90.51000213623047,
+          283.4250183105469,
+          118.0140151977539,
+          295.791015625
+        ],
+        [
+          120.51600646972656,
+          283.4250183105469,
+          158.03700256347656,
+          295.791015625
+        ]
+      ],
+      "confidence": 0.9321,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mri brain",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "to Springfield Neurology Group (Dr. Natarajan). Recommend neuroimaging (MRI brain with MRV) prior to lumbar puncture. Report faxed",
+      "rects": [
+        [
+          466.131591796875,
+          270.9250183105469,
+          485.6256103515625,
+          283.291015625
+        ],
+        [
+          488.0823974609375,
+          270.9250183105469,
+          508.0893859863281,
+          283.291015625
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "papilledema",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Sofia Grant (Meridian Primary Care) \u2014 rule out papilledema; chronic headache with transient visual obscurations. OD (Right)",
+      "rects": [
+        [
+          304.55694580078125,
+          98.92497253417969,
+          355.5779113769531,
+          111.29097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "papilledema",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Enlarged blind spot Enlarged blind spot Assessment: Bilateral papilledema (H47.10) in a 31-year-old female with chronic headaches,",
+      "rects": [
+        [
+          156.53399658203125,
+          242.969970703125,
+          208.55398559570312,
+          255.36297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "h47.10",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "blind spot Enlarged blind spot Assessment: Bilateral papilledema (H47.10) in a 31-year-old female with chronic headaches, on",
+      "rects": [
+        [
+          211.0559844970703,
+          242.969970703125,
+          246.0659637451172,
+          255.36297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 5,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "(Meridian Primary Care) \u2014 rule out papilledema; chronic headache with transient visual obscurations. OD (Right) OS (Left)",
+      "rects": [
+        [
+          389.58892822265625,
+          98.92497253417969,
+          429.1169128417969,
+          111.29097747802734
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "papilledema (H47.10) in a 31-year-old female with chronic headaches, on injectable progestin contraception. Findings concerning for elevated",
+      "rects": [
+        [
+          393.116943359375,
+          242.9249725341797,
+          439.6469421386719,
+          255.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mrv",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Group (Dr. Natarajan). Recommend neuroimaging (MRI brain with MRV) prior to lumbar puncture. Report faxed to PCP",
+      "rects": [
+        [
+          529.0049438476562,
+          270.9250183105469,
+          551.9999389648438,
+          283.291015625
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "optic disc edema",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Cranial nerves II\u2013XII intact except fundoscopy showing bilateral optic disc edema consistent with outside report. Motor 5/5 throughout; reflexes",
+      "rects": [
+        [
+          405.6539306640625,
+          207.9249725341797,
+          424.66192626953125,
+          220.2909698486328
+        ],
+        [
+          427.1639404296875,
+          207.9249725341797,
+          443.1659240722656,
+          220.2909698486328
+        ],
+        [
+          445.6679382324219,
+          207.9249725341797,
+          473.1809387207031,
+          220.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "transient visual obscurations",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "12/09/2022 Reason for consult: Bilateral papilledema, chronic headache, transient visual obscurations, pulsatile tinnitus. HPI: 31-year-old woman, BMI 25, with",
+      "rects": [
+        [
+          311.5859375,
+          98.92497253417969,
+          346.1009521484375,
+          111.29097747802734
+        ],
+        [
+          348.60296630859375,
+          98.92497253417969,
+          371.60693359375,
+          111.29097747802734
+        ],
+        [
+          374.10894775390625,
+          98.92497253417969,
+          427.6319580078125,
+          111.29097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "transient visual obscurations",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "30 seconds. No diplopia currently. ROS: Positive: headache, transient visual obscurations, pulsatile tinnitus. Negative: denies diplopia at rest, denies",
+      "rects": [
+        [
+          166.0469970703125,
+          179.9249725341797,
+          200.56198120117188,
+          192.2909698486328
+        ],
+        [
+          203.06398010253906,
+          179.9249725341797,
+          226.06797790527344,
+          192.2909698486328
+        ],
+        [
+          228.56997680664062,
+          179.9249725341797,
+          282.09295654296875,
+          192.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "and whooshing tinnitus. Medication history is notable for medroxyprogesterone acetate (Depo-Provera) 150 mg IM every 12\u201313 weeks from",
+      "rects": [
+        [
+          60.0,
+          139.469970703125,
+          155.02200317382812,
+          151.86297607421875
+        ],
+        [
+          157.5240020751953,
+          139.469970703125,
+          188.53799438476562,
+          151.86297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "vision loss",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": true,
+      "evidence": "records). Ibuprofen and sumatriptan provide partial relief. No vision loss episodes lasting > 30 seconds. No diplopia currently.",
+      "rects": [
+        [
+          514.697998046875,
+          151.9249725341797,
+          537.7020263671875,
+          164.2909698486328
+        ],
+        [
+          60.0,
+          164.4249725341797,
+          76.00199890136719,
+          176.7909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "negated"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "tinnitus",
+      "term_label": "Pulsatile tinnitus",
+      "variant": "pulsatile tinnitus",
+      "page": 6,
+      "match_quality": 0.9415,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "consult: Bilateral papilledema, chronic headache, transient visual obscurations, pulsatile tinnitus. HPI: 31-year-old woman, BMI 25, with ~3 months",
+      "rects": [
+        [
+          430.13397216796875,
+          98.92497253417969,
+          463.14593505859375,
+          111.29097747802734
+        ],
+        [
+          465.64794921875,
+          98.92497253417969,
+          496.6619567871094,
+          111.29097747802734
+        ]
+      ],
+      "confidence": 0.9321,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "tinnitus",
+      "term_label": "Pulsatile tinnitus",
+      "variant": "pulsatile tinnitus",
+      "page": 6,
+      "match_quality": 0.9415,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "diplopia currently. ROS: Positive: headache, transient visual obscurations, pulsatile tinnitus. Negative: denies diplopia at rest, denies focal weakness,",
+      "rects": [
+        [
+          284.594970703125,
+          179.9249725341797,
+          317.6069641113281,
+          192.2909698486328
+        ],
+        [
+          320.1089782714844,
+          179.9249725341797,
+          351.12298583984375,
+          192.2909698486328
+        ]
+      ],
+      "confidence": 0.9321,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mri brain",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "5/5 throughout; reflexes 2+ symmetric; gait normal. Imaging: MRI brain with and without contrast and MRV (12/02/2022, Springfield",
+      "rects": [
+        [
+          100.0050048828125,
+          235.9249725341797,
+          116.50199890136719,
+          248.2909698486328
+        ],
+        [
+          119.00399780273438,
+          235.9249725341797,
+          139.01100158691406,
+          248.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "tinnitus. Medication history is notable for medroxyprogesterone acetate (Depo-Provera) 150 mg IM every 12\u201313 weeks from 04/13/2021",
+      "rects": [
+        [
+          191.0399932861328,
+          139.469970703125,
+          256.0469665527344,
+          151.86297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "sumatriptan",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "injections, per patient and available records). Ibuprofen and sumatriptan provide partial relief. No vision loss episodes lasting",
+      "rects": [
+        [
+          367.64697265625,
+          151.9249725341797,
+          414.6629943847656,
+          164.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "ibuprofen",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "(six documented injections, per patient and available records). Ibuprofen and sumatriptan provide partial relief. No vision loss",
+      "rects": [
+        [
+          309.60595703125,
+          151.9249725341797,
+          347.6309509277344,
+          164.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "papilledema",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Neurology Consultation \u2014 12/09/2022 Reason for consult: Bilateral papilledema, chronic headache, transient visual obscurations, pulsatile tinnitus. HPI:",
+      "rects": [
+        [
+          182.02200317382812,
+          98.92497253417969,
+          233.04298400878906,
+          111.29097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 6,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "\u2014 12/09/2022 Reason for consult: Bilateral papilledema, chronic headache, transient visual obscurations, pulsatile tinnitus. HPI: 31-year-old woman,",
+      "rects": [
+        [
+          267.053955078125,
+          98.92497253417969,
+          309.083984375,
+          111.29097747802734
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "BMI 25, with ~3 months of progressive daily headaches, worse supine and in the morning, brief bilateral",
+      "rects": [
+        [
+          339.3509521484375,
+          114.42497253417969,
+          385.8809509277344,
+          126.79097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 6,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "> 30 seconds. No diplopia currently. ROS: Positive: headache, transient visual obscurations, pulsatile tinnitus. Negative: denies diplopia",
+      "rects": [
+        [
+          121.51499938964844,
+          179.9249725341797,
+          163.5449981689453,
+          192.2909698486328
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mrv",
+      "page": 6,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": true,
+      "evidence": "Imaging: MRI brain with and without contrast and MRV (12/02/2022, Springfield Imaging Center): no mass, no hydrocephalus,",
+      "rects": [
+        [
+          260.573974609375,
+          235.9249725341797,
+          280.57196044921875,
+          248.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "negated"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "idiopathic intracranial hypertension",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "12/09/2022 (continued) Impression: Clinical picture highly suggestive of idiopathic intracranial hypertension (pseudotumor cerebri, G93.2). Literature reports an association between",
+      "rects": [
+        [
+          256.0649719238281,
+          98.96997833251953,
+          298.5719299316406,
+          111.36297607421875
+        ],
+        [
+          301.07391357421875,
+          98.96997833251953,
+          349.59295654296875,
+          111.36297607421875
+        ],
+        [
+          352.094970703125,
+          98.96997833251953,
+          408.60595703125,
+          111.36297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "causation",
+      "category_label": "Causation Language",
+      "term_key": "contributing-factor",
+      "term_label": "Contributing factor language",
+      "variant": "should be discontinued",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "injectable contraceptive is a potentially contributing factor and should be discontinued in coordination with her gynecologist. Plan: 1) Diagnostic/therapeutic",
+      "rects": [
+        [
+          507.21905517578125,
+          123.92497253417969,
+          533.7330322265625,
+          136.2909698486328
+        ],
+        [
+          536.2350463867188,
+          123.92497253417969,
+          546.2430419921875,
+          136.2909698486328
+        ],
+        [
+          60.0,
+          136.4249725341797,
+          110.5260009765625,
+          148.7909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "some patients; given the temporal relationship here, the injectable contraceptive is a potentially contributing factor and should be",
+      "rects": [
+        [
+          259.60198974609375,
+          123.92497253417969,
+          297.6179504394531,
+          136.2909698486328
+        ],
+        [
+          300.1199645996094,
+          123.92497253417969,
+          353.6429748535156,
+          136.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "progestin-only injectable",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "(pseudotumor cerebri, G93.2). Literature reports an association between progestin-only injectable contraception and intracranial hypertension in some patients; given",
+      "rects": [
+        [
+          227.57998657226562,
+          111.42497253417969,
+          284.0999755859375,
+          123.79097747802734
+        ],
+        [
+          286.6019592285156,
+          111.42497253417969,
+          324.6179504394531,
+          123.79097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "pseudotumor cerebri",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Clinical picture highly suggestive of idiopathic intracranial hypertension (pseudotumor cerebri, G93.2). Literature reports an association between progestin-only injectable",
+      "rects": [
+        [
+          411.10797119140625,
+          98.96997833251953,
+          471.60595703125,
+          111.36297607421875
+        ],
+        [
+          474.10797119140625,
+          98.96997833251953,
+          506.625,
+          111.36297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "lumbar-puncture",
+      "term_label": "Lumbar puncture",
+      "variant": "lumbar puncture",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "in coordination with her gynecologist. Plan: 1) Diagnostic/therapeutic lumbar puncture with opening pressure, scheduled 12/16/2022. 2) If confirmed,",
+      "rects": [
+        [
+          186.5489959716797,
+          151.9249725341797,
+          214.052978515625,
+          164.2909698486328
+        ],
+        [
+          216.5549774169922,
+          151.9249725341797,
+          251.57395935058594,
+          164.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "opening-pressure",
+      "term_label": "Opening pressure",
+      "variant": "opening pressure",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "her gynecologist. Plan: 1) Diagnostic/therapeutic lumbar puncture with opening pressure, scheduled 12/16/2022. 2) If confirmed, start acetazolamide 500",
+      "rects": [
+        [
+          272.5799560546875,
+          151.9249725341797,
+          304.6019592285156,
+          164.2909698486328
+        ],
+        [
+          307.10394287109375,
+          151.9249725341797,
+          344.615966796875,
+          164.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "causation",
+      "category_label": "Causation Language",
+      "term_key": "contributing-factor",
+      "term_label": "Contributing factor language",
+      "variant": "contributing factor",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "relationship here, the injectable contraceptive is a potentially contributing factor and should be discontinued in coordination with her",
+      "rects": [
+        [
+          415.6709899902344,
+          123.92497253417969,
+          462.1919860839844,
+          136.2909698486328
+        ],
+        [
+          464.6940002441406,
+          123.92497253417969,
+          487.2030334472656,
+          136.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "causation",
+      "category_label": "Causation Language",
+      "term_key": "contributing-factor",
+      "term_label": "Contributing factor language",
+      "variant": "temporal relationship",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "and intracranial hypertension in some patients; given the temporal relationship here, the injectable contraceptive is a potentially contributing",
+      "rects": [
+        [
+          135.54600524902344,
+          123.92497253417969,
+          170.55599975585938,
+          136.2909698486328
+        ],
+        [
+          173.05799865722656,
+          123.92497253417969,
+          219.0749969482422,
+          136.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "panel in 4 weeks. 3) Recommend discontinuation of Depo-Provera; letter to Dr. Reyes (Lakeview Women's Health). 4)",
+      "rects": [
+        [
+          140.5050048828125,
+          176.9249725341797,
+          202.02000427246094,
+          189.36297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 7,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "opening pressure, scheduled 12/16/2022. 2) If confirmed, start acetazolamide 500 mg PO BID (dispense as 250 mg",
+      "rects": [
+        [
+          60.0,
+          164.469970703125,
+          121.52400207519531,
+          176.86297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "g93.2",
+      "page": 7,
+      "match_quality": 0.8818,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "highly suggestive of idiopathic intracranial hypertension (pseudotumor cerebri, G93.2). Literature reports an association between progestin-only injectable contraception",
+      "rects": [
+        [
+          509.12701416015625,
+          98.92497253417969,
+          539.1420288085938,
+          111.36297607421875
+        ]
+      ],
+      "confidence": 0.873,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 7,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "serial visual fields q6\u20138 weeks. 5) Weight-neutral counseling; headache diary; return 4 weeks post-LP. Electronically signed: Priya",
+      "rects": [
+        [
+          281.5889587402344,
+          189.4249725341797,
+          321.116943359375,
+          201.7909698486328
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "idiopathic intracranial hypertension",
+      "page": 8,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Note \u2014 Lumbar Puncture \u2014 12/16/2022 Indication Suspected idiopathic intracranial hypertension (G93.2) Consent Written informed consent obtained; risks reviewed.",
+      "rects": [
+        [
+          228.67999267578125,
+          102.03997802734375,
+          266.4639892578125,
+          113.05597686767578
+        ],
+        [
+          268.68798828125,
+          102.03997802734375,
+          311.81597900390625,
+          113.05597686767578
+        ],
+        [
+          314.03997802734375,
+          102.03997802734375,
+          364.27197265625,
+          113.05597686767578
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "idiopathic intracranial hypertension",
+      "page": 8,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "None; patient tolerated well, discharged ambulatory. Post-procedure diagnosis: Idiopathic intracranial hypertension, confirmed (opening pressure 32 cm H2O with normal",
+      "rects": [
+        [
+          176.49899291992188,
+          268.9250183105469,
+          215.01898193359375,
+          281.291015625
+        ],
+        [
+          217.5089874267578,
+          268.9250183105469,
+          261.5189514160156,
+          281.291015625
+        ],
+        [
+          264.00897216796875,
+          268.9250183105469,
+          318.03594970703125,
+          281.291015625
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "lumbar-puncture",
+      "term_label": "Lumbar puncture",
+      "variant": "lumbar puncture",
+      "page": 8,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "GENERATED FOR SOFTWARE DEMONSTRATION ONLY Procedure Note \u2014 Lumbar Puncture \u2014 12/16/2022 Indication Suspected idiopathic intracranial hypertension (G93.2)",
+      "rects": [
+        [
+          154.52099609375,
+          80.8334732055664,
+          193.0244903564453,
+          95.34447479248047
+        ],
+        [
+          195.94349670410156,
+          80.8334732055664,
+          241.4504852294922,
+          95.34447479248047
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "opening-pressure",
+      "term_label": "Opening pressure",
+      "variant": "opening pressure",
+      "page": 8,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "lateral decubitus, L3\u2013L4 interspace Anesthesia 1% lidocaine local Opening pressure 32 cm H2O (elevated; reference 6\u201325 cm H2O)",
+      "rects": [
+        [
+          63.599998474121094,
+          173.99996948242188,
+          93.83999633789062,
+          184.99197387695312
+        ],
+        [
+          96.06399536132812,
+          173.99996948242188,
+          127.18400573730469,
+          184.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "opening-pressure",
+      "term_label": "Opening pressure",
+      "variant": "opening pressure",
+      "page": 8,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "discharged ambulatory. Post-procedure diagnosis: Idiopathic intracranial hypertension, confirmed (opening pressure 32 cm H2O with normal CSF composition and",
+      "rects": [
+        [
+          362.5260009765625,
+          268.9250183105469,
+          397.54498291015625,
+          281.291015625
+        ],
+        [
+          400.0350036621094,
+          268.9250183105469,
+          435.0450134277344,
+          281.291015625
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 8,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "cm H2O with normal CSF composition and neuroimaging). Acetazolamide 500 mg PO BID started today; e-script sent",
+      "rects": [
+        [
+          190.21681213378906,
+          281.4700012207031,
+          253.2347869873047,
+          293.8630065917969
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "g93.2",
+      "page": 8,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Puncture \u2014 12/16/2022 Indication Suspected idiopathic intracranial hypertension (G93.2) Consent Written informed consent obtained; risks reviewed. Position",
+      "rects": [
+        [
+          366.4959716796875,
+          102.03997802734375,
+          393.615966796875,
+          113.05597686767578
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 8,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "started today; e-script sent to Northgate Pharmacy #204. Headache precautions reviewed. Electronically signed: Priya Natarajan, MD \u2014",
+      "rects": [
+        [
+          60.0,
+          293.9250183105469,
+          101.02200317382812,
+          306.291015625
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "NDC Lot Site Administered By Prescriber 04/13/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 KJ4471 L deltoid M.",
+      "rects": [
+        [
+          169.61599731445312,
+          122.4000015258789,
+          250.08798217773438,
+          133.39199829101562
+        ],
+        [
+          252.31198120117188,
+          122.4000015258789,
+          281.2159729003906,
+          133.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "M. Ortiz, RN A. Reyes, MD 07/20/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 KJ4471 R deltoid M.",
+      "rects": [
+        [
+          169.61599731445312,
+          152.39999389648438,
+          250.08798217773438,
+          163.39199829101562
+        ],
+        [
+          252.31198120117188,
+          152.39999389648438,
+          281.2159729003906,
+          163.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "M. Ortiz, RN A. Reyes, MD 10/19/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 LM0283 L deltoid C.",
+      "rects": [
+        [
+          169.61599731445312,
+          182.39999389648438,
+          250.08798217773438,
+          193.39199829101562
+        ],
+        [
+          252.31198120117188,
+          182.39999389648438,
+          281.2159729003906,
+          193.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "C. Boateng, LPN A. Reyes, MD 01/18/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 LM0283 R gluteal M.",
+      "rects": [
+        [
+          169.61599731445312,
+          212.39999389648438,
+          250.08798217773438,
+          223.39199829101562
+        ],
+        [
+          252.31198120117188,
+          212.39999389648438,
+          281.2159729003906,
+          223.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "M. Ortiz, RN A. Reyes, MD 04/12/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 NP7719 L deltoid C.",
+      "rects": [
+        [
+          169.61599731445312,
+          242.39999389648438,
+          250.08798217773438,
+          253.39199829101562
+        ],
+        [
+          252.31198120117188,
+          242.39999389648438,
+          281.2159729003906,
+          253.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "C. Boateng, LPN A. Reyes, MD 07/19/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 NP7719 R deltoid M.",
+      "rects": [
+        [
+          169.61599731445312,
+          272.3999938964844,
+          250.08798217773438,
+          283.3919982910156
+        ],
+        [
+          252.31198120117188,
+          272.3999938964844,
+          281.2159729003906,
+          283.3919982910156
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Route NDC Lot Site Administered By Prescriber 04/13/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 KJ4471 L",
+      "rects": [
+        [
+          117.5999984741211,
+          122.4000015258789,
+          167.39199829101562,
+          133.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "deltoid M. Ortiz, RN A. Reyes, MD 07/20/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 KJ4471 R",
+      "rects": [
+        [
+          117.5999984741211,
+          152.39999389648438,
+          167.39199829101562,
+          163.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "deltoid M. Ortiz, RN A. Reyes, MD 10/19/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 LM0283 L",
+      "rects": [
+        [
+          117.5999984741211,
+          182.39999389648438,
+          167.39199829101562,
+          193.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "deltoid C. Boateng, LPN A. Reyes, MD 01/18/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 LM0283 R",
+      "rects": [
+        [
+          117.5999984741211,
+          212.39999389648438,
+          167.39199829101562,
+          223.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "gluteal M. Ortiz, RN A. Reyes, MD 04/12/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 NP7719 L",
+      "rects": [
+        [
+          117.5999984741211,
+          242.39999389648438,
+          167.39199829101562,
+          253.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "deltoid C. Boateng, LPN A. Reyes, MD 07/19/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 NP7719 R",
+      "rects": [
+        [
+          117.5999984741211,
+          272.3999938964844,
+          167.39199829101562,
+          283.3919982910156
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Prescriber 04/13/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 KJ4471 L deltoid M. Ortiz, RN A. Reyes,",
+      "rects": [
+        [
+          272.3999938964844,
+          122.4000015258789,
+          322.2079772949219,
+          133.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "MD 07/20/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 KJ4471 R deltoid M. Ortiz, RN A. Reyes,",
+      "rects": [
+        [
+          272.3999938964844,
+          152.39999389648438,
+          322.2079772949219,
+          163.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "MD 10/19/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 LM0283 L deltoid C. Boateng, LPN A. Reyes,",
+      "rects": [
+        [
+          272.3999938964844,
+          182.39999389648438,
+          322.2079772949219,
+          193.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "MD 01/18/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 LM0283 R gluteal M. Ortiz, RN A. Reyes,",
+      "rects": [
+        [
+          272.3999938964844,
+          212.39999389648438,
+          322.2079772949219,
+          223.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "MD 04/12/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 NP7719 L deltoid C. Boateng, LPN A. Reyes,",
+      "rects": [
+        [
+          272.3999938964844,
+          242.39999389648438,
+          322.2079772949219,
+          253.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 9,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "MD 07/19/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 NP7719 R deltoid M. Ortiz, RN A. Reyes,",
+      "rects": [
+        [
+          272.3999938964844,
+          272.3999938964844,
+          322.2079772949219,
+          283.3919982910156
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 10,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "$48.00 $31.10 $0.00 04/12/2022 Lakeview Women's Health J1050 Medroxyprogesterone acetate, 150 mg $118.00 $92.75 $0.00 09/06/2022 Meridian Primary",
+      "rects": [
+        [
+          272.3999938964844,
+          158.39999389648438,
+          350.2080078125,
+          169.39199829101562
+        ],
+        [
+          352.4320068359375,
+          158.39999389648438,
+          380.89599609375,
+          169.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "lumbar-puncture",
+      "term_label": "Lumbar puncture",
+      "variant": "spinal puncture",
+      "page": 10,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "$364.00 $262.90 $40.00 12/16/2022 Springfield Neurology Group 62270 Spinal puncture, diagnostic $412.00 $298.60 $50.00 Totals: Charges $3,190.00 \u2022",
+      "rects": [
+        [
+          272.3999938964844,
+          266.3999938964844,
+          294.6319885253906,
+          277.3919982910156
+        ],
+        [
+          296.8559875488281,
+          266.3999938964844,
+          330.2080078125,
+          277.3919982910156
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "mri brain",
+      "page": 10,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "$210.00 $151.30 $30.00 12/02/2022 Springfield Imaging Center 70551 MRI brain w/o contrast $1,486.00 $1,022.18 $150.00 12/09/2022 Springfield Neurology",
+      "rects": [
+        [
+          272.3999938964844,
+          230.39999389648438,
+          287.0639953613281,
+          241.39199829101562
+        ],
+        [
+          289.2879943847656,
+          230.39999389648438,
+          307.072021484375,
+          241.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "j1050",
+      "page": 10,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "SC/IM $48.00 $31.10 $0.00 04/12/2022 Lakeview Women's Health J1050 Medroxyprogesterone acetate, 150 mg $118.00 $92.75 $0.00 09/06/2022",
+      "rects": [
+        [
+          232.8000030517578,
+          158.39999389648438,
+          254.5919952392578,
+          169.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "lumbar-puncture",
+      "term_label": "Lumbar puncture",
+      "variant": "62270",
+      "page": 10,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "comprehensive $364.00 $262.90 $40.00 12/16/2022 Springfield Neurology Group 62270 Spinal puncture, diagnostic $412.00 $298.60 $50.00 Totals: Charges",
+      "rects": [
+        [
+          232.8000030517578,
+          266.3999938964844,
+          255.0399932861328,
+          277.3919982910156
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "mri",
+      "term_label": "MRI brain",
+      "variant": "70551",
+      "page": 10,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "new $210.00 $151.30 $30.00 12/02/2022 Springfield Imaging Center 70551 MRI brain w/o contrast $1,486.00 $1,022.18 $150.00 12/09/2022",
+      "rects": [
+        [
+          232.8000030517578,
+          230.39999389648438,
+          255.0399932861328,
+          241.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 11,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "08:12 Resulted: 01/13/2023 14:47 Ordering: P. Natarajan, MD (acetazolamide monitoring) Analyte Result Flag Reference Sodium 138 mmol/L",
+      "rects": [
+        [
+          361.9439392089844,
+          83.4000015258789,
+          416.1839294433594,
+          94.39199829101562
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 11,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "metabolic acidosis with borderline hyperchloremia, consistent with expected acetazolamide effect; no action required. Continue current dose; repeat",
+      "rects": [
+        [
+          60.0,
+          319.82501220703125,
+          118.02301025390625,
+          332.1910095214844
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    }
+  ]
+}

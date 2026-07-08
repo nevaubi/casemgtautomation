@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "name": "Whitfield demo term library",
+    "version": 1,
+    "note": "Adjustable taxonomy. Categories map to bookmark tree groups. Variants are matched case-insensitively as whole-word phrases with OCR-tolerant fuzzy fallback."
+  },
+  "thresholds": {
+    "auto_accept": 0.85,
+    "review": 0.6,
+    "fuzzy_min_ratio": 88
+  },
+  "negation_cues": ["denies", "denied", "no", "without", "negative for", "not", "never"],
+  "negation_window_words": 4,
+  "categories": [
+    {
+      "key": "medication",
+      "label": "Medication Evidence",
+      "terms": [
+        {
+          "key": "depo-provera",
+          "label": "Depo-Provera (medroxyprogesterone)",
+          "variants": [
+            "depo-provera", "depo provera", "medroxyprogesterone acetate",
+            "medroxyprogesterone", "depo shot", "injectable contraceptive",
+            "progestin-only injectable", "j1050", "0009-0746-30"
+          ]
+        },
+        {
+          "key": "acetazolamide",
+          "label": "Acetazolamide",
+          "variants": ["acetazolamide", "00185-0742-01"]
+        },
+        {
+          "key": "sumatriptan",
+          "label": "Sumatriptan",
+          "variants": ["sumatriptan succinate", "sumatriptan", "imitrex", "00378-0221-93"]
+        },
+        {
+          "key": "ibuprofen",
+          "label": "Ibuprofen",
+          "variants": ["ibuprofen", "motrin", "53746-0131-05"]
+        }
+      ]
+    },
+    {
+      "key": "diagnosis",
+      "label": "Diagnosis / Symptoms",
+      "terms": [
+        {
+          "key": "iih",
+          "label": "Idiopathic intracranial hypertension",
+          "variants": [
+            "idiopathic intracranial hypertension", "pseudotumor cerebri", "g93.2"
+          ]
+        },
+        {
+          "key": "papilledema",
+          "label": "Papilledema",
+          "variants": ["papilledema", "optic disc edema", "h47.10"]
+        },
+        {
+          "key": "headache",
+          "label": "Headache",
+          "variants": ["headaches", "headache"]
+        },
+        {
+          "key": "visual-symptoms",
+          "label": "Visual symptoms",
+          "variants": [
+            "transient visual obscurations", "blurred vision", "dimming vision",
+            "vision loss", "enlarged blind spot"
+          ]
+        },
+        {
+          "key": "tinnitus",
+          "label": "Pulsatile tinnitus",
+          "variants": ["pulsatile tinnitus"]
+        }
+      ]
+    },
+    {
+      "key": "procedure",
+      "label": "Procedures / Diagnostics",
+      "terms": [
+        {
+          "key": "lumbar-puncture",
+          "label": "Lumbar puncture",
+          "variants": ["lumbar puncture", "spinal puncture", "62270"]
+        },
+        {
+          "key": "opening-pressure",
+          "label": "Opening pressure",
+          "variants": ["opening pressure"]
+        },
+        {
+          "key": "mri",
+          "label": "MRI brain",
+          "variants": ["mri brain", "70551", "mrv"]
+        }
+      ]
+    },
+    {
+      "key": "causation",
+      "label": "Causation Language",
+      "terms": [
+        {
+          "key": "contributing-factor",
+          "label": "Contributing factor language",
+          "variants": ["contributing factor", "should be discontinued", "temporal relationship"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,609 @@
+{
+  "description": "Ground-truth findings for the synthetic Whitfield record set. Use to evaluate OCR, term-search, extraction, bookmark, and highlight accuracy. All patients, providers, and identifiers are fictional.",
+  "patient": {
+    "name": "Whitfield, Dana L.",
+    "dob": "1991-03-14",
+    "mrn_gyn": "LWH-004821",
+    "mrn_pcp": "MPC-118374"
+  },
+  "case_narrative": "Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM q12-13 weeks from 2021-04-13 through 2022-07-19 (6 injections). Headaches begin ~Aug/Sep 2022, transient visual obscurations Oct 2022, bilateral papilledema found 2022-11-21, MRI/MRV negative 2022-12-02, LP 2022-12-16 opening pressure 32 cm H2O confirming idiopathic intracranial hypertension (G93.2). Acetazolamide started 2022-12-16; Depo-Provera formally discontinued 2023-01-05.",
+  "drug_dictionary_for_demo": {
+    "depo-provera": [
+      "Depo-Provera",
+      "medroxyprogesterone acetate",
+      "medroxyprogesterone",
+      "Depo shot",
+      "injectable contraceptive",
+      "progestin-only injectable",
+      "J1050",
+      "NDC 0009-0746-30"
+    ],
+    "acetazolamide": [
+      "acetazolamide",
+      "Diamox (not used in text)",
+      "NDC 00185-0742-01"
+    ],
+    "sumatriptan": [
+      "sumatriptan",
+      "sumatriptan succinate",
+      "Imitrex",
+      "NDC 00378-0221-93"
+    ],
+    "ibuprofen": [
+      "ibuprofen",
+      "Motrin",
+      "NDC 53746-0131-05"
+    ]
+  },
+  "documents": [
+    {
+      "file": "mock_record_01_gyn_medication_history.pdf",
+      "type": "born_digital",
+      "pages": 5,
+      "text_layer": "all pages",
+      "findings": [
+        {
+          "type": "diagnosis",
+          "page": 1,
+          "value": "Idiopathic intracranial hypertension",
+          "code": "G93.2",
+          "date": "2022-12-16"
+        },
+        {
+          "type": "diagnosis",
+          "page": 1,
+          "value": "Papilledema, bilateral",
+          "code": "H47.10",
+          "date": "2022-11-21"
+        },
+        {
+          "type": "medication_history",
+          "page": 2,
+          "drug": "Depo-Provera (medroxyprogesterone acetate)",
+          "strength": "150 mg/mL",
+          "route": "IM injection",
+          "sig": "1 injection IM every 12-13 weeks",
+          "start": "2021-04-13",
+          "stop": "2023-01-05",
+          "prescriber": "A. Reyes, MD",
+          "ndc": "0009-0746-30"
+        },
+        {
+          "type": "medication_history",
+          "page": 2,
+          "drug": "Ibuprofen",
+          "strength": "600 mg",
+          "sig": "1 tab PO q6h PRN headache",
+          "start": "2022-09-06",
+          "prescriber": "S. Grant, DO"
+        },
+        {
+          "type": "medication_history",
+          "page": 2,
+          "drug": "Sumatriptan",
+          "strength": "50 mg",
+          "sig": "1 tab PO at headache onset; max 2/day",
+          "start": "2022-10-28",
+          "prescriber": "S. Grant, DO"
+        },
+        {
+          "type": "medication_history",
+          "page": 2,
+          "drug": "Acetazolamide",
+          "strength": "500 mg",
+          "sig": "1 tab PO BID",
+          "start": "2022-12-16",
+          "prescriber": "P. Natarajan, MD"
+        },
+        {
+          "type": "administration",
+          "page": 2,
+          "drug": "Depo-Provera",
+          "dose": "150 mg/mL IM",
+          "date": "2021-04-13",
+          "lot": "KJ4471",
+          "site": "L deltoid",
+          "administered_by": "M. Ortiz, RN"
+        },
+        {
+          "type": "administration",
+          "page": 2,
+          "drug": "Depo-Provera",
+          "dose": "150 mg/mL IM",
+          "date": "2021-07-20",
+          "lot": "KJ4471",
+          "site": "R deltoid",
+          "administered_by": "M. Ortiz, RN"
+        },
+        {
+          "type": "administration",
+          "page": 2,
+          "drug": "Depo-Provera",
+          "dose": "150 mg/mL IM",
+          "date": "2021-10-19",
+          "lot": "LM0283",
+          "site": "L deltoid",
+          "administered_by": "C. Boateng, LPN"
+        },
+        {
+          "type": "administration",
+          "page": 2,
+          "drug": "Depo-Provera",
+          "dose": "150 mg/mL IM",
+          "date": "2022-01-18",
+          "lot": "LM0283",
+          "site": "R gluteal",
+          "administered_by": "M. Ortiz, RN"
+        },
+        {
+          "type": "administration",
+          "page": 2,
+          "drug": "Depo-Provera",
+          "dose": "150 mg/mL IM",
+          "date": "2022-04-12",
+          "lot": "NP7719",
+          "site": "L deltoid",
+          "administered_by": "C. Boateng, LPN"
+        },
+        {
+          "type": "administration",
+          "page": 2,
+          "drug": "Depo-Provera",
+          "dose": "150 mg/mL IM",
+          "date": "2022-07-19",
+          "lot": "NP7719",
+          "site": "R deltoid",
+          "administered_by": "M. Ortiz, RN"
+        },
+        {
+          "type": "missed_dose",
+          "page": 2,
+          "drug": "Depo-Provera",
+          "due": "2022-10-18",
+          "status": "deferred, later discontinued"
+        },
+        {
+          "type": "administration_note",
+          "page": 3,
+          "drug": "Depo-Provera",
+          "date": "2021-04-13",
+          "evidence": "Depo-Provera 150 mg/mL administered IM left deltoid today, lot KJ4471"
+        },
+        {
+          "type": "negation",
+          "page": 3,
+          "evidence": "Denies headache at this visit. Denies chest pain, denies shortness of breath.",
+          "note": "must NOT be flagged as positive headache/chest pain findings"
+        },
+        {
+          "type": "administration_note",
+          "page": 4,
+          "drug": "Depo-Provera",
+          "date": "2022-07-19",
+          "evidence": "Depo-Provera 150 mg/mL IM administered right deltoid, lot NP7719"
+        },
+        {
+          "type": "symptom_onset",
+          "page": 4,
+          "value": "occasional mild headaches over the past month",
+          "date": "2022-07-19"
+        },
+        {
+          "type": "deferral",
+          "page": 4,
+          "date": "2022-10-14",
+          "evidence": "Patient called to defer injection scheduled for week of 10/18/2022"
+        },
+        {
+          "type": "discontinuation",
+          "page": 5,
+          "drug": "Depo-Provera",
+          "date": "2023-01-05",
+          "last_dose": "2022-07-19",
+          "reason": "idiopathic intracranial hypertension; neurology recommendation"
+        },
+        {
+          "type": "diagnostic_result",
+          "page": 5,
+          "value": "lumbar puncture opening pressure 32 cm H2O",
+          "date": "2022-12-16"
+        },
+        {
+          "type": "symptom",
+          "page": 5,
+          "value": "transient visual obscurations resolved per patient",
+          "date": "2023-01-05"
+        }
+      ]
+    },
+    {
+      "file": "mock_record_02_pharmacy_scanned.pdf",
+      "type": "scanned_image_only",
+      "pages": 3,
+      "text_layer": "none (OCR required); pages skewed with noise and JPEG artifacts",
+      "findings": [
+        {
+          "type": "dispense",
+          "page": 1,
+          "rx": "7742810",
+          "fill_date": "2022-09-07",
+          "drug": "Ibuprofen 600 mg tab",
+          "qty": 60,
+          "days": 30,
+          "prescriber": "Grant, Sofia DO",
+          "ndc": "53746-0131-05"
+        },
+        {
+          "type": "dispense",
+          "page": 1,
+          "rx": "7756934",
+          "fill_date": "2022-10-29",
+          "drug": "Sumatriptan succinate 50 mg tab",
+          "qty": 9,
+          "days": 30,
+          "prescriber": "Grant, Sofia DO",
+          "ndc": "00378-0221-93",
+          "sig": "TAKE 1 TABLET AT ONSET OF HEADACHE; MAX 2 PER DAY"
+        },
+        {
+          "type": "dispense",
+          "page": 1,
+          "rx": "7761187",
+          "fill_date": "2022-11-28",
+          "drug": "Sumatriptan succinate 50 mg tab",
+          "qty": 9,
+          "days": 30,
+          "prescriber": "Grant, Sofia DO",
+          "ndc": "00378-0221-93"
+        },
+        {
+          "type": "dispense",
+          "page": 1,
+          "rx": "7769452",
+          "fill_date": "2022-12-17",
+          "drug": "Acetazolamide 250 mg tab",
+          "qty": 120,
+          "days": 30,
+          "prescriber": "Natarajan, Priya MD",
+          "ndc": "00185-0742-01"
+        },
+        {
+          "type": "dispense",
+          "page": 1,
+          "rx": "7781203",
+          "fill_date": "2023-01-16",
+          "drug": "Acetazolamide 250 mg tab",
+          "qty": 120,
+          "days": 30,
+          "prescriber": "Natarajan, Priya MD",
+          "ndc": "00185-0742-01"
+        },
+        {
+          "type": "drug_mention",
+          "page": 1,
+          "drug": "Depo-Provera 150 mg/mL",
+          "evidence": "administered at prescriber office per patient report; not dispensed by this pharmacy",
+          "note": "mention without dispense - tests context handling"
+        },
+        {
+          "type": "label_detail",
+          "page": 2,
+          "rx": "7769452",
+          "drug": "Acetazolamide 250 mg",
+          "lot": "AC2291",
+          "exp": "2024-08"
+        },
+        {
+          "type": "label_detail",
+          "page": 2,
+          "rx": "7756934",
+          "drug": "Sumatriptan succinate 50 mg",
+          "lot": "SM8813",
+          "exp": "2024-05",
+          "sig": "TAKE 1 TABLET AT ONSET OF HEADACHE. MAX 2 TABLETS PER DAY."
+        },
+        {
+          "type": "counseling",
+          "page": 2,
+          "date": "2022-12-17",
+          "drug": "Acetazolamide",
+          "pharmacist": "R. Delgado, RPh"
+        },
+        {
+          "type": "counseling",
+          "page": 2,
+          "date": "2022-10-29",
+          "drug": "Sumatriptan",
+          "pharmacist": "R. Delgado, RPh"
+        }
+      ]
+    },
+    {
+      "file": "mock_record_03_mixed_records_packet.pdf",
+      "type": "mixed_packet",
+      "pages": 12,
+      "text_layer": "all pages except page 2 (scanned intake form, OCR required)",
+      "sub_documents": [
+        {
+          "pages": "1",
+          "type": "records release cover"
+        },
+        {
+          "pages": "2",
+          "type": "new patient intake form (SCANNED)"
+        },
+        {
+          "pages": "3",
+          "type": "PCP progress note 2022-09-06"
+        },
+        {
+          "pages": "4",
+          "type": "PCP progress note 2022-10-28"
+        },
+        {
+          "pages": "5",
+          "type": "comprehensive eye examination 2022-11-21"
+        },
+        {
+          "pages": "6-7",
+          "type": "neurology consultation 2022-12-09"
+        },
+        {
+          "pages": "8",
+          "type": "lumbar puncture procedure note 2022-12-16"
+        },
+        {
+          "pages": "9",
+          "type": "medication administration record (Depo injections x6)"
+        },
+        {
+          "pages": "10",
+          "type": "billing and charges summary"
+        },
+        {
+          "pages": "11",
+          "type": "laboratory report CMP 2023-01-13"
+        },
+        {
+          "pages": "12",
+          "type": "certification of records"
+        }
+      ],
+      "findings": [
+        {
+          "type": "drug_mention",
+          "page": 2,
+          "drug": "Depo-Provera",
+          "evidence": "Depo shot (birth control) since 2021",
+          "note": "colloquial name on scanned page - hardest extraction in the set"
+        },
+        {
+          "type": "symptom",
+          "page": 2,
+          "value": "Bad headaches, about 3 weeks",
+          "date": "2022-09-06"
+        },
+        {
+          "type": "drug_mention",
+          "page": 3,
+          "drug": "Depo-Provera",
+          "dose": "150 mg/mL IM every 3 months",
+          "start": "2021-04",
+          "last_dose": "2022-07-19",
+          "evidence": "Depo-Provera 150 mg/mL IM every 3 months since April 2021 ... last injection 07/19/2022"
+        },
+        {
+          "type": "prescription",
+          "page": 3,
+          "drug": "Ibuprofen",
+          "strength": "600 mg",
+          "sig": "PO q6h PRN",
+          "qty": 60,
+          "refills": 2,
+          "date": "2022-09-06",
+          "prescriber": "Sofia Grant, DO"
+        },
+        {
+          "type": "negation",
+          "page": 3,
+          "evidence": "Denies head trauma. Denies chest pain. Denies fever or weight loss.",
+          "note": "must NOT be flagged as positive findings"
+        },
+        {
+          "type": "prescription",
+          "page": 4,
+          "drug": "Sumatriptan",
+          "strength": "50 mg",
+          "sig": "at headache onset, max 2 tabs/day",
+          "qty": 9,
+          "refills": 1,
+          "date": "2022-10-28",
+          "prescriber": "Sofia Grant, DO"
+        },
+        {
+          "type": "symptom",
+          "page": 4,
+          "value": "transient visual obscurations",
+          "date": "2022-10-28"
+        },
+        {
+          "type": "deferral",
+          "page": 4,
+          "drug": "Depo-Provera",
+          "evidence": "Deferred her injectable contraceptive dose that was due mid-October pending evaluation"
+        },
+        {
+          "type": "diagnosis",
+          "page": 5,
+          "value": "Bilateral papilledema",
+          "code": "H47.10",
+          "date": "2022-11-21",
+          "detail": "Frisen grade 2 OU; enlarged blind spots"
+        },
+        {
+          "type": "drug_mention",
+          "page": 6,
+          "drug": "Depo-Provera (medroxyprogesterone acetate)",
+          "dose": "150 mg IM every 12-13 weeks",
+          "start": "2021-04-13",
+          "stop": "2022-07-19",
+          "evidence": "six documented injections"
+        },
+        {
+          "type": "imaging",
+          "page": 6,
+          "value": "MRI brain w/wo contrast + MRV: no mass, no thrombosis; partially empty sella",
+          "date": "2022-12-02"
+        },
+        {
+          "type": "diagnosis",
+          "page": 7,
+          "value": "Idiopathic intracranial hypertension (pseudotumor cerebri)",
+          "code": "G93.2",
+          "date": "2022-12-09",
+          "status": "suspected pending LP"
+        },
+        {
+          "type": "causation_language",
+          "page": 7,
+          "evidence": "the injectable contraceptive is a potentially contributing factor and should be discontinued",
+          "note": "high-value litigation finding"
+        },
+        {
+          "type": "prescription",
+          "page": 7,
+          "drug": "Acetazolamide",
+          "strength": "500 mg PO BID (as 250 mg tabs, 2 BID)",
+          "date": "2022-12-09",
+          "prescriber": "Priya Natarajan, MD"
+        },
+        {
+          "type": "diagnostic_result",
+          "page": 8,
+          "value": "opening pressure 32 cm H2O; closing 18 cm H2O; CSF normal",
+          "date": "2022-12-16"
+        },
+        {
+          "type": "diagnosis",
+          "page": 8,
+          "value": "Idiopathic intracranial hypertension, confirmed",
+          "code": "G93.2",
+          "date": "2022-12-16"
+        },
+        {
+          "type": "administration",
+          "page": 9,
+          "drug": "Depo-Provera",
+          "dates": [
+            "2021-04-13",
+            "2021-07-20",
+            "2021-10-19",
+            "2022-01-18",
+            "2022-04-12",
+            "2022-07-19"
+          ],
+          "ndc": "0009-0746-30",
+          "note": "consolidated MAR; duplicates doc1 page 2 - tests cross-document dedup"
+        },
+        {
+          "type": "billing",
+          "page": 10,
+          "code": "J1050",
+          "description": "Medroxyprogesterone acetate, 150 mg",
+          "dos": "2022-04-12",
+          "charge": "$118.00"
+        },
+        {
+          "type": "billing",
+          "page": 10,
+          "code": "96372",
+          "description": "Therapeutic injection, SC/IM",
+          "dos": "2022-04-12"
+        },
+        {
+          "type": "billing",
+          "page": 10,
+          "code": "70551",
+          "description": "MRI brain w/o contrast",
+          "dos": "2022-12-02"
+        },
+        {
+          "type": "billing",
+          "page": 10,
+          "code": "62270",
+          "description": "Spinal puncture, diagnostic",
+          "dos": "2022-12-16"
+        },
+        {
+          "type": "lab",
+          "page": 11,
+          "value": "CO2 19 mmol/L (L), Chloride 108 mmol/L (H)",
+          "date": "2023-01-13",
+          "note": "expected acetazolamide effect"
+        },
+        {
+          "type": "symptom",
+          "page": 3,
+          "value": "pulsatile tinnitus",
+          "date": "2022-09-06"
+        },
+        {
+          "type": "symptom",
+          "page": 6,
+          "value": "pulsatile tinnitus",
+          "date": "2022-12-09"
+        }
+      ]
+    }
+  ],
+  "suggested_bookmark_tree": {
+    "Medication Evidence": {
+      "Depo-Provera / medroxyprogesterone": [
+        "doc1 p2 (history + injection log)",
+        "doc1 p3-5 (administration and discontinuation notes)",
+        "doc2 p1 (pharmacy mention)",
+        "doc3 p2, p3, p6, p9 (MAR)",
+        "doc3 p10 (J1050 billing)"
+      ],
+      "Acetazolamide": [
+        "doc1 p2, p5",
+        "doc2 p1-2",
+        "doc3 p7, p8, p11"
+      ],
+      "Sumatriptan": [
+        "doc1 p2",
+        "doc2 p1-2",
+        "doc3 p4"
+      ],
+      "Ibuprofen": [
+        "doc1 p2",
+        "doc2 p1",
+        "doc3 p3"
+      ]
+    },
+    "Diagnosis / Symptoms": {
+      "Headache onset and progression": [
+        "doc1 p4",
+        "doc3 p2, p3, p4"
+      ],
+      "Visual symptoms / papilledema": [
+        "doc3 p4, p5"
+      ],
+      "IIH diagnosis (G93.2)": [
+        "doc1 p1, p5",
+        "doc3 p7, p8"
+      ]
+    },
+    "Provider Timeline": {
+      "Lakeview Women's Health (Reyes)": "2021-04 to 2023-01",
+      "Meridian Primary Care (Grant)": "2022-09 to 2022-10",
+      "Northgate Eye (Okafor)": "2022-11",
+      "Springfield Neurology (Natarajan)": "2022-12 onward"
+    },
+    "Attorney Attention Items": [
+      "Causation language, doc3 p7",
+      "Temporal proximity: last injection 2022-07-19 vs symptom onset ~2022-08/09",
+      "Missed/deferred dose 2022-10-18 and formal discontinuation 2023-01-05"
+    ]
+  }
+}

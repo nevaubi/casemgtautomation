@@ -1,0 +1,1211 @@
+{
+  "source_pdf": "mock_record_01_gyn_medication_history.pdf",
+  "enriched_pdf": "AI Reviewed - mock_record_01_gyn_medication_history.pdf",
+  "pages": [
+    {
+      "number": 1,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 156
+    },
+    {
+      "number": 2,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 278
+    },
+    {
+      "number": 3,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 217
+    },
+    {
+      "number": 4,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 192
+    },
+    {
+      "number": 5,
+      "source": "text_layer",
+      "mean_conf": 0.99,
+      "words": 163
+    }
+  ],
+  "counts": {
+    "total": 47,
+    "auto": 45,
+    "review": 0,
+    "escalated": 0,
+    "negated": 2
+  },
+  "processing_seconds": 0.18,
+  "findings": [
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "idiopathic intracranial hypertension",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "bilateral (per Northgate Eye Associates) H47.10 Active 12/16/2022 Idiopathic intracranial hypertension G93.2 Active Allergies NKDA \u2014 No known drug",
+      "rects": [
+        [
+          122.80000305175781,
+          328.0,
+          157.0399932861328,
+          338.99200439453125
+        ],
+        [
+          159.2639923095703,
+          328.0,
+          198.3839874267578,
+          338.99200439453125
+        ],
+        [
+          200.6079864501953,
+          328.0,
+          246.40797424316406,
+          338.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "g93.2",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Eye Associates) H47.10 Active 12/16/2022 Idiopathic intracranial hypertension G93.2 Active Allergies NKDA \u2014 No known drug allergies",
+      "rects": [
+        [
+          403.6000061035156,
+          328.0,
+          425.3919982910156,
+          338.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "papilledema",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Headache, intractable (per PCP records) R51.9 Active 11/21/2022 Papilledema, bilateral (per Northgate Eye Associates) H47.10 Active 12/16/2022",
+      "rects": [
+        [
+          122.80000305175781,
+          310.0,
+          169.0399932861328,
+          320.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "papilledema",
+      "term_label": "Papilledema",
+      "variant": "h47.10",
+      "page": 1,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Active 11/21/2022 Papilledema, bilateral (per Northgate Eye Associates) H47.10 Active 12/16/2022 Idiopathic intracranial hypertension G93.2 Active Allergies",
+      "rects": [
+        [
+          403.6000061035156,
+          310.0,
+          429.3919982910156,
+          320.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 1,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "for contraceptive management, injectable Z30.42 Resolved 01/05/2023 09/06/2022 Headache, intractable (per PCP records) R51.9 Active 11/21/2022 Papilledema,",
+      "rects": [
+        [
+          122.80000305175781,
+          292.0,
+          161.4879913330078,
+          302.99200439453125
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "/ Route Sig Start Stop Prescriber Source Depo-Provera (medroxyprogesterone acetate) NDC 0009-0746-30 150 mg/mL, IM injection1 injection IM",
+      "rects": [
+        [
+          76.17601013183594,
+          135.99996948242188,
+          156.6479949951172,
+          146.99197387695312
+        ],
+        [
+          158.8719940185547,
+          135.99996948242188,
+          187.77598571777344,
+          146.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "daily 04/13/2021 10/01/2021 A. Reyes, MD This clinic Injectable Contraceptive Administration Log # Date Administered Drug / Dose",
+      "rects": [
+        [
+          60.0,
+          254.83348083496094,
+          108.4365005493164,
+          269.344482421875
+        ],
+        [
+          111.35549926757812,
+          254.83348083496094,
+          181.36949157714844,
+          269.344482421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Strength / Route Sig Start Stop Prescriber Source Depo-Provera (medroxyprogesterone acetate) NDC 0009-0746-30 150 mg/mL, IM injection1",
+      "rects": [
+        [
+          24.15999984741211,
+          135.99996948242188,
+          73.9520034790039,
+          146.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Dose NDC Lot Site Administered By 1 04/13/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 L deltoid M.",
+      "rects": [
+        [
+          161.3199920654297,
+          294.0,
+          211.1119842529297,
+          304.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "KJ4471 L deltoid M. Ortiz, RN 2 07/20/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 R deltoid M.",
+      "rects": [
+        [
+          161.3199920654297,
+          312.0,
+          211.1119842529297,
+          322.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "KJ4471 R deltoid M. Ortiz, RN 3 10/19/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 L deltoid C.",
+      "rects": [
+        [
+          161.3199920654297,
+          330.0,
+          211.1119842529297,
+          340.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "LM0283 L deltoid C. Boateng, LPN 4 01/18/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 R gluteal M.",
+      "rects": [
+        [
+          161.3199920654297,
+          348.0,
+          211.1119842529297,
+          358.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "LM0283 R gluteal M. Ortiz, RN 5 04/12/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 L deltoid C.",
+      "rects": [
+        [
+          161.3199920654297,
+          366.0,
+          211.1119842529297,
+          376.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "NP7719 L deltoid C. Boateng, LPN 6 07/19/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 R deltoid M.",
+      "rects": [
+        [
+          161.3199920654297,
+          384.0,
+          211.1119842529297,
+          394.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Start Stop Prescriber Source Depo-Provera (medroxyprogesterone acetate) NDC 0009-0746-30 150 mg/mL, IM injection1 injection IM every 12\u201313",
+      "rects": [
+        [
+          43.712005615234375,
+          147.99996948242188,
+          93.52001953125,
+          158.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Administered By 1 04/13/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 L deltoid M. Ortiz, RN 2 07/20/2021",
+      "rects": [
+        [
+          294.5199890136719,
+          294.0,
+          344.3280029296875,
+          304.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Ortiz, RN 2 07/20/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 R deltoid M. Ortiz, RN 3 10/19/2021",
+      "rects": [
+        [
+          294.5199890136719,
+          312.0,
+          344.3280029296875,
+          322.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Ortiz, RN 3 10/19/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 L deltoid C. Boateng, LPN 4 01/18/2022",
+      "rects": [
+        [
+          294.5199890136719,
+          330.0,
+          344.3280029296875,
+          340.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Boateng, LPN 4 01/18/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 R gluteal M. Ortiz, RN 5 04/12/2022",
+      "rects": [
+        [
+          294.5199890136719,
+          348.0,
+          344.3280029296875,
+          358.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Ortiz, RN 5 04/12/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 L deltoid C. Boateng, LPN 6 07/19/2022",
+      "rects": [
+        [
+          294.5199890136719,
+          366.0,
+          344.3280029296875,
+          376.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "0009-0746-30",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Boateng, LPN 6 07/19/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 R deltoid M. Ortiz, RN Note: next",
+      "rects": [
+        [
+          294.5199890136719,
+          384.0,
+          344.3280029296875,
+          394.99200439453125
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "10/28/2022 \u2014 S. Grant, DO Reconciled \u2013 PCP Acetazolamide 500 mg, oral tablet 1 tab PO BID",
+      "rects": [
+        [
+          24.15999984741211,
+          201.99996948242188,
+          76.62400817871094,
+          212.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "sumatriptan",
+      "term_label": "Sumatriptan",
+      "variant": "sumatriptan",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "09/06/2022 \u2014 S. Grant, DO Reconciled \u2013 PCP Sumatriptan 50 mg, oral tablet 1 tab PO at",
+      "rects": [
+        [
+          24.15999984741211,
+          183.99996948242188,
+          67.28800201416016,
+          194.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "ibuprofen",
+      "term_label": "Ibuprofen",
+      "variant": "ibuprofen",
+      "page": 2,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "12\u201313 weeks04/13/2021 01/05/2023 A. Reyes, MD This clinic Ibuprofen 600 mg, oral tablet 1 tab PO q6h",
+      "rects": [
+        [
+          24.15999984741211,
+          165.99996948242188,
+          57.96000289916992,
+          176.99197387695312
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 2,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "mg, oral tablet 1 tab PO q6h PRN headache 09/06/2022 \u2014 S. Grant, DO Reconciled \u2013 PCP",
+      "rects": [
+        [
+          315.8399963378906,
+          165.99996948242188,
+          350.9759826660156,
+          176.99197387695312
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 2,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "50 mg, oral tablet 1 tab PO at headache onset; max 2/day 10/28/2022 \u2014 S. Grant, DO",
+      "rects": [
+        [
+          290.0559997558594,
+          183.99996948242188,
+          325.1919860839844,
+          194.99197387695312
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "medroxyprogesterone acetate",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "injectable contraceptive (Z30.013). Plan: Counseled on risks/benefits/alternatives of medroxyprogesterone acetate injectable suspension, including irregular bleeding, weight change, and",
+      "rects": [
+        [
+          256.08294677734375,
+          157.9249725341797,
+          343.616943359375,
+          170.2909698486328
+        ],
+        [
+          346.11895751953125,
+          157.9249725341797,
+          375.63897705078125,
+          170.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "today. Exam unremarkable. Assessment: Encounter for initiation of injectable contraceptive (Z30.013). Plan: Counseled on risks/benefits/alternatives of medroxyprogesterone acetate",
+      "rects": [
+        [
+          220.56898498535156,
+          142.4249725341797,
+          258.5849914550781,
+          154.7909698486328
+        ],
+        [
+          261.08697509765625,
+          142.4249725341797,
+          314.6099548339844,
+          154.7909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Weight 152 lb. Assessment: Encounter for surveillance of injectable contraceptive (Z30.42). Plan: Depo-Provera 150 mg/mL IM administered left",
+      "rects": [
+        [
+          235.0679931640625,
+          291.9250183105469,
+          273.083984375,
+          304.291015625
+        ],
+        [
+          275.58599853515625,
+          291.9250183105469,
+          329.10894775390625,
+          304.291015625
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "change, and bone mineral density considerations. Consent signed. Depo-Provera 150 mg/mL administered IM left deltoid today, lot",
+      "rects": [
+        [
+          395.6729736328125,
+          170.469970703125,
+          454.6859436035156,
+          182.86297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Encounter for surveillance of injectable contraceptive (Z30.42). Plan: Depo-Provera 150 mg/mL IM administered left deltoid, lot NP7719.",
+      "rects": [
+        [
+          84.50700378417969,
+          307.4700012207031,
+          143.51998901367188,
+          319.8630065917969
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 3,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": true,
+      "evidence": "combined oral contraceptive use without complication. No current headaches, no visual complaints. Denies tobacco use. Objective: BP",
+      "rects": [
+        [
+          190.5449981689453,
+          111.42497253417969,
+          237.07498168945312,
+          123.79097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "negated"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 3,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": true,
+      "evidence": "menses, tolerating well. No new complaints today. Denies headache at this visit. Denies chest pain, denies shortness",
+      "rects": [
+        [
+          117.52801513671875,
+          260.92498779296875,
+          157.05599975585938,
+          273.2909851074219
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "negated"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "injectable contraceptive",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "122/80, HR 78. Assessment: Encounter for surveillance of injectable contraceptive (Z30.42). Headache, intermittent \u2014 advised to follow with",
+      "rects": [
+        [
+          235.0679931640625,
+          142.4249725341797,
+          273.083984375,
+          154.7909698486328
+        ],
+        [
+          275.58599853515625,
+          142.4249725341797,
+          329.10894775390625,
+          154.7909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "advised to follow with PCP if persistent. Plan: Depo-Provera 150 mg/mL IM administered right deltoid, lot NP7719.",
+      "rects": [
+        [
+          84.50700378417969,
+          170.469970703125,
+          143.51998901367188,
+          182.86297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Subjective: Returns for scheduled injection. Mentions occasional mild headaches over the past month, attributed to work stress;",
+      "rects": [
+        [
+          342.1049499511719,
+          98.92497253417969,
+          386.1329345703125,
+          111.29097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 4,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Assessment: Encounter for surveillance of injectable contraceptive (Z30.42). Headache, intermittent \u2014 advised to follow with PCP if",
+      "rects": [
+        [
+          370.6260070800781,
+          142.4249725341797,
+          414.1499938964844,
+          154.7909698486328
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 4,
+      "match_quality": 0.9129,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "or about 10/18/2022. Patient advised to report worsening headache or any visual changes. Electronically signed: Alan Reyes,",
+      "rects": [
+        [
+          203.5679931640625,
+          182.9249725341797,
+          243.09597778320312,
+          195.2909698486328
+        ]
+      ],
+      "confidence": 0.9038,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 4,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "injection scheduled for week of 10/18/2022. Reports ongoing headaches under evaluation by primary care. Advised acceptable to",
+      "rects": [
+        [
+          393.6839904785156,
+          248.4249725341797,
+          437.71197509765625,
+          260.7909851074219
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "idiopathic intracranial hypertension",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Since last injection she has been diagnosed with idiopathic intracranial hypertension (G93.2) by Dr. Priya Natarajan, Springfield Neurology Group,",
+      "rects": [
+        [
+          484.1969909667969,
+          98.96997833251953,
+          526.7040405273438,
+          111.36297607421875
+        ],
+        [
+          60.0,
+          111.46997833251953,
+          108.51900482177734,
+          123.86297607421875
+        ],
+        [
+          111.02100372314453,
+          111.46997833251953,
+          167.531982421875,
+          123.86297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "visual-symptoms",
+      "term_label": "Visual symptoms",
+      "variant": "transient visual obscurations",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "taking acetazolamide 500 mg BID. Ongoing headaches, improving; transient visual obscurations resolved per patient. Assessment/Plan: In light of neurology's",
+      "rects": [
+        [
+          153.0419921875,
+          136.4249725341797,
+          187.55699157714844,
+          148.7909698486328
+        ],
+        [
+          190.05899047851562,
+          136.4249725341797,
+          213.06298828125,
+          148.7909698486328
+        ],
+        [
+          215.5649871826172,
+          136.4249725341797,
+          266.5859680175781,
+          148.7909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "lumbar-puncture",
+      "term_label": "Lumbar puncture",
+      "variant": "lumbar puncture",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "by Dr. Priya Natarajan, Springfield Neurology Group, following lumbar puncture on 12/16/2022 (opening pressure 32 cm H2O per",
+      "rects": [
+        [
+          452.6339416503906,
+          111.42497253417969,
+          480.137939453125,
+          123.79097747802734
+        ],
+        [
+          482.63995361328125,
+          111.42497253417969,
+          517.6589965820312,
+          123.79097747802734
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "procedure",
+      "category_label": "Procedures / Diagnostics",
+      "term_key": "opening-pressure",
+      "term_label": "Opening pressure",
+      "variant": "opening pressure",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "Springfield Neurology Group, following lumbar puncture on 12/16/2022 (opening pressure 32 cm H2O per outside record). Currently taking",
+      "rects": [
+        [
+          107.53800964355469,
+          123.92497253417969,
+          142.5570068359375,
+          136.2909698486328
+        ],
+        [
+          145.0590057373047,
+          123.92497253417969,
+          180.06900024414062,
+          136.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "depo-provera",
+      "term_label": "Depo-Provera (medroxyprogesterone)",
+      "variant": "depo-provera",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "per patient. Assessment/Plan: In light of neurology's recommendation, Depo-Provera is discontinued as of today. Last dose administered",
+      "rects": [
+        [
+          299.3189392089844,
+          151.969970703125,
+          358.3319396972656,
+          164.36297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "medication",
+      "category_label": "Medication Evidence",
+      "term_key": "acetazolamide",
+      "term_label": "Acetazolamide",
+      "variant": "acetazolamide",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "32 cm H2O per outside record). Currently taking acetazolamide 500 mg BID. Ongoing headaches, improving; transient visual",
+      "rects": [
+        [
+          376.6379699707031,
+          123.92497253417969,
+          434.66094970703125,
+          136.2909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "iih",
+      "term_label": "Idiopathic intracranial hypertension",
+      "variant": "g93.2",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "she has been diagnosed with idiopathic intracranial hypertension (G93.2) by Dr. Priya Natarajan, Springfield Neurology Group, following",
+      "rects": [
+        [
+          170.03399658203125,
+          111.46997833251953,
+          200.5439910888672,
+          123.86297607421875
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    },
+    {
+      "category": "diagnosis",
+      "category_label": "Diagnosis / Symptoms",
+      "term_key": "headache",
+      "term_label": "Headache",
+      "variant": "headaches",
+      "page": 5,
+      "match_quality": 1.0,
+      "ocr_conf": 0.99,
+      "source": "text_layer",
+      "negated": false,
+      "evidence": "record). Currently taking acetazolamide 500 mg BID. Ongoing headaches, improving; transient visual obscurations resolved per patient. Assessment/Plan:",
+      "rects": [
+        [
+          60.0,
+          136.4249725341797,
+          106.5300064086914,
+          148.7909698486328
+        ]
+      ],
+      "confidence": 0.99,
+      "routing": "auto"
+    }
+  ]
+}
