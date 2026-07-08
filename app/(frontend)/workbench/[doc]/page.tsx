@@ -94,7 +94,7 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
       <div className="grid min-h-0 flex-1 gap-3 xl:[grid-template-columns:200px_minmax(0,1fr)_400px]">
         {/* Matter rail */}
         <Card className="hidden h-full min-h-0 flex-col gap-0 overflow-hidden rounded-lg py-0 shadow-none xl:flex">
-          <div className="shrink-0 border-b px-3 py-2.5 text-sm font-semibold">In this matter</div>
+          <div className="shrink-0 border-b px-3 py-2 text-[13px] font-semibold">In this matter</div>
           <div className="min-h-0 flex-1 space-y-0.5 overflow-y-auto p-1.5">
             {m.documents.map((d) => {
               const on = d.id === doc.id;
@@ -119,7 +119,7 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
         {/* PDF viewer */}
         <Card className="flex h-full min-h-0 min-w-0 flex-col gap-0 overflow-hidden rounded-lg py-0 shadow-none">
           <div className="flex shrink-0 items-center justify-between border-b px-3 py-1.5">
-            <span className="text-sm font-semibold">Enriched document</span>
+            <span className="text-[13px] font-semibold">Enriched document</span>
             <span className="flex items-center gap-1.5">
               <span className="text-muted-foreground mr-1 text-xs tabular-nums">
                 Page {page} of {doc.pages}
@@ -160,12 +160,12 @@ export default function Workbench({ params }: { params: Promise<{ doc: string }>
         <Card className="flex h-full min-h-0 flex-col gap-0 overflow-hidden rounded-lg py-0 shadow-none">
           <Tabs defaultValue="findings" className="flex h-full min-h-0 flex-col gap-0">
             <div className="shrink-0 border-b px-2.5 py-1.5">
-              <TabsList className="h-8">
-                <TabsTrigger value="findings" className="px-2.5 text-xs">
+              <TabsList className="h-7">
+                <TabsTrigger value="findings" className="px-2.5 text-[11px]">
                   Findings ({findings.length})
                 </TabsTrigger>
-                <TabsTrigger value="bookmarks" className="px-2.5 text-xs">Bookmarks</TabsTrigger>
-                <TabsTrigger value="fields" className="px-2.5 text-xs">Fields</TabsTrigger>
+                <TabsTrigger value="bookmarks" className="px-2.5 text-[11px]">Bookmarks</TabsTrigger>
+                <TabsTrigger value="fields" className="px-2.5 text-[11px]">Fields</TabsTrigger>
               </TabsList>
             </div>
 

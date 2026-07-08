@@ -49,12 +49,12 @@ export default function Worklist() {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Filter documents…"
-          className="h-8 w-52 text-sm"
+          className="h-7 w-48 text-[13px]"
         />
         <Tabs value={filter} onValueChange={setFilter}>
-          <TabsList className="h-8">
+          <TabsList className="h-7">
             {FILTERS.map((f) => (
-              <TabsTrigger key={f.value} value={f.value} className="px-2.5 text-xs">
+              <TabsTrigger key={f.value} value={f.value} className="px-2.5 text-[11px]">
                 {f.label}
               </TabsTrigger>
             ))}

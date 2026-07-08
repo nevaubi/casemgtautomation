@@ -82,12 +82,12 @@ export default function Dashboard() {
       <Card className="grid shrink-0 grid-cols-2 gap-0 divide-y rounded-lg py-0 shadow-none sm:grid-cols-3 sm:divide-y-0 xl:grid-cols-5 xl:divide-x">
         {stats.map((s) => (
           <div key={s.label} className="px-4 py-2.5">
-            <div className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">
+            <div className="text-muted-foreground/80 text-[10px] font-medium tracking-[0.06em] uppercase">
               {s.label}
             </div>
             <div className="mt-0.5 flex items-baseline gap-2">
-              <span className="text-xl leading-none font-semibold tabular-nums">{s.value}</span>
-              <span className="text-muted-foreground text-[11px]">{s.sub}</span>
+              <span className="text-lg leading-none font-semibold tabular-nums">{s.value}</span>
+              <span className="text-muted-foreground text-[10.5px]">{s.sub}</span>
             </div>
           </div>
         ))}
@@ -97,8 +97,8 @@ export default function Dashboard() {
         {/* Documents */}
         <Card className="flex h-full min-h-0 min-w-0 flex-col gap-0 overflow-hidden rounded-lg py-0 shadow-none lg:col-span-2">
           <div className="flex shrink-0 items-baseline justify-between gap-3 border-b px-4 py-2.5">
-            <span className="text-sm font-semibold">Matter documents</span>
-            <span className="text-muted-foreground text-xs">
+            <span className="text-[13px] font-semibold">Matter documents</span>
+            <span className="text-muted-foreground text-[11px]">
               Pulled from Litify (simulated) · pipeline v{m.pipelineVersion}
             </span>
           </div>
@@ -177,8 +177,8 @@ export default function Dashboard() {
         <div className="flex h-full min-h-0 flex-col gap-3">
           <Card className="shrink-0 gap-0 rounded-lg py-0 shadow-none">
             <div className="border-b px-4 py-2.5">
-              <span className="text-sm font-semibold">Routing</span>
-              <span className="text-muted-foreground ml-2 text-xs">auto-accept at 85%</span>
+              <span className="text-[13px] font-semibold">Routing</span>
+              <span className="text-muted-foreground ml-2 text-[11px]">auto-accept at 85%</span>
             </div>
             <div className="grid gap-2.5 px-4 py-3">
               {routingRows.map((r) => (
@@ -198,8 +198,8 @@ export default function Dashboard() {
 
           <Card className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden rounded-lg py-0 shadow-none">
             <div className="flex shrink-0 items-baseline justify-between border-b px-4 py-2.5">
-              <span className="text-sm font-semibold">Recent activity</span>
-              <span className="text-muted-foreground text-xs">
+              <span className="text-[13px] font-semibold">Recent activity</span>
+              <span className="text-muted-foreground text-[11px]">
                 {audit.length > 0 ? "live audit trail" : "pipeline summary"}
               </span>
             </div>

@@ -30,7 +30,7 @@ const ROUTING_TINT: Record<Routing, string> = {
 };
 
 export function RoutingBadge({ routing }: { routing: Routing }) {
-  return <Badge className={ROUTING_TINT[routing]}>{routingLabel[routing]}</Badge>;
+  return <Badge className={`${ROUTING_TINT[routing]} h-5 px-1.5 text-[11px]`}>{routingLabel[routing]}</Badge>;
 }
 
 export function StatusBadge({ status }: { status: string }) {
@@ -40,7 +40,7 @@ export function StatusBadge({ status }: { status: string }) {
       : status === "Needs Review"
         ? TINT.amber
         : TINT.slate;
-  return <Badge className={tint}>{status}</Badge>;
+  return <Badge className={`${tint} h-5 px-1.5 text-[11px]`}>{status}</Badge>;
 }
 
 export function DecisionBadge({ decision }: { decision: string }) {
@@ -49,7 +49,7 @@ export function DecisionBadge({ decision }: { decision: string }) {
     : decision === "rejected" ? TINT.rose
     : decision === "corrected" ? TINT.blue
     : TINT.orange;
-  return <Badge className={`${tint} capitalize`}>{decision}</Badge>;
+  return <Badge className={`${tint} h-5 px-1.5 text-[11px] capitalize`}>{decision}</Badge>;
 }
 
 export function TintBadge({
@@ -59,7 +59,7 @@ export function TintBadge({
   tone: keyof typeof TINT;
   children: React.ReactNode;
 }) {
-  return <Badge className={TINT[tone]}>{children}</Badge>;
+  return <Badge className={`${TINT[tone]} h-5 px-1.5 text-[11px]`}>{children}</Badge>;
 }
 
 /** Compact confidence meter with a tick at the 85% auto-accept threshold. */
@@ -93,21 +93,19 @@ export function PageHeader({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
+    <div className="flex shrink-0 flex-wrap items-end justify-between gap-x-6 gap-y-2 py-2.5">
       <div className="min-w-0">
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-          <h1 className="text-lg leading-tight font-semibold tracking-tight">{title}</h1>
-          {overline && (
-            <span className="text-muted-foreground font-mono text-[11px] tracking-wide uppercase">
-              {overline}
-            </span>
-          )}
-        </div>
+        {overline && (
+          <div className="text-muted-foreground/80 mb-0.5 font-mono text-[10px] tracking-[0.08em] uppercase">
+            {overline}
+          </div>
+        )}
+        <h1 className="text-[17px] leading-tight font-semibold tracking-tight">{title}</h1>
         {description && (
           <p className="text-muted-foreground mt-0.5 truncate text-xs">{description}</p>
         )}
       </div>
-      {children && <div className="flex flex-wrap items-center gap-2">{children}</div>}
+      {children && <div className="flex flex-wrap items-center gap-2 pb-0.5">{children}</div>}
     </div>
   );
 }

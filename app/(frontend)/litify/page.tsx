@@ -57,8 +57,8 @@ function LitifySyncInner() {
         <div className="grid gap-3 lg:grid-cols-5">
           <Card className="gap-0 self-start rounded-lg py-0 shadow-none lg:col-span-2">
             <div className="border-b px-4 py-2.5">
-              <span className="text-sm font-semibold">Connection</span>
-              <span className="text-muted-foreground ml-2 text-xs">Connected App profile</span>
+              <span className="text-[13px] font-semibold">Connection</span>
+              <span className="text-muted-foreground ml-2 text-[11px]">Connected App profile</span>
             </div>
             <div className="grid gap-2 px-4 py-3 text-sm">
               {[
@@ -82,8 +82,8 @@ function LitifySyncInner() {
 
           <Card className="gap-0 self-start rounded-lg py-0 shadow-none lg:col-span-3">
             <div className="flex items-baseline justify-between border-b px-4 py-2.5">
-              <span className="text-sm font-semibold">Inbound pull log</span>
-              <span className="text-muted-foreground hidden text-xs sm:block">
+              <span className="text-[13px] font-semibold">Inbound pull log</span>
+              <span className="text-muted-foreground hidden text-[11px] sm:block">
                 ContentDocumentLink → ContentVersion → VersionData
               </span>
             </div>
@@ -109,8 +109,8 @@ function LitifySyncInner() {
 
         <Card className="gap-0 overflow-hidden rounded-lg py-0 shadow-none">
           <div className="flex items-baseline justify-between border-b px-4 py-2.5">
-            <span className="text-sm font-semibold">Write-back staging</span>
-            <span className="text-muted-foreground text-xs">
+            <span className="text-[13px] font-semibold">Write-back staging</span>
+            <span className="text-muted-foreground text-[11px]">
               Originals are never modified · nothing pushes without approval
             </span>
           </div>

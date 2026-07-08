@@ -27,15 +27,18 @@ export function AppHeader() {
   const title = TITLES.find(([p]) => pathname.startsWith(p))?.[1] ?? "Dashboard";
 
   return (
-    <header className="flex h-12 shrink-0 items-center gap-2 border-b">
-      <div className="flex items-center gap-2 px-4 md:px-6">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
-        <div className="text-sm font-medium">{title}</div>
+    <header className="flex h-11 shrink-0 items-center gap-2 border-b">
+      <div className="flex items-center gap-2 px-4">
+        <SidebarTrigger className="text-muted-foreground -ml-1 size-7" />
+        <Separator orientation="vertical" className="data-[orientation=vertical]:h-3.5" />
+        <div className="text-[13px] font-medium">{title}</div>
       </div>
-      <div className="ml-auto flex items-center gap-3 px-4 md:px-6">
-        <Badge variant="outline" className="text-muted-foreground hidden gap-1.5 sm:inline-flex">
-          <span className="bg-status-warn size-1.5 rounded-full" />
+      <div className="ml-auto flex items-center gap-2.5 px-4">
+        <Badge
+          variant="outline"
+          className="text-muted-foreground hidden h-5 gap-1.5 px-1.5 text-[11px] font-normal sm:inline-flex"
+        >
+          <span className="size-1 rounded-full bg-amber-500" />
           Simulated Litify
         </Badge>
         <DropdownMenu>
@@ -43,8 +46,8 @@ export function AppHeader() {
             aria-label="Account menu"
             className="focus-visible:ring-ring rounded-full outline-none focus-visible:ring-2"
           >
-            <Avatar className="size-7">
-              <AvatarFallback>OP</AvatarFallback>
+            <Avatar className="size-6">
+              <AvatarFallback className="text-[10px]">OP</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">

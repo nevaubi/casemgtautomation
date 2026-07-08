@@ -7,7 +7,9 @@ import { AppHeader } from "./app-header";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
+    <SidebarProvider
+      style={{ "--sidebar-width": "13rem", "--sidebar-width-icon": "3rem" } as React.CSSProperties}
+    >
       <AppSidebar />
       <SidebarInset className="flex h-svh min-w-0 flex-col overflow-hidden">
         <AppHeader />
