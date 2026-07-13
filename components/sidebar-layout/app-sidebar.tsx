@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ClipboardCheck, Files, LayoutDashboard, RefreshCw, ShieldCheck, UploadCloud } from "lucide-react";
+import { ClipboardCheck, Files, LayoutDashboard, NotebookText, RefreshCw, ShieldCheck, UploadCloud } from "lucide-react";
 
 import {
   Sidebar,
@@ -25,6 +25,7 @@ const NAV = [
   { title: "Work list", url: "/worklist", icon: Files },
   { title: "Upload & process", url: "/upload", icon: UploadCloud },
   { title: "Review queue", url: "/review", icon: ClipboardCheck },
+  { title: "Case profile", url: "/profile", icon: NotebookText },
   { title: "Litify sync", url: "/litify", icon: RefreshCw },
 ];
 

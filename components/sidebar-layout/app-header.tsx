@@ -20,6 +20,7 @@ const TITLES: [string, string][] = [
   ["/upload", "Upload & process"],
   ["/workbench", "Workbench"],
   ["/review", "Review queue"],
+  ["/profile", "Case profile"],
   ["/litify", "Litify sync"],
 ];
 
