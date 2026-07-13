@@ -1,0 +1,81 @@
+{
+  "document_id": "mock_record_06_urgent_care_fax_scanned",
+  "model": "claude-sonnet-5",
+  "records": [
+    {
+      "type": "treatment",
+      "page": 1,
+      "quote": "Severe headache x 5 days, throbbing, worse whe 1 iving fat and with, er en ee . bending. Episodes of blurrad vision lasting seconds when standing.",
+      "certainty": "medium",
+      "data": {
+        "intervention": "Urgent care visit for severe headache",
+        "date": "09/30/2022",
+        "result": "Severe headache x 5 days, throbbing, worse lying flat and with bending; episodes of blurred vision lasting seconds when standing",
+        "facility": "Riverbend Urgent Care"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 1,
+      "quote": "patient receives depo provera injection. for contraception; last’ - -injection 07/19/2022 per patient",
+      "certainty": "medium",
+      "reported_by": "patient",
+      "data": {
+        "drug": "Depo-Provera",
+        "route": "injection",
+        "end_date": "07/19/2022",
+        "frequency": "for contraception"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 1,
+      "quote": "Reports headache unrelieved by Ibuprofen 400 mg at-home",
+      "certainty": "low",
+      "reported_by": "patient",
+      "data": {
+        "drug": "Ibuprofen",
+        "dose": "400 mg",
+        "route": "at-home",
+        "frequency": "Headache unrelieved"
+      }
+    },
+    {
+      "type": "administration",
+      "page": 1,
+      "quote": "SUMATRIPTAN. 6: MG. SUBCUTANEOUS xt 2 °° Lor sm2203° 2005",
+      "certainty": "low",
+      "data": {
+        "drug": "Sumatriptan",
+        "dose": "6 mg (OCR uncertain)",
+        "route": "subcutaneous",
+        "date": "09/30/2022",
+        "facility": "Riverbend Urgent Care"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 2,
+      "quote": "A. IBUPROFEN ‘600 mg by mouth every 8 hours with donde as needed x 9 days.",
+      "certainty": "medium",
+      "data": {
+        "drug": "Ibuprofen",
+        "dose": "600 mg",
+        "route": "by mouth",
+        "frequency": "every 8 hours as needed x 9 days (OCR degraded)",
+        "start_date": "09/30/2022"
+      }
+    },
+    {
+      "type": "treatment",
+      "page": 2,
+      "quote": "3: Follow-up with primary care-within one week. bises recurrent — “headaches and contraceptive management (depo provera) with PCP:",
+      "certainty": "low",
+      "data": {
+        "intervention": "Discharge instruction — follow up with PCP on recurrent headaches and contraceptive management (Depo-Provera)",
+        "date": "09/30/2022",
+        "facility": "Riverbend Urgent Care"
+      }
+    }
+  ]
+}

@@ -1,0 +1,454 @@
+{
+  "document_id": "mock_record_05_neuro_ophthalmology_followup",
+  "source_pdf": "mock_record_05_neuro_ophthalmology_followup.pdf",
+  "model": "claude-sonnet-5",
+  "spec_version": 1,
+  "extraction_mode": "replay",
+  "pages": [
+    {
+      "number": 1,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 2,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 3,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    }
+  ],
+  "counts": {
+    "proposed": 11,
+    "grounded": 11,
+    "rejected": 0,
+    "auto": 11,
+    "review": 0,
+    "escalated": 0
+  },
+  "by_type": {
+    "causation": 2,
+    "diagnosis": 2,
+    "exposure": 2,
+    "negated_finding": 1,
+    "provider": 1,
+    "treatment": 3
+  },
+  "processing_seconds": 0.01,
+  "records": [
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:0",
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "Returns six weeks after diagnosis of idiopathic intracranial hypertension (G93.2), confirmed by lumbar puncture on 12/16/2022 with opening pressure of 32 cm H2O.",
+      "matched_text": "Returns six weeks after diagnosis of idiopathic intracranial hypertension (G93.2), confirmed by lumbar puncture on 12/16/2022 with opening pressure of 32 cm H2O.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Idiopathic intracranial hypertension",
+        "icd10": "G93.2",
+        "date": "12/16/2022",
+        "confirming_test": "Lumbar puncture 12/16/2022 \u2014 opening pressure 32 cm H2O",
+        "status": "Confirmed"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          133.79,
+          354.95,
+          146.84
+        ],
+        [
+          54.0,
+          147.29,
+          376.1,
+          160.34
+        ],
+        [
+          54.0,
+          160.79,
+          115.25,
+          173.84
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:1",
+      "type": "exposure",
+      "page": 1,
+      "quote": "Acetazolamide 500 mg PO BID started 12/16/2022 and has been tolerated aside from mild paresthesias.",
+      "matched_text": "Acetazolamide 500 mg PO BID started 12/16/2022 and has been tolerated aside from mild paresthesias.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Acetazolamide",
+        "dose": "500 mg",
+        "route": "PO",
+        "frequency": "BID",
+        "start_date": "12/16/2022"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          117.89,
+          160.79,
+          391.43,
+          173.84
+        ],
+        [
+          54.0,
+          174.29,
+          217.14,
+          187.34
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:2",
+      "type": "exposure",
+      "page": 1,
+      "quote": "Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset",
+      "matched_text": "Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset;",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera (medroxyprogesterone acetate)",
+        "end_date": "01/05/2023"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          219.78,
+          174.29,
+          377.11,
+          187.34
+        ],
+        [
+          54.0,
+          187.79,
+          369.25,
+          200.84
+        ],
+        [
+          54.0,
+          201.29,
+          321.71,
+          214.34
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:3",
+      "type": "causation",
+      "page": 1,
+      "quote": "Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset; treating providers agree the agent is best regarded as a contributing factor and should be discontinued permanently.",
+      "matched_text": "Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset; treating providers agree the agent is best regarded as a contributing factor and should be discontinued permanently.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "statement": "Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset; treating providers agree the agent is best regarded as a contributing factor and should be discontinued permanently.",
+        "relationship": "contributing factor; temporal relationship between exposure and symptom onset",
+        "author": "C. Okafor, MD",
+        "date": "01/20/2023"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          219.78,
+          174.29,
+          377.11,
+          187.34
+        ],
+        [
+          54.0,
+          187.79,
+          369.25,
+          200.84
+        ],
+        [
+          54.0,
+          201.29,
+          356.03,
+          214.34
+        ],
+        [
+          54.0,
+          214.79,
+          350.24,
+          227.84
+        ],
+        [
+          54.0,
+          228.29,
+          208.72,
+          241.34
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:4",
+      "type": "negated_finding",
+      "page": 1,
+      "quote": "Denies pulsatile tinnitus. No transient visual obscurations since early January.",
+      "matched_text": "Denies pulsatile tinnitus. No transient visual obscurations since early January.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Pulsatile tinnitus",
+        "date": "01/20/2023",
+        "result": "Denied at 01/20/2023 follow-up"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          215.03,
+          281.29,
+          332.25,
+          294.34
+        ],
+        [
+          54.0,
+          294.79,
+          260.97,
+          307.84
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:5",
+      "type": "treatment",
+      "page": 1,
+      "quote": "Fundus: optic disc edema improving; Frisen grade 1 OU (previously grade 3 OD, grade 2 OS on 11/21/2022). No hemorrhages.",
+      "matched_text": "Fundus: optic disc edema improving; Frisen grade 1 OU (previously grade 3 OD, grade 2 OS on 11/21/2022). No hemorrhages.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Dilated fundus examination",
+        "date": "01/20/2023",
+        "result": "Optic disc edema improving; Frisen grade 1 OU (previously grade 3 OD, grade 2 OS on 11/21/2022)",
+        "facility": "Northgate Eye Specialists"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          361.29,
+          338.04,
+          374.34
+        ],
+        [
+          54.0,
+          374.79,
+          302.19,
+          387.84
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:6",
+      "type": "treatment",
+      "page": 2,
+      "quote": "INTERPRETATION Enlarged blind spot OU, improved from 12/16/2022 baseline (MD -5.4 / -4.6). No new focal defects. Findings consistent with resolving papilledema.",
+      "matched_text": "INTERPRETATION Enlarged blind spot OU, improved from 12/16/2022 baseline (MD -5.4 / -4.6). No new focal defects. Findings consistent with resolving papilledema.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Humphrey Visual Field 24-2 SITA-Fast",
+        "date": "01/20/2023",
+        "result": "Enlarged blind spot OU, improved from 12/16/2022 baseline (MD -5.4 / -4.6); no new focal defects; consistent with resolving papilledema",
+        "facility": "Northgate Eye Specialists"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          178.9,
+          128.61,
+          190.61
+        ],
+        [
+          54.0,
+          195.79,
+          376.08,
+          208.84
+        ],
+        [
+          54.0,
+          209.29,
+          345.45,
+          222.34
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:7",
+      "type": "treatment",
+      "page": 3,
+      "quote": "OCT RETINAL NERVE FIBER LAYER Average RNFL: OD 128 um (prev 186) OS 119 um (prev 171)",
+      "matched_text": "OCT RETINAL NERVE FIBER LAYER Average RNFL: OD 128 um (prev 186) OS 119 um (prev 171)",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "OCT retinal nerve fiber layer analysis",
+        "date": "01/20/2023",
+        "result": "Average RNFL OD 128 um (prev 186), OS 119 um (prev 171) \u2014 optic disc edema resolving bilaterally",
+        "facility": "Northgate Eye Specialists"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          82.9,
+          201.81,
+          94.61
+        ],
+        [
+          64.8,
+          101.61,
+          394.2,
+          112.85
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:8",
+      "type": "diagnosis",
+      "page": 3,
+      "quote": "2. Papilledema, bilateral (H47.10) \u00b7 Frisen grade 1 OU, improving.",
+      "matched_text": "2. Papilledema, bilateral (H47.10) \u00b7 Frisen grade 1 OU, improving.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Papilledema, bilateral",
+        "icd10": "H47.10",
+        "date": "01/20/2023",
+        "status": "Frisen grade 1 OU, improving",
+        "diagnosed_by": "C. Okafor, MD"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          208.79,
+          330.13,
+          221.84
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:9",
+      "type": "causation",
+      "page": 3,
+      "quote": "3. Contraception counseling deferred to gynecology; injectable medroxyprogesterone remains contraindicated in this patient.",
+      "matched_text": "3. Contraception counseling deferred to gynecology; injectable medroxyprogesterone remains contraindicated in this patient.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "statement": "Contraception counseling deferred to gynecology; injectable medroxyprogesterone remains contraindicated in this patient.",
+        "relationship": "injectable medroxyprogesterone remains contraindicated",
+        "author": "C. Okafor, MD",
+        "date": "01/20/2023"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          222.29,
+          316.44,
+          235.34
+        ],
+        [
+          61.92,
+          235.79,
+          319.06,
+          248.84
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_05_neuro_ophthalmology_followup:10",
+      "type": "provider",
+      "page": 3,
+      "quote": "Electronically signed: C. Okafor, MD \u00b7 01/20/2023 15:22",
+      "matched_text": "Electronically signed: C. Okafor, MD \u00b7 01/20/2023 15:22",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "name": "C. Okafor",
+        "credential": "MD",
+        "specialty": "Neuro-ophthalmology",
+        "role": "Neuro-ophthalmology follow-up; documented causation opinion (01/20/2023)",
+        "facility": "Northgate Eye Specialists"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          272.61,
+          351.0,
+          283.85
+        ]
+      ]
+    }
+  ],
+  "rejected": []
+}

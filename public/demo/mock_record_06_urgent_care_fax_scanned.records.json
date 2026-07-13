@@ -1,0 +1,385 @@
+{
+  "document_id": "mock_record_06_urgent_care_fax_scanned",
+  "source_pdf": "mock_record_06_urgent_care_fax_scanned.pdf",
+  "model": "claude-sonnet-5",
+  "spec_version": 1,
+  "extraction_mode": "replay",
+  "pages": [
+    {
+      "number": 1,
+      "source": "ocr",
+      "mean_conf": 0.4671
+    },
+    {
+      "number": 2,
+      "source": "ocr",
+      "mean_conf": 0.5257
+    }
+  ],
+  "counts": {
+    "proposed": 6,
+    "grounded": 6,
+    "rejected": 0,
+    "auto": 0,
+    "review": 0,
+    "escalated": 6
+  },
+  "by_type": {
+    "administration": 1,
+    "exposure": 3,
+    "treatment": 2
+  },
+  "processing_seconds": 7.03,
+  "records": [
+    {
+      "id": "mock_record_06_urgent_care_fax_scanned:0",
+      "type": "treatment",
+      "page": 1,
+      "quote": "Severe headache x 5 days, throbbing, worse whe 1 iving fat and with, er en ee . bending. Episodes of blurrad vision lasting seconds when standing.",
+      "matched_text": "Severe headache x 5 days, throbbing, worse whe 1 iving fat and with, er en ee . bending. Episodes of blurrad vision lasting seconds when standing.",
+      "certainty": "medium",
+      "reported_by": null,
+      "data": {
+        "intervention": "Urgent care visit for severe headache",
+        "date": "09/30/2022",
+        "result": "Severe headache x 5 days, throbbing, worse lying flat and with bending; episodes of blurred vision lasting seconds when standing",
+        "facility": "Riverbend Urgent Care"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.4671,
+      "word_conf": 0.6758,
+      "confidence": 0.3513,
+      "routing": "escalated",
+      "rects": [
+        [
+          50.16,
+          128.88,
+          136.56,
+          148.56
+        ],
+        [
+          140.16,
+          136.08,
+          142.8,
+          143.52
+        ],
+        [
+          145.68,
+          126.72,
+          214.08,
+          148.56
+        ],
+        [
+          213.12,
+          131.52,
+          242.4,
+          147.36
+        ],
+        [
+          245.52,
+          126.72,
+          286.32,
+          149.28
+        ],
+        [
+          289.92,
+          129.84,
+          305.28,
+          148.32
+        ],
+        [
+          309.12,
+          133.2,
+          528.72,
+          150.72
+        ],
+        [
+          51.36,
+          156.48,
+          52.08,
+          157.2
+        ],
+        [
+          54.0,
+          146.64,
+          337.68,
+          162.24
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_06_urgent_care_fax_scanned:1",
+      "type": "exposure",
+      "page": 1,
+      "quote": "patient receives depo provera injection. for contraception; last\u2019 - -injection 07/19/2022 per patient",
+      "matched_text": "patient receives depo provera injection. for contraception; last\u2019 - -injection 07/19/2022 per patient",
+      "certainty": "medium",
+      "reported_by": "patient",
+      "data": {
+        "drug": "Depo-Provera",
+        "route": "injection",
+        "end_date": "07/19/2022",
+        "frequency": "for contraception"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.4671,
+      "word_conf": 0.7023,
+      "confidence": 0.3513,
+      "routing": "escalated",
+      "rects": [
+        [
+          51.12,
+          171.84,
+          293.28,
+          189.6
+        ],
+        [
+          295.2,
+          171.84,
+          313.92,
+          188.64
+        ],
+        [
+          360.96,
+          177.6,
+          370.56,
+          179.76
+        ],
+        [
+          52.56,
+          186.24,
+          186.72,
+          207.36
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_06_urgent_care_fax_scanned:2",
+      "type": "exposure",
+      "page": 1,
+      "quote": "Reports headache unrelieved by Ibuprofen 400 mg at-home",
+      "matched_text": "Reports headache unrelieved by Ibuprofen 400 mg at-home,",
+      "certainty": "low",
+      "reported_by": "patient",
+      "data": {
+        "drug": "Ibuprofen",
+        "dose": "400 mg",
+        "route": "at-home",
+        "frequency": "Headache unrelieved"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.4671,
+      "word_conf": 0.8538,
+      "confidence": 0.2415,
+      "routing": "escalated",
+      "rects": [
+        [
+          56.16,
+          158.88,
+          253.2,
+          175.92
+        ],
+        [
+          254.4,
+          163.92,
+          308.4,
+          174.24
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_06_urgent_care_fax_scanned:3",
+      "type": "administration",
+      "page": 1,
+      "quote": "SUMATRIPTAN. 6: MG. SUBCUTANEOUS xt 2 \u00b0\u00b0 Lor sm2203\u00b0 2005",
+      "matched_text": "SUMATRIPTAN. 6: MG. SUBCUTANEOUS xt 2 \u00b0\u00b0 Lor sm2203\u00b0 2005",
+      "certainty": "low",
+      "reported_by": null,
+      "data": {
+        "drug": "Sumatriptan",
+        "dose": "6 mg (OCR uncertain)",
+        "route": "subcutaneous",
+        "date": "09/30/2022",
+        "facility": "Riverbend Urgent Care"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.4671,
+      "word_conf": 0.513,
+      "confidence": 0.2415,
+      "routing": "escalated",
+      "rects": [
+        [
+          67.68,
+          240.48,
+          134.64,
+          254.16
+        ],
+        [
+          140.16,
+          241.92,
+          164.16,
+          254.16
+        ],
+        [
+          169.68,
+          236.16,
+          239.28,
+          257.28
+        ],
+        [
+          247.44,
+          244.56,
+          259.92,
+          252.96
+        ],
+        [
+          277.68,
+          240.48,
+          402.0,
+          255.6
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_06_urgent_care_fax_scanned:4",
+      "type": "exposure",
+      "page": 2,
+      "quote": "A. IBUPROFEN \u2018600 mg by mouth every 8 hours with donde as needed x 9 days.",
+      "matched_text": "A. IBUPROFEN \u2018600 mg by mouth every 8 hours with donde as needed x 9 days.",
+      "certainty": "medium",
+      "reported_by": null,
+      "data": {
+        "drug": "Ibuprofen",
+        "dose": "600 mg",
+        "route": "by mouth",
+        "frequency": "every 8 hours as needed x 9 days (OCR degraded)",
+        "start_date": "09/30/2022"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.5257,
+      "word_conf": 0.7419,
+      "confidence": 0.3953,
+      "routing": "escalated",
+      "rects": [
+        [
+          49.2,
+          105.84,
+          58.08,
+          114.24
+        ],
+        [
+          60.96,
+          97.44,
+          218.4,
+          117.12
+        ],
+        [
+          220.32,
+          93.36,
+          251.04,
+          117.84
+        ],
+        [
+          255.84,
+          101.52,
+          272.16,
+          114.0
+        ],
+        [
+          274.32,
+          93.36,
+          300.24,
+          113.76
+        ],
+        [
+          296.88,
+          104.64,
+          306.48,
+          113.52
+        ],
+        [
+          309.84,
+          95.28,
+          342.72,
+          115.2
+        ],
+        [
+          343.92,
+          104.64,
+          348.0,
+          114.24
+        ],
+        [
+          350.16,
+          96.96,
+          354.96,
+          109.92
+        ],
+        [
+          356.64,
+          92.88,
+          380.88,
+          113.52
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_06_urgent_care_fax_scanned:5",
+      "type": "treatment",
+      "page": 2,
+      "quote": "3: Follow-up with primary care-within one week. bises recurrent \u2014 \u201cheadaches and contraceptive management (depo provera) with PCP:",
+      "matched_text": "3: Follow-up with primary care-within one week. bises recurrent \u2014 \u201cheadaches and contraceptive management (depo provera) with PCP:",
+      "certainty": "low",
+      "reported_by": null,
+      "data": {
+        "intervention": "Discharge instruction \u2014 follow up with PCP on recurrent headaches and contraceptive management (Depo-Provera)",
+        "date": "09/30/2022",
+        "facility": "Riverbend Urgent Care"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.5257,
+      "word_conf": 0.7072,
+      "confidence": 0.2718,
+      "routing": "escalated",
+      "rects": [
+        [
+          45.12,
+          145.44,
+          102.48,
+          157.2
+        ],
+        [
+          105.36,
+          140.88,
+          249.6,
+          158.16
+        ],
+        [
+          253.68,
+          135.36,
+          324.24,
+          154.8
+        ],
+        [
+          339.12,
+          151.68,
+          355.68,
+          152.4
+        ],
+        [
+          54.0,
+          152.16,
+          350.16,
+          171.12
+        ]
+      ]
+    }
+  ],
+  "rejected": []
+}

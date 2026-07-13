@@ -3,7 +3,7 @@ name = "casepipe"
 version = "0.1.0"
 description = "Case management automation document pipeline"
 requires-python = ">=3.11"
-dependencies = ["pymupdf>=1.24", "pytesseract>=0.3.10", "rapidfuzz>=3.0", "Pillow>=10"]
+dependencies = ["pymupdf>=1.24", "pytesseract>=0.3.10", "rapidfuzz>=3.0", "Pillow>=10", "anthropic>=0.40"]
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -13,4 +13,4 @@ build-backend = "setuptools.build_meta"
 include = ["casepipe*"]
 
 [tool.setuptools.package-data]
-casepipe = ["terms.json"]
+casepipe = ["terms.json", "record_spec.json"]

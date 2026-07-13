@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "name": "PFS record extraction spec",
+    "version": 1,
+    "note": "Canonical spec for the LLM record-extraction stage. Imported by BOTH the Python batch pipeline (casepipe.extract_records) and the Next.js live route (app/api/extract-records). Changing it changes both. The deterministic term matcher (terms.json) is unchanged and still runs — it is the evidence spine and the eval gate; this stage adds the structured fields a Plaintiff Fact Sheet needs."
+  },
+  "model": "claude-sonnet-5",
+  "max_tokens": 8000,
+  "temperature": 0,
+  "confidence": {
+    "certainty_weight": {
+      "high": 0.97,
+      "medium": 0.8,
+      "low": 0.55
+    },
+    "source_factor": {
+      "text_layer": 1.0,
+      "ocr": 0.94
+    },
+    "min_grounding": 0.7,
+    "fuzzy_min_ratio": 88,
+    "thresholds": {
+      "auto_accept": 0.85,
+      "review": 0.6
+    }
+  },
+  "system_prompt": "You are a medical-records extraction engine for a plaintiff-side mass tort law firm. You read one document at a time and emit STRUCTURED RECORDS that will populate a Plaintiff Fact Sheet (PFS) filed in litigation. Accuracy is the only thing that matters; an omission is recoverable, an invention is not.\n\nRULES — these are absolute:\n1. EXTRACT, NEVER INFER. Emit a value only if it is stated in the document text you were given. Do not calculate, complete, normalize away, or guess. If a page says a drug was given but never states the dose, leave dose empty — do not supply a typical dose.\n2. EVERY record must carry a `quote` that is copied CHARACTER-FOR-CHARACTER from the page text supplied to you, and the `page` number it came from. The quote must be long enough to contain the values you extracted (roughly 8-40 words). A record whose quote cannot be located in that page is discarded automatically and counts as a failure.\n3. Quote the text AS IT APPEARS, including OCR garbling. Do not clean up, correct, or re-spell a quote. Scanned pages are noisy on purpose; a garbled quote that is faithful is correct, a tidy quote that is invented is wrong.\n4. NEGATION IS NOT A FINDING. \"Denies pulsatile tinnitus\", \"no visual complaints\", \"without vision loss\" mean the condition is ABSENT. Never emit a diagnosis record for a denied or ruled-out condition. If a document explicitly rules something out and that matters, emit it as type `negated_finding`.\n5. ATTRIBUTE, DO NOT ADOPT. When a record repeats what another provider or the patient reported (\"per patient\", \"per outside record\", \"reported at reconciliation\"), set `reported_by` accordingly. A second-hand statement is still a record, but it is not first-hand evidence.\n6. Set `certainty`: `high` when the value is stated plainly and unambiguously on the page; `medium` when it is stated but the page is garbled, the label is ambiguous, or the value is spread across a table you had to read structurally; `low` when you are reading between the lines at all. Be honest — a low-certainty record routes to a human, which is a good outcome. A high-certainty record that is wrong is the worst outcome.\n7. Dates: emit exactly as written in the document (do not reformat). If a record has no date in the document, leave it empty.\n8. Do not deduplicate across pages — emit the record where you see it and let the aggregator merge. But do not emit the same fact twice from the same sentence.\n\nCAUSATION records are the most sensitive: emit one only for an explicit statement by a clinician connecting the plaintiff's exposure to their injury (\"contributing factor\", \"temporal relationship\", \"should be discontinued given...\"). The `statement` must be the complete sentence, verbatim. Attribute it to the signing clinician. Do not emit a causation record for the firm's theory, for background literature, or for your own reading of the timeline.",
+  "tool": {
+    "name": "emit_records",
+    "description": "Emit every structured record found in this document.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "demographic",
+                  "exposure",
+                  "administration",
+                  "diagnosis",
+                  "treatment",
+                  "causation",
+                  "provider",
+                  "negated_finding"
+                ],
+                "description": "demographic: an identity/history field about the plaintiff (one record per field). exposure: a medication the plaintiff was prescribed or took, with its regimen. administration: a single documented dose actually given, with date. diagnosis: a condition affirmatively diagnosed. treatment: a procedure, test, or therapy performed, with its result. causation: a clinician's explicit statement linking exposure to injury. provider: a treating clinician or facility. negated_finding: a condition explicitly denied or ruled out."
+              },
+              "page": {
+                "type": "integer",
+                "description": "1-based page number this record was read from."
+              },
+              "quote": {
+                "type": "string",
+                "description": "Verbatim text from that page containing the extracted values. Copied character-for-character, OCR noise included."
+              },
+              "certainty": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "reported_by": {
+                "type": "string",
+                "description": "Leave empty for first-hand documentation by the authoring facility. Otherwise: 'patient', 'outside record', 'reconciliation', etc."
+              },
+              "data": {
+                "type": "object",
+                "description": "Type-specific fields. Only include keys with values actually stated in the document.",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "demographic: the field name, e.g. 'Date of birth', 'Address', 'Insurer', 'Tobacco use', 'Family history', 'Allergies', 'Emergency contact', 'MRN'."
+                  },
+                  "value": {
+                    "type": "string",
+                    "description": "demographic: the field value."
+                  },
+                  "drug": {
+                    "type": "string",
+                    "description": "exposure/administration: drug name as written, generic in parentheses if given."
+                  },
+                  "dose": {
+                    "type": "string"
+                  },
+                  "route": {
+                    "type": "string"
+                  },
+                  "frequency": {
+                    "type": "string",
+                    "description": "exposure: the sig / regimen as written."
+                  },
+                  "start_date": {
+                    "type": "string"
+                  },
+                  "dispensed_date": {
+                    "type": "string",
+                    "description": "exposure: the date a pharmacy DISPENSED this fill, when the source is a dispensing/claims record rather than a prescription. Use this instead of start_date for pharmacy records — a fill date is not the date therapy began."
+                  },
+                  "end_date": {
+                    "type": "string"
+                  },
+                  "prescriber": {
+                    "type": "string"
+                  },
+                  "ndc": {
+                    "type": "string"
+                  },
+                  "lot": {
+                    "type": "string"
+                  },
+                  "site": {
+                    "type": "string",
+                    "description": "administration: anatomical injection site."
+                  },
+                  "administered_by": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string",
+                    "description": "administration/diagnosis/treatment/causation: the date of the event as written."
+                  },
+                  "facility": {
+                    "type": "string"
+                  },
+                  "condition": {
+                    "type": "string",
+                    "description": "diagnosis/negated_finding: the condition."
+                  },
+                  "icd10": {
+                    "type": "string",
+                    "description": "diagnosis: ICD-10 code ONLY if the code appears in the document."
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "diagnosis: e.g. Active, Resolved, Confirmed, Suspected."
+                  },
+                  "diagnosed_by": {
+                    "type": "string"
+                  },
+                  "confirming_test": {
+                    "type": "string",
+                    "description": "diagnosis: the test/procedure the document credits with establishing it."
+                  },
+                  "intervention": {
+                    "type": "string",
+                    "description": "treatment: the procedure, test, or therapy performed."
+                  },
+                  "result": {
+                    "type": "string",
+                    "description": "treatment: the documented result, e.g. 'Opening pressure 32 cm H2O (elevated)'."
+                  },
+                  "cpt": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string",
+                    "description": "causation: the complete verbatim sentence."
+                  },
+                  "relationship": {
+                    "type": "string",
+                    "description": "causation: how the document characterizes the link, in its own words, e.g. 'potentially contributing factor', 'temporal relationship'."
+                  },
+                  "author": {
+                    "type": "string",
+                    "description": "causation: the clinician who made the statement."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "provider: clinician or facility name."
+                  },
+                  "credential": {
+                    "type": "string"
+                  },
+                  "specialty": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "description": "provider: role in this case, e.g. 'Prescribed and administered Depo-Provera'."
+                  },
+                  "npi": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "type",
+              "page",
+              "quote",
+              "certainty",
+              "data"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "records"
+      ]
+    }
+  }
+}

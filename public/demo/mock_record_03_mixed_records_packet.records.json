@@ -1,0 +1,1302 @@
+{
+  "document_id": "mock_record_03_mixed_records_packet",
+  "source_pdf": "mock_record_03_mixed_records_packet.pdf",
+  "model": "claude-sonnet-5",
+  "spec_version": 1,
+  "extraction_mode": "replay",
+  "pages": [
+    {
+      "number": 1,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 2,
+      "source": "ocr",
+      "mean_conf": 0.9418
+    },
+    {
+      "number": 3,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 4,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 5,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 6,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 7,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 8,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 9,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 10,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 11,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 12,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    }
+  ],
+  "counts": {
+    "proposed": 34,
+    "grounded": 34,
+    "rejected": 0,
+    "auto": 32,
+    "review": 2,
+    "escalated": 0
+  },
+  "by_type": {
+    "administration": 2,
+    "causation": 1,
+    "demographic": 7,
+    "diagnosis": 5,
+    "exposure": 6,
+    "negated_finding": 2,
+    "provider": 2,
+    "treatment": 9
+  },
+  "processing_seconds": 3.8,
+  "records": [
+    {
+      "id": "mock_record_03_mixed_records_packet:0",
+      "type": "demographic",
+      "page": 2,
+      "quote": "Name: Dana L. Whitfield 3/14/91 88 Concord Lane Apt 3B, Springfield IL 62704 aos (217) 555-0142 BlueCare PPO Member ID: XQP448210077",
+      "matched_text": "Name: Dana L. Whitfield 3/14/91 88 Concord Lane Apt 3B, Springfield IL 62704 aos (217) 555-0142 BlueCare PPO Member ID: XQP448210077",
+      "certainty": "medium",
+      "reported_by": null,
+      "data": {
+        "field": "Date of birth",
+        "value": "3/14/91 (as written on intake form)"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9418,
+      "word_conf": 0.9143,
+      "confidence": 0.7082,
+      "routing": "review",
+      "rects": [
+        [
+          57.12,
+          113.52,
+          242.4,
+          126.96
+        ],
+        [
+          460.08,
+          107.76,
+          488.88,
+          115.2
+        ],
+        [
+          169.2,
+          139.2,
+          352.56,
+          150.24
+        ],
+        [
+          386.16,
+          108.48,
+          453.36,
+          156.48
+        ],
+        [
+          461.04,
+          135.12,
+          522.24,
+          144.96
+        ],
+        [
+          169.92,
+          169.92,
+          228.96,
+          178.32
+        ],
+        [
+          393.12,
+          162.24,
+          525.84,
+          173.28
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:1",
+      "type": "demographic",
+      "page": 2,
+      "quote": "Emergency contact: Marcus Whitfield (spouse) Phone: (217) 555-0177",
+      "matched_text": "Emergency contact: Marcus Whitfield (spouse) Phone: (217) 555-0177",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Emergency contact",
+        "value": "Marcus Whitfield (spouse), (217) 555-0177"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9418,
+      "word_conf": 0.9587,
+      "confidence": 0.8587,
+      "routing": "auto",
+      "rects": [
+        [
+          59.28,
+          196.8,
+          274.08,
+          210.24
+        ],
+        [
+          394.08,
+          190.8,
+          524.16,
+          203.04
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:2",
+      "type": "demographic",
+      "page": 2,
+      "quote": "Past history: None significant / no surgeries Family history: Mother \u2014 migraines; Father \u2014 HTN",
+      "matched_text": "Past history: None significant / no surgeries Family history: Mother \u2014 migraines; Father \u2014 HTN",
+      "certainty": "high",
+      "reported_by": "patient",
+      "data": {
+        "field": "Family history",
+        "value": "Mother \u2014 migraines; Father \u2014 hypertension"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9418,
+      "word_conf": 0.9247,
+      "confidence": 0.8587,
+      "routing": "auto",
+      "rects": [
+        [
+          61.92,
+          308.88,
+          294.0,
+          321.84
+        ],
+        [
+          62.64,
+          338.88,
+          202.32,
+          350.16
+        ],
+        [
+          204.24,
+          342.0,
+          209.52,
+          343.2
+        ],
+        [
+          212.16,
+          336.96,
+          282.24,
+          346.8
+        ],
+        [
+          284.4,
+          340.08,
+          289.68,
+          341.28
+        ],
+        [
+          292.32,
+          336.0,
+          310.56,
+          343.2
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:3",
+      "type": "demographic",
+      "page": 2,
+      "quote": "Past history: None significant / no surgeries Family history: Mother \u2014 migraines; Father \u2014 HTN",
+      "matched_text": "Past history: None significant / no surgeries Family history: Mother \u2014 migraines; Father \u2014 HTN",
+      "certainty": "high",
+      "reported_by": "patient",
+      "data": {
+        "field": "Past medical / surgical history",
+        "value": "None significant / no surgeries"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9418,
+      "word_conf": 0.9247,
+      "confidence": 0.8587,
+      "routing": "auto",
+      "rects": [
+        [
+          61.92,
+          308.88,
+          294.0,
+          321.84
+        ],
+        [
+          62.64,
+          338.88,
+          202.32,
+          350.16
+        ],
+        [
+          204.24,
+          342.0,
+          209.52,
+          343.2
+        ],
+        [
+          212.16,
+          336.96,
+          282.24,
+          346.8
+        ],
+        [
+          284.4,
+          340.08,
+          289.68,
+          341.28
+        ],
+        [
+          292.32,
+          336.0,
+          310.56,
+          343.2
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:4",
+      "type": "demographic",
+      "page": 2,
+      "quote": "Tobacco / Alcohol: Never / occasional (1-2 drinks per month)",
+      "matched_text": "Tobacco / Alcohol: Never / occasional (1-2 drinks per month)",
+      "certainty": "high",
+      "reported_by": "patient",
+      "data": {
+        "field": "Tobacco / alcohol",
+        "value": "Tobacco never; alcohol occasional (1-2 drinks per month)"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9418,
+      "word_conf": 0.946,
+      "confidence": 0.8587,
+      "routing": "auto",
+      "rects": [
+        [
+          62.88,
+          363.36,
+          339.12,
+          376.8
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:5",
+      "type": "demographic",
+      "page": 2,
+      "quote": "Allergies: None",
+      "matched_text": "Allergies: None",
+      "certainty": "high",
+      "reported_by": "patient",
+      "data": {
+        "field": "Allergies",
+        "value": "None"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9418,
+      "word_conf": 0.96,
+      "confidence": 0.8587,
+      "routing": "auto",
+      "rects": [
+        [
+          58.32,
+          283.44,
+          193.92,
+          295.68
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:6",
+      "type": "exposure",
+      "page": 2,
+      "quote": "Current medications: Depo shot (birth control) since 2021; multivitamin",
+      "matched_text": "Current medications: Depo shot (birth control) since 2021; multivitamin",
+      "certainty": "medium",
+      "reported_by": "patient",
+      "data": {
+        "drug": "Depo shot (birth control)",
+        "start_date": "2021",
+        "frequency": "Reported as current medication on intake, 09/06/2022"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9418,
+      "word_conf": 0.9567,
+      "confidence": 0.7082,
+      "routing": "review",
+      "rects": [
+        [
+          60.48,
+          251.04,
+          366.72,
+          264.96
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:7",
+      "type": "diagnosis",
+      "page": 3,
+      "quote": "Assessment: 1) Headache, new pattern (R51.9). 2) Long-term use of injectable contraceptive.",
+      "matched_text": "Assessment: 1) Headache, new pattern (R51.9). 2) Long-term use of injectable contraceptive.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Headache, new pattern",
+        "icd10": "R51.9",
+        "date": "09/06/2022",
+        "diagnosed_by": "Sofia Grant, DO",
+        "status": "New"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          182.92,
+          437.16,
+          195.36
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:8",
+      "type": "exposure",
+      "page": 3,
+      "quote": "Reports current use of injectable contraception (Depo-Provera 150 mg/mL IM every 3 months since April 2021, administered at Lakeview Women's Health Clinic; last injection 07/19/2022).",
+      "matched_text": "Reports current use of injectable contraception (Depo-Provera 150 mg/mL IM every 3 months since April 2021, administered at Lakeview Women's Health Clinic; last injection 07/19/2022).",
+      "certainty": "high",
+      "reported_by": "patient",
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "frequency": "every 3 months",
+        "start_date": "April 2021",
+        "end_date": "last injection 07/19/2022",
+        "facility": "Lakeview Women's Health Clinic"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          287.1,
+          126.92,
+          537.69,
+          139.36
+        ],
+        [
+          60.0,
+          139.42,
+          512.88,
+          151.86
+        ],
+        [
+          60.0,
+          151.92,
+          110.54,
+          164.29
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:9",
+      "type": "exposure",
+      "page": 3,
+      "quote": "Plan: Start ibuprofen 600 mg PO q6h PRN (#60, 2 refills).",
+      "matched_text": "Plan: Start ibuprofen 600 mg PO q6h PRN (#60, 2 refills).",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Ibuprofen",
+        "dose": "600 mg",
+        "route": "PO",
+        "frequency": "q6h PRN",
+        "start_date": "09/06/2022",
+        "prescriber": "Sofia Grant, DO"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          198.42,
+          296.06,
+          210.86
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:10",
+      "type": "negated_finding",
+      "page": 3,
+      "quote": "Denies head trauma. Denies chest pain. Denies fever or weight loss. No visual changes reported today.",
+      "matched_text": "Denies head trauma. Denies chest pain. Denies fever or weight loss. No visual changes reported today.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Visual changes",
+        "date": "09/06/2022",
+        "result": "None reported at 09/06/2022 visit"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          113.04,
+          151.92,
+          525.22,
+          164.29
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:11",
+      "type": "diagnosis",
+      "page": 4,
+      "quote": "Assessment: 1) Chronic daily headache with transient visual obscurations \u2014 papilledema must be excluded.",
+      "matched_text": "Assessment: 1) Chronic daily headache with transient visual obscurations \u2014 papilledema must be excluded.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Chronic daily headache with transient visual obscurations",
+        "date": "10/28/2022",
+        "diagnosed_by": "Sofia Grant, DO",
+        "status": "Papilledema must be excluded"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          182.92,
+          495.67,
+          195.36
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:12",
+      "type": "exposure",
+      "page": 4,
+      "quote": "Plan: Rx sumatriptan 50 mg PO at headache onset, max 2 tabs/day (#9, 1 refill).",
+      "matched_text": "Plan: Rx sumatriptan 50 mg PO at headache onset, max 2 tabs/day (#9, 1 refill).",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Sumatriptan",
+        "dose": "50 mg",
+        "route": "PO",
+        "frequency": "at headache onset, max 2 tabs/day",
+        "start_date": "10/28/2022",
+        "prescriber": "Sofia Grant, DO"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          210.92,
+          396.62,
+          223.36
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:13",
+      "type": "treatment",
+      "page": 4,
+      "quote": "Deferred her injectable contraceptive dose that was due mid-October pending evaluation.",
+      "matched_text": "Deferred her injectable contraceptive dose that was due mid-October pending evaluation.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Injectable contraceptive dose deferred pending evaluation",
+        "date": "10/28/2022",
+        "result": "Dose due mid-October not administered"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          452.18,
+          126.92,
+          543.21,
+          139.29
+        ],
+        [
+          60.0,
+          139.42,
+          320.77,
+          151.79
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:14",
+      "type": "diagnosis",
+      "page": 5,
+      "quote": "Assessment: Bilateral papilledema (H47.10) in a 31-year-old female with chronic headaches, on injectable progestin contraception.",
+      "matched_text": "Assessment: Bilateral papilledema (H47.10) in a 31-year-old female with chronic headaches, on injectable progestin contraception.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Bilateral papilledema",
+        "icd10": "H47.10",
+        "date": "11/21/2022",
+        "diagnosed_by": "Tunde Okafor, OD",
+        "confirming_test": "Dilated fundus examination \u2014 optic disc edema, Frisen grade 2 OU",
+        "status": "Findings concerning for elevated intracranial pressure"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          242.92,
+          532.19,
+          255.36
+        ],
+        [
+          60.0,
+          255.42,
+          116.53,
+          267.79
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:15",
+      "type": "treatment",
+      "page": 5,
+      "quote": "Comprehensive Eye Examination \u2014 11/21/2022",
+      "matched_text": "Comprehensive Eye Examination \u2014 11/21/2022",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Comprehensive eye examination with dilated fundus exam",
+        "date": "11/21/2022",
+        "facility": "Northgate Eye Associates"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          80.83,
+          294.6,
+          95.34
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:16",
+      "type": "provider",
+      "page": 5,
+      "quote": "Electronically signed: Tunde Okafor, OD \u2014 11/21/2022",
+      "matched_text": "Electronically signed: Tunde Okafor, OD \u2014 11/21/2022",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "name": "Tunde Okafor",
+        "credential": "OD",
+        "specialty": "Optometry",
+        "role": "Diagnosed bilateral papilledema (11/21/2022)",
+        "facility": "Northgate Eye Associates"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          299.0,
+          255.2,
+          309.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:17",
+      "type": "exposure",
+      "page": 6,
+      "quote": "Medication history is notable for medroxyprogesterone acetate (Depo-Provera) 150 mg IM every 12\u201313 weeks from 04/13/2021 through 07/19/2022 (six documented injections, per patient and available records).",
+      "matched_text": "Medication history is notable for medroxyprogesterone acetate (Depo-Provera) 150 mg IM every 12\u201313 weeks from 04/13/2021 through 07/19/2022 (six documented injections, per patient and available records).",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Medroxyprogesterone acetate (Depo-Provera)",
+        "dose": "150 mg",
+        "route": "IM",
+        "frequency": "every 12\u201313 weeks",
+        "start_date": "04/13/2021",
+        "end_date": "07/19/2022"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          338.12,
+          126.97,
+          476.65,
+          139.36
+        ],
+        [
+          60.0,
+          139.47,
+          539.2,
+          151.86
+        ],
+        [
+          60.0,
+          151.92,
+          307.1,
+          164.29
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:18",
+      "type": "treatment",
+      "page": 6,
+      "quote": "Imaging: MRI brain with and without contrast and MRV (12/02/2022, Springfield Imaging Center): no mass, no hydrocephalus, no venous sinus thrombosis. Partially empty sella and posterior globe flattening noted \u2014 findings compatible with elevated intracranial pressure.",
+      "matched_text": "Imaging: MRI brain with and without contrast and MRV (12/02/2022, Springfield Imaging Center): no mass, no hydrocephalus, no venous sinus thrombosis. Partially empty sella and posterior globe flattening noted \u2014 findings compatible with elevated intracranial pressure.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "MRI brain with and without contrast + MRV",
+        "date": "12/02/2022",
+        "facility": "Springfield Imaging Center",
+        "result": "No mass, no hydrocephalus, no venous sinus thrombosis; partially empty sella and posterior globe flattening \u2014 compatible with elevated intracranial pressure"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          235.92,
+          499.68,
+          248.36
+        ],
+        [
+          60.0,
+          248.42,
+          508.7,
+          260.79
+        ],
+        [
+          60.0,
+          260.92,
+          245.07,
+          273.29
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:19",
+      "type": "negated_finding",
+      "page": 6,
+      "quote": "Negative: denies diplopia at rest, denies focal weakness, denies seizures, denies fever.",
+      "matched_text": "Negative: denies diplopia at rest, denies focal weakness, denies seizures, denies fever.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Diplopia at rest, focal weakness, seizures, fever",
+        "date": "12/09/2022",
+        "result": "All denied at neurology consultation"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          353.62,
+          179.92,
+          534.71,
+          192.29
+        ],
+        [
+          60.0,
+          192.42,
+          224.07,
+          204.79
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:20",
+      "type": "causation",
+      "page": 7,
+      "quote": "Literature reports an association between progestin-only injectable contraception and intracranial hypertension in some patients; given the temporal relationship here, the injectable contraceptive is a potentially contributing factor and should be discontinued in coordination with her gynecologist.",
+      "matched_text": "Literature reports an association between progestin-only injectable contraception and intracranial hypertension in some patients; given the temporal relationship here, the injectable contraceptive is a potentially contributing factor and should be discontinued in coordination with her gynecologist.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "statement": "Literature reports an association between progestin-only injectable contraception and intracranial hypertension in some patients; given the temporal relationship here, the injectable contraceptive is a potentially contributing factor and should be discontinued in coordination with her gynecologist.",
+        "relationship": "potentially contributing factor; temporal relationship",
+        "author": "Priya Natarajan, MD",
+        "date": "12/09/2022"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          111.42,
+          533.21,
+          123.79
+        ],
+        [
+          60.0,
+          123.92,
+          546.24,
+          136.29
+        ],
+        [
+          60.0,
+          136.42,
+          260.59,
+          148.79
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:21",
+      "type": "diagnosis",
+      "page": 7,
+      "quote": "Impression: Clinical picture highly suggestive of idiopathic intracranial hypertension (pseudotumor cerebri, G93.2).",
+      "matched_text": "Impression: Clinical picture highly suggestive of idiopathic intracranial hypertension (pseudotumor cerebri, G93.2).",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Idiopathic intracranial hypertension (pseudotumor cerebri)",
+        "icd10": "G93.2",
+        "date": "12/09/2022",
+        "diagnosed_by": "Priya Natarajan, MD",
+        "status": "Clinical picture highly suggestive \u2014 pending lumbar puncture"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          98.92,
+          539.14,
+          111.36
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:22",
+      "type": "provider",
+      "page": 7,
+      "quote": "Electronically signed: Priya Natarajan, MD \u2014 12/09/2022 17:26",
+      "matched_text": "Electronically signed: Priya Natarajan, MD \u2014 12/09/2022 17:26",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "name": "Priya Natarajan",
+        "credential": "MD",
+        "specialty": "Neurology",
+        "role": "Diagnosed IIH; recommended discontinuation of Depo-Provera",
+        "facility": "Springfield Neurology Group"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          205.0,
+          284.1,
+          215.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:23",
+      "type": "treatment",
+      "page": 8,
+      "quote": "Opening pressure 32 cm H2O (elevated; reference 6\u201325 cm H2O) CSF removed 12 mL; closing pressure 18 cm H2O",
+      "matched_text": "Opening pressure 32 cm H2O (elevated; reference 6\u201325 cm H2O) CSF removed 12 mL; closing pressure 18 cm H2O",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Lumbar puncture with opening pressure",
+        "date": "12/16/2022",
+        "result": "Opening pressure 32 cm H2O (elevated; reference 6\u201325 cm H2O); 12 mL CSF removed; closing pressure 18 cm H2O",
+        "facility": "Springfield Neurology Group"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          63.6,
+          174.0,
+          354.06,
+          184.99
+        ],
+        [
+          63.6,
+          192.0,
+          313.6,
+          202.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:24",
+      "type": "diagnosis",
+      "page": 8,
+      "quote": "Post-procedure diagnosis: Idiopathic intracranial hypertension, confirmed (opening pressure 32 cm H2O with normal CSF composition and neuroimaging).",
+      "matched_text": "Post-procedure diagnosis: Idiopathic intracranial hypertension, confirmed (opening pressure 32 cm H2O with normal CSF composition and neuroimaging).",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Idiopathic intracranial hypertension",
+        "icd10": "G93.2",
+        "date": "12/16/2022",
+        "diagnosed_by": "Priya Natarajan, MD",
+        "confirming_test": "Lumbar puncture \u2014 opening pressure 32 cm H2O with normal CSF composition and neuroimaging",
+        "status": "Confirmed"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          268.93,
+          552.0,
+          281.36
+        ],
+        [
+          60.0,
+          281.43,
+          187.83,
+          293.79
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:25",
+      "type": "exposure",
+      "page": 8,
+      "quote": "Acetazolamide 500 mg PO BID started today; e-script sent to Northgate Pharmacy #204.",
+      "matched_text": "Acetazolamide 500 mg PO BID started today; e-script sent to Northgate Pharmacy #204.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Acetazolamide",
+        "dose": "500 mg",
+        "route": "PO",
+        "frequency": "BID",
+        "start_date": "12/16/2022",
+        "prescriber": "Priya Natarajan, MD"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          190.22,
+          281.43,
+          552.0,
+          293.86
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:26",
+      "type": "administration",
+      "page": 9,
+      "quote": "04/13/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 KJ4471 L deltoid M. Ortiz, RN A. Reyes, MD",
+      "matched_text": "04/13/2021 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 KJ4471 L deltoid M. Ortiz, RN A. Reyes, MD",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera (medroxyprogesterone acetate)",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "04/13/2021",
+        "ndc": "0009-0746-30",
+        "lot": "KJ4471",
+        "site": "L deltoid",
+        "administered_by": "M. Ortiz, RN",
+        "prescriber": "A. Reyes, MD"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          122.4,
+          281.22,
+          133.39
+        ],
+        [
+          117.6,
+          134.4,
+          168.73,
+          145.39
+        ],
+        [
+          272.4,
+          122.4,
+          555.74,
+          133.39
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:27",
+      "type": "administration",
+      "page": 9,
+      "quote": "07/19/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 NP7719 R deltoid M. Ortiz, RN A. Reyes, MD",
+      "matched_text": "07/19/2022 Depo-Provera (medroxyprogesterone acetate) 150 mg/mL IM 0009-0746-30 NP7719 R deltoid M. Ortiz, RN A. Reyes, MD",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera (medroxyprogesterone acetate)",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "07/19/2022",
+        "ndc": "0009-0746-30",
+        "lot": "NP7719",
+        "site": "R deltoid",
+        "administered_by": "M. Ortiz, RN",
+        "prescriber": "A. Reyes, MD"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          272.4,
+          281.22,
+          283.39
+        ],
+        [
+          117.6,
+          284.4,
+          168.73,
+          295.39
+        ],
+        [
+          272.4,
+          272.4,
+          555.74,
+          283.39
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:28",
+      "type": "treatment",
+      "page": 9,
+      "quote": "Injection due on/about 10/18/2022 \u2014 not administered (patient deferred; medication later discontinued 01/05/2023 per prescriber note).",
+      "matched_text": "Injection due on/about 10/18/2022 \u2014 not administered (patient deferred; medication later discontinued 01/05/2023 per prescriber note).",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Depo-Provera injection due on/about 10/18/2022 \u2014 not administered",
+        "date": "10/18/2022",
+        "result": "Patient deferred; medication later discontinued 01/05/2023 per prescriber note"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          307.33,
+          535.75,
+          319.76
+        ],
+        [
+          60.0,
+          319.83,
+          125.52,
+          332.19
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:29",
+      "type": "treatment",
+      "page": 10,
+      "quote": "12/02/2022 Springfield Imaging Center 70551 MRI brain w/o contrast $1,486.00",
+      "matched_text": "12/02/2022 Springfield Imaging Center 70551 MRI brain w/o contrast $1,486.00",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "MRI brain w/o contrast",
+        "cpt": "70551",
+        "date": "12/02/2022",
+        "facility": "Springfield Imaging Center"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          50.64,
+          230.4,
+          466.38,
+          241.39
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:30",
+      "type": "treatment",
+      "page": 10,
+      "quote": "12/16/2022 Springfield Neurology Group 62270 Spinal puncture, diagnostic $412.00",
+      "matched_text": "12/16/2022 Springfield Neurology Group 62270 Spinal puncture, diagnostic $412.00",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Spinal puncture, diagnostic",
+        "cpt": "62270",
+        "date": "12/16/2022",
+        "facility": "Springfield Neurology Group"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          50.64,
+          266.4,
+          459.71,
+          277.39
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:31",
+      "type": "treatment",
+      "page": 10,
+      "quote": "04/12/2022 Lakeview Women's Health J1050 Medroxyprogesterone acetate, 150 mg $118.00",
+      "matched_text": "04/12/2022 Lakeview Women's Health J1050 Medroxyprogesterone acetate, 150 mg $118.00",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Medroxyprogesterone acetate, 150 mg (billed)",
+        "cpt": "J1050",
+        "date": "04/12/2022",
+        "facility": "Lakeview Women's Health"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          50.64,
+          158.4,
+          459.71,
+          169.39
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:32",
+      "type": "demographic",
+      "page": 10,
+      "quote": "Patient: WHITFIELD, DANA L. Guarantor: Self Payer: BlueCare PPO",
+      "matched_text": "Patient: WHITFIELD, DANA L. Guarantor: Self Payer: BlueCare PPO",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Payer",
+        "value": "BlueCare PPO (guarantor: self)"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          83.4,
+          304.54,
+          94.39
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_03_mixed_records_packet:33",
+      "type": "treatment",
+      "page": 11,
+      "quote": "Interpretation: mild non-anion-gap metabolic acidosis with borderline hyperchloremia, consistent with expected acetazolamide effect; no action required.",
+      "matched_text": "Interpretation: mild non-anion-gap metabolic acidosis with borderline hyperchloremia, consistent with expected acetazolamide effect; no action required.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Comprehensive metabolic panel (acetazolamide monitoring)",
+        "date": "01/13/2023",
+        "result": "Mild non-anion-gap metabolic acidosis with borderline hyperchloremia, consistent with expected acetazolamide effect; no action required",
+        "facility": "Ordering: P. Natarajan, MD"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          307.33,
+          499.17,
+          319.69
+        ],
+        [
+          60.0,
+          319.83,
+          222.08,
+          332.19
+        ]
+      ]
+    }
+  ],
+  "rejected": []
+}

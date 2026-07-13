@@ -1,0 +1,549 @@
+{
+  "document_id": "mock_record_02_pharmacy_scanned",
+  "source_pdf": "mock_record_02_pharmacy_scanned.pdf",
+  "model": "claude-sonnet-5",
+  "spec_version": 1,
+  "extraction_mode": "replay",
+  "pages": [
+    {
+      "number": 1,
+      "source": "ocr",
+      "mean_conf": 0.9043
+    },
+    {
+      "number": 2,
+      "source": "ocr",
+      "mean_conf": 0.7782
+    },
+    {
+      "number": 3,
+      "source": "ocr",
+      "mean_conf": 0.9439
+    }
+  ],
+  "counts": {
+    "proposed": 12,
+    "grounded": 12,
+    "rejected": 0,
+    "auto": 1,
+    "review": 9,
+    "escalated": 2
+  },
+  "by_type": {
+    "demographic": 2,
+    "exposure": 6,
+    "provider": 2,
+    "treatment": 2
+  },
+  "processing_seconds": 18.03,
+  "records": [
+    {
+      "id": "mock_record_02_pharmacy_scanned:0",
+      "type": "demographic",
+      "page": 1,
+      "quote": "PATIENT WHITFIELD, DANA L. DOB : 03/14/1991 -ADDRESS 88 CONCORD LANE APT 3B PHONE: (217) 555-0142 SPRINGFIELD, IL 62704",
+      "matched_text": "PATIENT WHITFIELD, DANA L. DOB : 03/14/1991 -ADDRESS 88 CONCORD LANE APT 3B PHONE: (217) 555-0142 SPRINGFIELD, IL 62704",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Date of birth",
+        "value": "03/14/1991"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9043,
+      "word_conf": 0.9168,
+      "confidence": 0.8245,
+      "routing": "review",
+      "rects": [
+        [
+          50.16,
+          114.72,
+          341.52,
+          126.0
+        ],
+        [
+          48.48,
+          124.32,
+          366.24,
+          136.32
+        ],
+        [
+          100.56,
+          136.8,
+          204.72,
+          144.0
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:1",
+      "type": "demographic",
+      "page": 1,
+      "quote": "-ADDRESS 88 CONCORD LANE APT 3B PHONE: (217) 555-0142 SPRINGFIELD, IL 62704",
+      "matched_text": "-ADDRESS 88 CONCORD LANE APT 3B PHONE: (217) 555-0142 SPRINGFIELD, IL 62704",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Address",
+        "value": "88 Concord Lane Apt 3B, Springfield, IL 62704"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9043,
+      "word_conf": 0.9533,
+      "confidence": 0.8245,
+      "routing": "review",
+      "rects": [
+        [
+          48.48,
+          124.32,
+          366.24,
+          136.32
+        ],
+        [
+          100.56,
+          136.8,
+          204.72,
+          144.0
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:2",
+      "type": "provider",
+      "page": 1,
+      "quote": "NORTHGATE PHARMAC .Y #204 902 Northgate Plaza, Springfield, IL. 62702 Tel .(217) 555-0290 Fax (217) 555-0291",
+      "matched_text": "NORTHGATE PHARMAC .Y #204 902 Northgate Plaza, Springfield, IL. 62702 Tel .(217) 555-0290 Fax (217) 555-0291",
+      "certainty": "medium",
+      "reported_by": null,
+      "data": {
+        "name": "Northgate Pharmacy #204",
+        "role": "Dispensing pharmacy",
+        "address": "902 Northgate Plaza, Springfield, IL 62702",
+        "phone": "(217) 555-0290"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9043,
+      "word_conf": 0.855,
+      "confidence": 0.68,
+      "routing": "review",
+      "rects": [
+        [
+          116.64,
+          52.08,
+          342.48,
+          62.16
+        ],
+        [
+          117.12,
+          62.16,
+          327.36,
+          71.76
+        ],
+        [
+          116.4,
+          73.44,
+          317.04,
+          82.56
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:3",
+      "type": "exposure",
+      "page": 1,
+      "quote": "7742810 09/07/2022 IBUPROFEN 600 MG TAB 60 30. GRANT, SOFIA DO GENERIC FOR: MOTRIN SIG: TAKE 1 TABLET BY MOUTH EVERY 6 HOURS AS NEEDED NDC: 53746-0131-05",
+      "matched_text": "7742810 09/07/2022 IBUPROFEN 600 MG TAB 60 30. GRANT, SOFIA DO GENERIC FOR: MOTRIN SIG: TAKE 1 TABLET BY MOUTH EVERY 6 HOURS AS NEEDED NDC: 53746-0131-05",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Ibuprofen",
+        "dose": "600 mg",
+        "route": "oral tablet",
+        "frequency": "Take 1 tablet by mouth every 6 hours as needed",
+        "start_date": "09/07/2022",
+        "prescriber": "Grant, Sofia DO",
+        "ndc": "53746-0131-05",
+        "facility": "Northgate Pharmacy #204"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9043,
+      "word_conf": 0.9526,
+      "confidence": 0.8245,
+      "routing": "review",
+      "rects": [
+        [
+          48.96,
+          198.96,
+          441.12,
+          211.92
+        ],
+        [
+          149.04,
+          211.92,
+          244.56,
+          218.88
+        ],
+        [
+          149.28,
+          222.48,
+          405.36,
+          232.8
+        ],
+        [
+          148.56,
+          233.28,
+          238.32,
+          240.24
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:4",
+      "type": "exposure",
+      "page": 1,
+      "quote": "7756934 10/29/2022 SUMATRIPTAN SUCCINATE 50 MG TAB 9 30 GRANT, SOFIA DO ! GENERIC FOR: IMITREX SIG: TAKE 1 TABLET AT ONSET OF HEADACHE; MAX 2 PER DAY NDC: 00378-0221-93",
+      "matched_text": "7756934 10/29/2022 SUMATRIPTAN SUCCINATE 50 MG TAB 9 30 GRANT, SOFIA DO ! GENERIC FOR: IMITREX SIG: TAKE 1 TABLET AT ONSET OF HEADACHE; MAX 2 PER DAY NDC: 00378-0221-93",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Sumatriptan succinate",
+        "dose": "50 mg",
+        "route": "oral tablet",
+        "frequency": "Take 1 tablet at onset of headache; max 2 per day",
+        "start_date": "10/29/2022",
+        "prescriber": "Grant, Sofia DO",
+        "ndc": "00378-0221-93",
+        "facility": "Northgate Pharmacy #204"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9043,
+      "word_conf": 0.9143,
+      "confidence": 0.8245,
+      "routing": "review",
+      "rects": [
+        [
+          47.76,
+          252.0,
+          440.16,
+          264.96
+        ],
+        [
+          148.08,
+          264.96,
+          248.4,
+          271.92
+        ],
+        [
+          148.32,
+          275.28,
+          419.76,
+          285.6
+        ],
+        [
+          147.6,
+          286.08,
+          237.12,
+          293.04
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:5",
+      "type": "exposure",
+      "page": 1,
+      "quote": "7761187 11/28/2022 SUMATRIPTAN SUCCINATE 50 MG: TAB 9 30 GRANT, SOFIA DO REFILL 1 OF 1 NDC: 00378-0221-93",
+      "matched_text": "7761187 11/28/2022 SUMATRIPTAN SUCCINATE 50 MG: TAB 9 30 GRANT, SOFIA DO REFILL 1 OF 1 NDC: 00378-0221-93",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Sumatriptan succinate",
+        "dose": "50 mg",
+        "route": "oral tablet",
+        "frequency": "Refill 1 of 1",
+        "start_date": "11/28/2022",
+        "prescriber": "Grant, Sofia DO",
+        "ndc": "00378-0221-93",
+        "facility": "Northgate Pharmacy #204"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9043,
+      "word_conf": 0.82,
+      "confidence": 0.8245,
+      "routing": "review",
+      "rects": [
+        [
+          46.8,
+          305.28,
+          439.2,
+          318.24
+        ],
+        [
+          147.12,
+          317.76,
+          211.68,
+          324.24
+        ],
+        [
+          146.88,
+          328.56,
+          236.4,
+          335.52
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:6",
+      "type": "exposure",
+      "page": 1,
+      "quote": "7769452 12/17/2022 ACETAZOLAMIDE 250 MG. TAB 120 30. NATARAJAN, PRIYA MD SIG: TAKE 2 TABLETS (500 MG) BY MOUTH TWICE DAILY NDC: 00185-0742-01",
+      "matched_text": "7769452 12/17/2022 ACETAZOLAMIDE 250 MG. TAB 120 30. NATARAJAN, PRIYA MD SIG: TAKE 2 TABLETS (500 MG) BY MOUTH TWICE DAILY NDC: 00185-0742-01",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Acetazolamide",
+        "dose": "250 mg tablets \u2014 take 2 tablets (500 mg)",
+        "route": "oral tablet",
+        "frequency": "Take 2 tablets (500 mg) by mouth twice daily",
+        "start_date": "12/17/2022",
+        "prescriber": "Natarajan, Priya MD",
+        "ndc": "00185-0742-01",
+        "facility": "Northgate Pharmacy #204"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9043,
+      "word_conf": 0.85,
+      "confidence": 0.8245,
+      "routing": "review",
+      "rects": [
+        [
+          46.08,
+          347.04,
+          458.4,
+          360.72
+        ],
+        [
+          146.64,
+          360.24,
+          392.88,
+          370.08
+        ],
+        [
+          145.92,
+          370.8,
+          235.68,
+          377.52
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:7",
+      "type": "exposure",
+      "page": 1,
+      "quote": "7781203 01/16/2023 ACETAZOLAMIDE 250 MG TAB 120 30 NATARAJAN, PRIYA MD : REFILL 1 OF 3 NDC: 00185-0742-01",
+      "matched_text": "7781203 01/16/2023 ACETAZOLAMIDE 250 MG TAB 120 30 NATARAJAN, PRIYA MD : REFILL 1 OF 3 NDC: 00185-0742-01",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Acetazolamide",
+        "dose": "250 mg",
+        "route": "oral tablet",
+        "frequency": "Refill 1 of 3",
+        "start_date": "01/16/2023",
+        "prescriber": "Natarajan, Priya MD",
+        "ndc": "00185-0742-01",
+        "facility": "Northgate Pharmacy #204"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9043,
+      "word_conf": 0.8861,
+      "confidence": 0.8245,
+      "routing": "review",
+      "rects": [
+        [
+          45.36,
+          389.76,
+          457.68,
+          403.2
+        ],
+        [
+          83.04,
+          402.72,
+          209.76,
+          409.2
+        ],
+        [
+          145.2,
+          413.04,
+          234.96,
+          420.0
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:8",
+      "type": "exposure",
+      "page": 1,
+      "quote": "NOTE: INJECTABLE CONTRACEPTIVE (DEPO-PROVERA 150 MG/ML) ADMINISTERED AT PRESCRIBER OFFICE PER PATIENT REPORT; NOT DISPENSED BY THIS PHARMACY.",
+      "matched_text": "NOTE: INJECTABLE CONTRACEPTIVE (DEPO-PROVERA 150 MG/ML) ADMINISTERED AT PRESCRIBER OFFICE PER PATIENT REPORT; NOT DISPENSED BY THIS PHARMACY.",
+      "certainty": "medium",
+      "reported_by": "patient",
+      "data": {
+        "drug": "Depo-Provera (injectable contraceptive)",
+        "dose": "150 mg/mL",
+        "route": "Administered at prescriber office",
+        "facility": "Not dispensed by Northgate Pharmacy #204"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9043,
+      "word_conf": 0.9467,
+      "confidence": 0.68,
+      "routing": "review",
+      "rects": [
+        [
+          43.92,
+          432.48,
+          401.52,
+          444.48
+        ],
+        [
+          44.16,
+          443.04,
+          389.52,
+          454.8
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:9",
+      "type": "treatment",
+      "page": 2,
+      "quote": "COUNSELING RECORD: 12/17/2022 PATIENT COUNSELED ON ACETAZOLAMIDE - NEW THERAPY. DISCUSSED PARESTHESIA, HYDRATION, TAKE WITH FOOD.",
+      "matched_text": "COUNSELING RECORD: 12/17/2022 PATIENT COUNSELED ON ACETAZOLAMIDE - NEW THERAPY. DISCUSSED PARESTHESIA, HYDRATION, TAKE WITH FOOD.",
+      "certainty": "medium",
+      "reported_by": null,
+      "data": {
+        "intervention": "Pharmacist counseling \u2014 acetazolamide, new therapy",
+        "date": "12/17/2022",
+        "result": "Discussed paresthesia, hydration, take with food",
+        "facility": "Northgate Pharmacy #204"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.7782,
+      "word_conf": 0.945,
+      "confidence": 0.5852,
+      "routing": "escalated",
+      "rects": [
+        [
+          45.12,
+          408.72,
+          133.92,
+          415.2
+        ],
+        [
+          55.92,
+          414.72,
+          360.96,
+          426.24
+        ],
+        [
+          115.68,
+          426.24,
+          360.96,
+          435.36
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:10",
+      "type": "treatment",
+      "page": 2,
+      "quote": "10/29/2022 PATIENT COUNSELED ON SUMATRIPTAN - NEW THERAPY. DISCUSSED MAX DAILY DOSE AND SEROTONIN SYNDROME WARNING SIGNS.",
+      "matched_text": "10/29/2022 PATIENT COUNSELED ON SUMATRIPTAN - NEW THERAPY. DISCUSSED MAX DAILY DOSE AND SEROTONIN SYNDROME WARNING SIGNS.",
+      "certainty": "medium",
+      "reported_by": null,
+      "data": {
+        "intervention": "Pharmacist counseling \u2014 sumatriptan, new therapy",
+        "date": "10/29/2022",
+        "result": "Discussed max daily dose and serotonin syndrome warning signs",
+        "facility": "Northgate Pharmacy #204"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.7782,
+      "word_conf": 0.9494,
+      "confidence": 0.5852,
+      "routing": "escalated",
+      "rects": [
+        [
+          56.4,
+          447.12,
+          351.36,
+          457.92
+        ],
+        [
+          116.4,
+          457.92,
+          352.8,
+          466.8
+        ],
+        [
+          116.4,
+          471.12,
+          185.28,
+          477.36
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_02_pharmacy_scanned:11",
+      "type": "provider",
+      "page": 3,
+      "quote": "FROM : NORTHGATE PHARMACY #204 / R. DELGADO, RPH FAX : (217) 555-0291",
+      "matched_text": "FROM : NORTHGATE PHARMACY #204 / R. DELGADO, RPH FAX : (217) 555-0291",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "name": "R. Delgado",
+        "credential": "RPh",
+        "role": "Dispensing pharmacist, Northgate Pharmacy #204"
+      },
+      "grounding": 1.0,
+      "source": "ocr",
+      "page_conf": 0.9439,
+      "word_conf": 0.9238,
+      "confidence": 0.8606,
+      "routing": "auto",
+      "rects": [
+        [
+          58.08,
+          116.88,
+          101.28,
+          122.64
+        ],
+        [
+          108.0,
+          115.2,
+          314.4,
+          125.52
+        ],
+        [
+          57.84,
+          127.44,
+          177.84,
+          134.16
+        ]
+      ]
+    }
+  ],
+  "rejected": []
+}

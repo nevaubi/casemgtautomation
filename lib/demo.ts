@@ -45,6 +45,9 @@ export interface DocMeta {
   processingSeconds: number;
   enrichedPdf: string;
   findingsJson: string;
+  /** Structured records from the LLM extraction stage (see lib/records.ts). */
+  recordsJson?: string;
+  recordCounts?: { total: number; auto: number; review: number; escalated: number; rejected: number };
   status: "Auto-Processed" | "Needs Review";
 }
 
@@ -61,6 +64,12 @@ export interface Manifest {
   documents: DocMeta[];
   generatedAt: string;
   pipelineVersion: string;
+  extraction?: {
+    model: string;
+    specVersion: number;
+    stage: string;
+    totals: { records: number; auto: number; review: number; escalated: number; rejected: number };
+  };
 }
 
 export interface AuditEvent {

@@ -1,0 +1,139 @@
+{
+  "document_id": "mock_record_05_neuro_ophthalmology_followup",
+  "model": "claude-sonnet-5",
+  "records": [
+    {
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "Returns six weeks after diagnosis of idiopathic intracranial hypertension (G93.2), confirmed by lumbar puncture on 12/16/2022 with opening pressure of 32 cm H2O.",
+      "certainty": "high",
+      "data": {
+        "condition": "Idiopathic intracranial hypertension",
+        "icd10": "G93.2",
+        "date": "12/16/2022",
+        "confirming_test": "Lumbar puncture 12/16/2022 — opening pressure 32 cm H2O",
+        "status": "Confirmed"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 1,
+      "quote": "Acetazolamide 500 mg PO BID started 12/16/2022 and has been tolerated aside from mild paresthesias.",
+      "certainty": "high",
+      "data": {
+        "drug": "Acetazolamide",
+        "dose": "500 mg",
+        "route": "PO",
+        "frequency": "BID",
+        "start_date": "12/16/2022"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 1,
+      "quote": "Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset",
+      "certainty": "high",
+      "data": {
+        "drug": "Depo-Provera (medroxyprogesterone acetate)",
+        "end_date": "01/05/2023"
+      }
+    },
+    {
+      "type": "causation",
+      "page": 1,
+      "quote": "Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset; treating providers agree the agent is best regarded as a contributing factor and should be discontinued permanently.",
+      "certainty": "high",
+      "data": {
+        "statement": "Depo-Provera (medroxyprogesterone acetate) was discontinued as of 01/05/2023 given the temporal relationship between injectable contraceptive exposure and symptom onset; treating providers agree the agent is best regarded as a contributing factor and should be discontinued permanently.",
+        "relationship": "contributing factor; temporal relationship between exposure and symptom onset",
+        "author": "C. Okafor, MD",
+        "date": "01/20/2023"
+      }
+    },
+    {
+      "type": "negated_finding",
+      "page": 1,
+      "quote": "Denies pulsatile tinnitus. No transient visual obscurations since early January.",
+      "certainty": "high",
+      "data": {
+        "condition": "Pulsatile tinnitus",
+        "date": "01/20/2023",
+        "result": "Denied at 01/20/2023 follow-up"
+      }
+    },
+    {
+      "type": "treatment",
+      "page": 1,
+      "quote": "Fundus: optic disc edema improving; Frisen grade 1 OU (previously grade 3 OD, grade 2 OS on 11/21/2022). No hemorrhages.",
+      "certainty": "high",
+      "data": {
+        "intervention": "Dilated fundus examination",
+        "date": "01/20/2023",
+        "result": "Optic disc edema improving; Frisen grade 1 OU (previously grade 3 OD, grade 2 OS on 11/21/2022)",
+        "facility": "Northgate Eye Specialists"
+      }
+    },
+    {
+      "type": "treatment",
+      "page": 2,
+      "quote": "INTERPRETATION Enlarged blind spot OU, improved from 12/16/2022 baseline (MD -5.4 / -4.6). No new focal defects. Findings consistent with resolving papilledema.",
+      "certainty": "high",
+      "data": {
+        "intervention": "Humphrey Visual Field 24-2 SITA-Fast",
+        "date": "01/20/2023",
+        "result": "Enlarged blind spot OU, improved from 12/16/2022 baseline (MD -5.4 / -4.6); no new focal defects; consistent with resolving papilledema",
+        "facility": "Northgate Eye Specialists"
+      }
+    },
+    {
+      "type": "treatment",
+      "page": 3,
+      "quote": "OCT RETINAL NERVE FIBER LAYER Average RNFL: OD 128 um (prev 186) OS 119 um (prev 171)",
+      "certainty": "high",
+      "data": {
+        "intervention": "OCT retinal nerve fiber layer analysis",
+        "date": "01/20/2023",
+        "result": "Average RNFL OD 128 um (prev 186), OS 119 um (prev 171) — optic disc edema resolving bilaterally",
+        "facility": "Northgate Eye Specialists"
+      }
+    },
+    {
+      "type": "diagnosis",
+      "page": 3,
+      "quote": "2. Papilledema, bilateral (H47.10) · Frisen grade 1 OU, improving.",
+      "certainty": "high",
+      "data": {
+        "condition": "Papilledema, bilateral",
+        "icd10": "H47.10",
+        "date": "01/20/2023",
+        "status": "Frisen grade 1 OU, improving",
+        "diagnosed_by": "C. Okafor, MD"
+      }
+    },
+    {
+      "type": "causation",
+      "page": 3,
+      "quote": "3. Contraception counseling deferred to gynecology; injectable medroxyprogesterone remains contraindicated in this patient.",
+      "certainty": "high",
+      "data": {
+        "statement": "Contraception counseling deferred to gynecology; injectable medroxyprogesterone remains contraindicated in this patient.",
+        "relationship": "injectable medroxyprogesterone remains contraindicated",
+        "author": "C. Okafor, MD",
+        "date": "01/20/2023"
+      }
+    },
+    {
+      "type": "provider",
+      "page": 3,
+      "quote": "Electronically signed: C. Okafor, MD · 01/20/2023 15:22",
+      "certainty": "high",
+      "data": {
+        "name": "C. Okafor",
+        "credential": "MD",
+        "specialty": "Neuro-ophthalmology",
+        "role": "Neuro-ophthalmology follow-up; documented causation opinion (01/20/2023)",
+        "facility": "Northgate Eye Specialists"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1077 @@
+{
+  "document_id": "mock_record_01_gyn_medication_history",
+  "source_pdf": "mock_record_01_gyn_medication_history.pdf",
+  "model": "claude-sonnet-5",
+  "spec_version": 1,
+  "extraction_mode": "replay",
+  "pages": [
+    {
+      "number": 1,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 2,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 3,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 4,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 5,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    }
+  ],
+  "counts": {
+    "proposed": 32,
+    "grounded": 32,
+    "rejected": 0,
+    "auto": 27,
+    "review": 5,
+    "escalated": 0
+  },
+  "by_type": {
+    "administration": 6,
+    "demographic": 11,
+    "diagnosis": 5,
+    "exposure": 6,
+    "negated_finding": 1,
+    "provider": 1,
+    "treatment": 2
+  },
+  "processing_seconds": 0.04,
+  "records": [
+    {
+      "id": "mock_record_01_gyn_medication_history:0",
+      "type": "demographic",
+      "page": 1,
+      "quote": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "matched_text": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Full name",
+        "value": "WHITFIELD, DANA L."
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          154.96,
+          495.27,
+          166.71
+        ],
+        [
+          60.0,
+          170.96,
+          473.54,
+          182.71
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:1",
+      "type": "demographic",
+      "page": 1,
+      "quote": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "matched_text": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Date of birth",
+        "value": "03/14/1991"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          154.96,
+          495.27,
+          166.71
+        ],
+        [
+          60.0,
+          170.96,
+          473.54,
+          182.71
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:2",
+      "type": "demographic",
+      "page": 1,
+      "quote": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "matched_text": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Sex",
+        "value": "Female"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          154.96,
+          495.27,
+          166.71
+        ],
+        [
+          60.0,
+          170.96,
+          473.54,
+          182.71
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:3",
+      "type": "demographic",
+      "page": 1,
+      "quote": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "matched_text": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Medical record number",
+        "value": "LWH-004821 (Lakeview Women's Health Clinic)"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          154.96,
+          495.27,
+          166.71
+        ],
+        [
+          60.0,
+          170.96,
+          473.54,
+          182.71
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:4",
+      "type": "demographic",
+      "page": 1,
+      "quote": "Address: 88 Concord Lane, Apt 3B, Springfield, IL 62704 Phone: (217) 555-0142",
+      "matched_text": "Address: 88 Concord Lane, Apt 3B, Springfield, IL 62704 Phone: (217) 555-0142",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Address",
+        "value": "88 Concord Lane, Apt 3B, Springfield, IL 62704"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          186.96,
+          503.31,
+          198.71
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:5",
+      "type": "demographic",
+      "page": 1,
+      "quote": "Address: 88 Concord Lane, Apt 3B, Springfield, IL 62704 Phone: (217) 555-0142",
+      "matched_text": "Address: 88 Concord Lane, Apt 3B, Springfield, IL 62704 Phone: (217) 555-0142",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Phone",
+        "value": "(217) 555-0142"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          186.96,
+          503.31,
+          198.71
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:6",
+      "type": "demographic",
+      "page": 1,
+      "quote": "Insurance: BlueCare PPO \u2022 Member ID XQP448210077 \u2022 Group 55210",
+      "matched_text": "Insurance: BlueCare PPO \u2022 Member ID XQP448210077 \u2022 Group 55210",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Insurer",
+        "value": "BlueCare PPO \u2014 Member ID XQP448210077, Group 55210"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          202.96,
+          374.29,
+          214.71
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:7",
+      "type": "demographic",
+      "page": 1,
+      "quote": "Allergies NKDA \u2014 No known drug allergies (reviewed 01/05/2023).",
+      "matched_text": "Allergies NKDA \u2014 No known drug allergies (reviewed 01/05/2023).",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Allergies",
+        "value": "NKDA \u2014 no known drug allergies (reviewed 01/05/2023)"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          360.83,
+          104.35,
+          375.34
+        ],
+        [
+          60.0,
+          378.93,
+          290.08,
+          391.29
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:8",
+      "type": "provider",
+      "page": 1,
+      "quote": "Primary Provider: Alan Reyes, MD (NPI 1093817465)",
+      "matched_text": "Primary Provider: Alan Reyes, MD (NPI 1093817465)",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "name": "Alan Reyes",
+        "credential": "MD",
+        "npi": "1093817465",
+        "role": "Primary Provider"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          362.4,
+          202.96,
+          578.42,
+          214.64
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:9",
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "04/13/2021 Encounter for contraceptive management, injectable Z30.42 Resolved 01/05/2023",
+      "matched_text": "04/13/2021 Encounter for contraceptive management, injectable Z30.42 Resolved 01/05/2023",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Encounter for contraceptive management, injectable",
+        "icd10": "Z30.42",
+        "date": "04/13/2021",
+        "status": "Resolved 01/05/2023"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          58.0,
+          274.0,
+          536.8,
+          284.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:10",
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "09/06/2022 Headache, intractable (per PCP records) R51.9 Active",
+      "matched_text": "09/06/2022 Headache, intractable (per PCP records) R51.9 Active",
+      "certainty": "high",
+      "reported_by": "outside record (PCP)",
+      "data": {
+        "condition": "Headache, intractable",
+        "icd10": "R51.9",
+        "date": "09/06/2022",
+        "status": "Active"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          58.0,
+          292.0,
+          482.98,
+          302.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:11",
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "11/21/2022 Papilledema, bilateral (per Northgate Eye Associates) H47.10 Active",
+      "matched_text": "11/21/2022 Papilledema, bilateral (per Northgate Eye Associates) H47.10 Active",
+      "certainty": "high",
+      "reported_by": "outside record (Northgate Eye Associates)",
+      "data": {
+        "condition": "Papilledema, bilateral",
+        "icd10": "H47.10",
+        "date": "11/21/2022",
+        "status": "Active"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          58.0,
+          310.0,
+          482.98,
+          320.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:12",
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "12/16/2022 Idiopathic intracranial hypertension G93.2 Active",
+      "matched_text": "12/16/2022 Idiopathic intracranial hypertension G93.2 Active",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Idiopathic intracranial hypertension",
+        "icd10": "G93.2",
+        "date": "12/16/2022",
+        "status": "Active"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          58.0,
+          328.0,
+          482.98,
+          338.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:13",
+      "type": "exposure",
+      "page": 2,
+      "quote": "Depo-Provera (medroxyprogesterone acetate) NDC 0009-0746-30 150 mg/mL, IM injection1 injection IM every 12\u201313 weeks04/13/2021 01/05/2023 A. Reyes, MD This clinic",
+      "matched_text": "Depo-Provera (medroxyprogesterone acetate) NDC 0009-0746-30 150 mg/mL, IM injection1 injection IM every 12\u201313 weeks04/13/2021 01/05/2023 A. Reyes, MD This clinic",
+      "certainty": "medium",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera (medroxyprogesterone acetate)",
+        "ndc": "0009-0746-30",
+        "dose": "150 mg/mL",
+        "route": "IM injection",
+        "frequency": "1 injection IM every 12\u201313 weeks",
+        "start_date": "04/13/2021",
+        "end_date": "01/05/2023",
+        "prescriber": "A. Reyes, MD"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.792,
+      "routing": "review",
+      "rects": [
+        [
+          24.16,
+          136.0,
+          187.78,
+          146.99
+        ],
+        [
+          24.16,
+          148.0,
+          93.52,
+          158.99
+        ],
+        [
+          164.56,
+          136.0,
+          562.55,
+          146.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:14",
+      "type": "exposure",
+      "page": 2,
+      "quote": "Ibuprofen 600 mg, oral tablet 1 tab PO q6h PRN headache 09/06/2022 \u2014 S. Grant, DO Reconciled \u2013 PCP",
+      "matched_text": "Ibuprofen 600 mg, oral tablet 1 tab PO q6h PRN headache 09/06/2022 \u2014 S. Grant, DO Reconciled \u2013 PCP",
+      "certainty": "medium",
+      "reported_by": "reconciliation (PCP)",
+      "data": {
+        "drug": "Ibuprofen",
+        "dose": "600 mg",
+        "route": "oral tablet",
+        "frequency": "1 tab PO q6h PRN headache",
+        "start_date": "09/06/2022",
+        "prescriber": "S. Grant, DO"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.792,
+      "routing": "review",
+      "rects": [
+        [
+          24.16,
+          166.0,
+          592.35,
+          176.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:15",
+      "type": "exposure",
+      "page": 2,
+      "quote": "Sumatriptan 50 mg, oral tablet 1 tab PO at headache onset; max 2/day 10/28/2022 \u2014 S. Grant, DO Reconciled \u2013 PCP",
+      "matched_text": "Sumatriptan 50 mg, oral tablet 1 tab PO at headache onset; max 2/day 10/28/2022 \u2014 S. Grant, DO Reconciled \u2013 PCP",
+      "certainty": "medium",
+      "reported_by": "reconciliation (PCP)",
+      "data": {
+        "drug": "Sumatriptan",
+        "dose": "50 mg",
+        "route": "oral tablet",
+        "frequency": "1 tab PO at headache onset; max 2/day",
+        "start_date": "10/28/2022",
+        "prescriber": "S. Grant, DO"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.792,
+      "routing": "review",
+      "rects": [
+        [
+          24.16,
+          184.0,
+          592.35,
+          194.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:16",
+      "type": "exposure",
+      "page": 2,
+      "quote": "Acetazolamide 500 mg, oral tablet 1 tab PO BID 12/16/2022 \u2014 P. Natarajan, MDReconciled \u2013 Neurology",
+      "matched_text": "Acetazolamide 500 mg, oral tablet 1 tab PO BID 12/16/2022 \u2014 P. Natarajan, MDReconciled \u2013 Neurology",
+      "certainty": "medium",
+      "reported_by": "reconciliation (Neurology)",
+      "data": {
+        "drug": "Acetazolamide",
+        "dose": "500 mg",
+        "route": "oral tablet",
+        "frequency": "1 tab PO BID",
+        "start_date": "12/16/2022",
+        "prescriber": "P. Natarajan, MD"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.792,
+      "routing": "review",
+      "rects": [
+        [
+          24.16,
+          202.0,
+          612.36,
+          212.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:17",
+      "type": "exposure",
+      "page": 2,
+      "quote": "Prenatal multivitamin oral tablet 1 tab PO daily 04/13/2021 10/01/2021 A. Reyes, MD This clinic",
+      "matched_text": "Prenatal multivitamin oral tablet 1 tab PO daily 04/13/2021 10/01/2021 A. Reyes, MD This clinic",
+      "certainty": "medium",
+      "reported_by": null,
+      "data": {
+        "drug": "Prenatal multivitamin",
+        "route": "oral tablet",
+        "frequency": "1 tab PO daily",
+        "start_date": "04/13/2021",
+        "end_date": "10/01/2021",
+        "prescriber": "A. Reyes, MD"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.792,
+      "routing": "review",
+      "rects": [
+        [
+          24.16,
+          220.0,
+          562.55,
+          230.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:18",
+      "type": "administration",
+      "page": 2,
+      "quote": "1 04/13/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 L deltoid M. Ortiz, RN",
+      "matched_text": "1 04/13/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 L deltoid M. Ortiz, RN",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "04/13/2021",
+        "ndc": "0009-0746-30",
+        "lot": "KJ4471",
+        "site": "L deltoid",
+        "administered_by": "M. Ortiz, RN"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          55.48,
+          294.0,
+          525.72,
+          304.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:19",
+      "type": "administration",
+      "page": 2,
+      "quote": "2 07/20/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 R deltoid M. Ortiz, RN",
+      "matched_text": "2 07/20/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 R deltoid M. Ortiz, RN",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "07/20/2021",
+        "ndc": "0009-0746-30",
+        "lot": "KJ4471",
+        "site": "R deltoid",
+        "administered_by": "M. Ortiz, RN"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          55.48,
+          312.0,
+          525.72,
+          322.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:20",
+      "type": "administration",
+      "page": 2,
+      "quote": "3 10/19/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 L deltoid C. Boateng, LPN",
+      "matched_text": "3 10/19/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 L deltoid C. Boateng, LPN",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "10/19/2021",
+        "ndc": "0009-0746-30",
+        "lot": "LM0283",
+        "site": "L deltoid",
+        "administered_by": "C. Boateng, LPN"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          55.48,
+          330.0,
+          541.75,
+          340.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:21",
+      "type": "administration",
+      "page": 2,
+      "quote": "4 01/18/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 R gluteal M. Ortiz, RN",
+      "matched_text": "4 01/18/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 R gluteal M. Ortiz, RN",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "01/18/2022",
+        "ndc": "0009-0746-30",
+        "lot": "LM0283",
+        "site": "R gluteal",
+        "administered_by": "M. Ortiz, RN"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          55.48,
+          348.0,
+          525.72,
+          358.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:22",
+      "type": "administration",
+      "page": 2,
+      "quote": "5 04/12/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 L deltoid C. Boateng, LPN",
+      "matched_text": "5 04/12/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 L deltoid C. Boateng, LPN",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "04/12/2022",
+        "ndc": "0009-0746-30",
+        "lot": "NP7719",
+        "site": "L deltoid",
+        "administered_by": "C. Boateng, LPN"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          55.48,
+          366.0,
+          541.75,
+          376.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:23",
+      "type": "administration",
+      "page": 2,
+      "quote": "6 07/19/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 R deltoid M. Ortiz, RN",
+      "matched_text": "6 07/19/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 R deltoid M. Ortiz, RN",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "07/19/2022",
+        "ndc": "0009-0746-30",
+        "lot": "NP7719",
+        "site": "R deltoid",
+        "administered_by": "M. Ortiz, RN"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          55.48,
+          384.0,
+          525.72,
+          394.99
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:24",
+      "type": "negated_finding",
+      "page": 3,
+      "quote": "Office Visit \u2014 Contraceptive Initiation \u2014 04/13/2021 Subjective: 30-year-old female presents to establish injectable contraception. Prior combined oral contraceptive use without complication. No current headaches, no visual complaints.",
+      "matched_text": "Office Visit \u2014 Contraceptive Initiation \u2014 04/13/2021 Subjective: 30-year-old female presents to establish injectable contraception. Prior combined oral contraceptive use without complication. No current headaches, no visual complaints.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Headache",
+        "date": "04/13/2021",
+        "result": "Absent at contraceptive initiation \u2014 \"No current headaches, no visual complaints\""
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          80.83,
+          316.76,
+          95.34
+        ],
+        [
+          60.0,
+          98.92,
+          523.69,
+          111.36
+        ],
+        [
+          60.0,
+          111.42,
+          323.11,
+          123.79
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:25",
+      "type": "demographic",
+      "page": 3,
+      "quote": "No current headaches, no visual complaints. Denies tobacco use.",
+      "matched_text": "No current headaches, no visual complaints. Denies tobacco use.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Tobacco use",
+        "value": "Denies tobacco use (04/13/2021)"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          146.03,
+          111.42,
+          407.15,
+          123.79
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:26",
+      "type": "demographic",
+      "page": 3,
+      "quote": "Objective: BP 116/72, HR 74, BMI 24.8. Urine hCG negative today.",
+      "matched_text": "Objective: BP 116/72, HR 74, BMI 24.8. Urine hCG negative today.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "BMI at contraceptive initiation",
+        "value": "24.8 (04/13/2021)"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          126.92,
+          330.63,
+          139.36
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:27",
+      "type": "demographic",
+      "page": 3,
+      "quote": "Objective: BP 120/78, HR 76, Weight 152 lb.",
+      "matched_text": "Objective: BP 120/78, HR 76, Weight 152 lb.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Weight",
+        "value": "152 lb (04/12/2022)"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          276.43,
+          241.09,
+          288.86
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:28",
+      "type": "treatment",
+      "page": 4,
+      "quote": "Telephone Encounter \u2014 10/14/2022 Patient called to defer injection scheduled for week of 10/18/2022. Reports ongoing headaches under evaluation by primary care.",
+      "matched_text": "Telephone Encounter \u2014 10/14/2022 Patient called to defer injection scheduled for week of 10/18/2022. Reports ongoing headaches under evaluation by primary care.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Scheduled Depo-Provera injection deferred by patient",
+        "date": "10/14/2022",
+        "result": "Injection due week of 10/18/2022 not administered; ongoing headaches under evaluation by primary care"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          60.0,
+          230.33,
+          236.23,
+          244.84
+        ],
+        [
+          60.0,
+          248.42,
+          551.26,
+          260.79
+        ],
+        [
+          60.0,
+          260.92,
+          80.01,
+          273.29
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:29",
+      "type": "diagnosis",
+      "page": 5,
+      "quote": "Since last injection she has been diagnosed with idiopathic intracranial hypertension (G93.2) by Dr. Priya Natarajan, Springfield Neurology Group, following lumbar puncture on 12/16/2022 (opening pressure 32 cm H2O per outside record).",
+      "matched_text": "Since last injection she has been diagnosed with idiopathic intracranial hypertension (G93.2) by Dr. Priya Natarajan, Springfield Neurology Group, following lumbar puncture on 12/16/2022 (opening pressure 32 cm H2O per outside record).",
+      "certainty": "high",
+      "reported_by": "outside record (Springfield Neurology Group)",
+      "data": {
+        "condition": "Idiopathic intracranial hypertension",
+        "icd10": "G93.2",
+        "date": "12/16/2022",
+        "diagnosed_by": "Dr. Priya Natarajan, Springfield Neurology Group",
+        "confirming_test": "Lumbar puncture 12/16/2022, opening pressure 32 cm H2O"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          288.1,
+          98.92,
+          526.7,
+          111.36
+        ],
+        [
+          60.0,
+          111.42,
+          530.17,
+          123.86
+        ],
+        [
+          60.0,
+          123.92,
+          308.62,
+          136.29
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:30",
+      "type": "exposure",
+      "page": 5,
+      "quote": "Currently taking acetazolamide 500 mg BID.",
+      "matched_text": "Currently taking acetazolamide 500 mg BID.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "drug": "Acetazolamide",
+        "dose": "500 mg",
+        "frequency": "BID"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          311.12,
+          123.92,
+          487.18,
+          136.29
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_01_gyn_medication_history:31",
+      "type": "treatment",
+      "page": 5,
+      "quote": "In light of neurology's recommendation, Depo-Provera is discontinued as of today. Last dose administered 07/19/2022.",
+      "matched_text": "In light of neurology's recommendation, Depo-Provera is discontinued as of today. Last dose administered 07/19/2022.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Depo-Provera discontinued in light of neurology's recommendation",
+        "result": "Last dose administered 07/19/2022"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          140.03,
+          151.92,
+          520.89,
+          164.36
+        ],
+        [
+          60.0,
+          164.42,
+          161.56,
+          176.79
+        ]
+      ]
+    }
+  ],
+  "rejected": []
+}

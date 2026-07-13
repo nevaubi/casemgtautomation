@@ -1,0 +1,337 @@
+{
+  "document_id": "mock_record_04_mri_mrv_radiology",
+  "source_pdf": "mock_record_04_mri_mrv_radiology.pdf",
+  "model": "claude-sonnet-5",
+  "spec_version": 1,
+  "extraction_mode": "replay",
+  "pages": [
+    {
+      "number": 1,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    },
+    {
+      "number": 2,
+      "source": "text_layer",
+      "mean_conf": 0.99
+    }
+  ],
+  "counts": {
+    "proposed": 8,
+    "grounded": 8,
+    "rejected": 0,
+    "auto": 8,
+    "review": 0,
+    "escalated": 0
+  },
+  "by_type": {
+    "demographic": 1,
+    "negated_finding": 3,
+    "provider": 1,
+    "treatment": 3
+  },
+  "processing_seconds": 0.01,
+  "records": [
+    {
+      "id": "mock_record_04_mri_mrv_radiology:0",
+      "type": "demographic",
+      "page": 1,
+      "quote": "PATIENT: WHITFIELD, DANA L. DOB: 03/14/1991 MRN: SIC-77320",
+      "matched_text": "PATIENT: WHITFIELD, DANA L. DOB: 03/14/1991 MRN: SIC-77320",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "field": "Medical record number",
+        "value": "SIC-77320 (Springfield Imaging Center)"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          83.61,
+          437.4,
+          94.85
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_04_mri_mrv_radiology:1",
+      "type": "treatment",
+      "page": 1,
+      "quote": "EXAM: MRI BRAIN W/WO CONTRAST (CPT 70551) + MRV HEAD DATE: 12/02/2022 REFERRER: P. NATARAJAN, MD \u00b7 Springfield Neurology Associates",
+      "matched_text": "EXAM: MRI BRAIN W/WO CONTRAST (CPT 70551) + MRV HEAD DATE: 12/02/2022 REFERRER: P. NATARAJAN, MD \u00b7 Springfield Neurology Associates",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "MRI brain with/without contrast + MRV head",
+        "cpt": "70551",
+        "date": "12/02/2022",
+        "facility": "Springfield Imaging Center",
+        "prescriber": "P. Natarajan, MD"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          96.61,
+          464.4,
+          107.85
+        ],
+        [
+          54.0,
+          109.61,
+          383.4,
+          120.85
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_04_mri_mrv_radiology:2",
+      "type": "negated_finding",
+      "page": 1,
+      "quote": "Patient denies pulsatile tinnitus. Presents without vision loss at time of exam.",
+      "matched_text": "Patient denies pulsatile tinnitus. Presents without vision loss at time of exam.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Pulsatile tinnitus",
+        "date": "12/02/2022",
+        "result": "Denied at time of MRI (12/02/2022)"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          110.5,
+          173.79,
+          343.35,
+          186.84
+        ],
+        [
+          54.0,
+          187.29,
+          141.11,
+          200.34
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_04_mri_mrv_radiology:3",
+      "type": "negated_finding",
+      "page": 1,
+      "quote": "Patient denies pulsatile tinnitus. Presents without vision loss at time of exam.",
+      "matched_text": "Patient denies pulsatile tinnitus. Presents without vision loss at time of exam.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Vision loss",
+        "date": "12/02/2022",
+        "result": "Absent at time of MRI (12/02/2022)"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          110.5,
+          173.79,
+          343.35,
+          186.84
+        ],
+        [
+          54.0,
+          187.29,
+          141.11,
+          200.34
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_04_mri_mrv_radiology:4",
+      "type": "negated_finding",
+      "page": 1,
+      "quote": "Venous system (MRV): The dural venous sinuses are patent. No evidence of dural venous sinus thrombosis or focal high-grade stenosis.",
+      "matched_text": "Venous system (MRV): The dural venous sinuses are patent. No evidence of dural venous sinus thrombosis or focal high-grade stenosis.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "condition": "Dural venous sinus thrombosis",
+        "date": "12/02/2022",
+        "result": "Excluded on MRV \u2014 secondary cause of intracranial hypertension ruled out"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          374.29,
+          366.05,
+          387.34
+        ],
+        [
+          59.28,
+          387.79,
+          320.11,
+          400.84
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_04_mri_mrv_radiology:5",
+      "type": "treatment",
+      "page": 1,
+      "quote": "Orbits: Mild flattening of the posterior globes bilaterally with distension and tortuosity of the optic nerve sheath complexes, findings that can be seen with elevated intracranial pressure.",
+      "matched_text": "Orbits: Mild flattening of the posterior globes bilaterally with distension and tortuosity of the optic nerve sheath complexes, findings that can be seen with elevated intracranial pressure.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "MRI orbit findings",
+        "date": "12/02/2022",
+        "result": "Mild posterior globe flattening bilaterally with optic nerve sheath distension and tortuosity \u2014 can be seen with elevated intracranial pressure"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          333.79,
+          302.15,
+          346.84
+        ],
+        [
+          59.28,
+          347.29,
+          319.08,
+          360.34
+        ],
+        [
+          59.28,
+          360.79,
+          314.32,
+          373.84
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_04_mri_mrv_radiology:6",
+      "type": "treatment",
+      "page": 2,
+      "quote": "IMPRESSION 1. No intracranial mass, hemorrhage, or venous sinus thrombosis. 2. Partially empty sella, posterior globe flattening, and optic nerve sheath distension: constellation compatible with idiopathic intracranial hypertension in the appropriate clinical setting. 3. Recommend correlation with lumbar puncture opening pressure.",
+      "matched_text": "IMPRESSION 1. No intracranial mass, hemorrhage, or venous sinus thrombosis. 2. Partially empty sella, posterior globe flattening, and optic nerve sheath distension: constellation compatible with idiopathic intracranial hypertension in the appropriate clinical setting. 3. Recommend correlation with lumbar puncture opening pressure.",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "intervention": "Neuroradiology impression (MRI brain + MRV)",
+        "date": "12/02/2022",
+        "result": "No mass, hemorrhage, or venous sinus thrombosis. Partially empty sella, posterior globe flattening and optic nerve sheath distension \u2014 constellation compatible with idiopathic intracranial hypertension in the appropriate clinical setting. Correlation with lumbar puncture opening pressure recommended.",
+        "facility": "Springfield Imaging Center"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          82.9,
+          107.37,
+          94.61
+        ],
+        [
+          54.0,
+          99.79,
+          331.18,
+          112.84
+        ],
+        [
+          54.0,
+          113.29,
+          328.57,
+          126.34
+        ],
+        [
+          61.92,
+          126.79,
+          304.81,
+          139.84
+        ],
+        [
+          61.92,
+          140.29,
+          306.39,
+          153.34
+        ],
+        [
+          54.0,
+          153.79,
+          334.89,
+          166.84
+        ]
+      ]
+    },
+    {
+      "id": "mock_record_04_mri_mrv_radiology:7",
+      "type": "provider",
+      "page": 2,
+      "quote": "ELECTRONICALLY SIGNED R. Vasquez, MD \u00b7 Neuroradiology Signed: 12/02/2022 16:41",
+      "matched_text": "ELECTRONICALLY SIGNED R. Vasquez, MD \u00b7 Neuroradiology Signed: 12/02/2022 16:41",
+      "certainty": "high",
+      "reported_by": null,
+      "data": {
+        "name": "R. Vasquez",
+        "credential": "MD",
+        "specialty": "Neuroradiology",
+        "role": "Interpreted MRI brain + MRV (12/02/2022)",
+        "facility": "Springfield Imaging Center"
+      },
+      "grounding": 1.0,
+      "source": "text_layer",
+      "page_conf": 0.99,
+      "word_conf": 0.99,
+      "confidence": 0.9603,
+      "routing": "auto",
+      "rects": [
+        [
+          54.0,
+          178.4,
+          166.4,
+          190.11
+        ],
+        [
+          54.0,
+          197.11,
+          415.8,
+          208.35
+        ]
+      ]
+    }
+  ],
+  "rejected": []
+}

@@ -1,0 +1,407 @@
+{
+  "document_id": "mock_record_01_gyn_medication_history",
+  "model": "claude-sonnet-5",
+  "records": [
+    {
+      "type": "demographic",
+      "page": 1,
+      "quote": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "certainty": "high",
+      "data": {
+        "field": "Full name",
+        "value": "WHITFIELD, DANA L."
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 1,
+      "quote": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "certainty": "high",
+      "data": {
+        "field": "Date of birth",
+        "value": "03/14/1991"
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 1,
+      "quote": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "certainty": "high",
+      "data": {
+        "field": "Sex",
+        "value": "Female"
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 1,
+      "quote": "Patient Name: WHITFIELD, DANA L. MRN: LWH-004821 Date of Birth: 03/14/1991 Sex: Female",
+      "certainty": "high",
+      "data": {
+        "field": "Medical record number",
+        "value": "LWH-004821 (Lakeview Women's Health Clinic)"
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 1,
+      "quote": "Address: 88 Concord Lane, Apt 3B, Springfield, IL 62704 Phone: (217) 555-0142",
+      "certainty": "high",
+      "data": {
+        "field": "Address",
+        "value": "88 Concord Lane, Apt 3B, Springfield, IL 62704"
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 1,
+      "quote": "Address: 88 Concord Lane, Apt 3B, Springfield, IL 62704 Phone: (217) 555-0142",
+      "certainty": "high",
+      "data": {
+        "field": "Phone",
+        "value": "(217) 555-0142"
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 1,
+      "quote": "Insurance: BlueCare PPO • Member ID XQP448210077 • Group 55210",
+      "certainty": "high",
+      "data": {
+        "field": "Insurer",
+        "value": "BlueCare PPO — Member ID XQP448210077, Group 55210"
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 1,
+      "quote": "Allergies NKDA — No known drug allergies (reviewed 01/05/2023).",
+      "certainty": "high",
+      "data": {
+        "field": "Allergies",
+        "value": "NKDA — no known drug allergies (reviewed 01/05/2023)"
+      }
+    },
+    {
+      "type": "provider",
+      "page": 1,
+      "quote": "Primary Provider: Alan Reyes, MD (NPI 1093817465)",
+      "certainty": "high",
+      "data": {
+        "name": "Alan Reyes",
+        "credential": "MD",
+        "npi": "1093817465",
+        "role": "Primary Provider"
+      }
+    },
+    {
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "04/13/2021 Encounter for contraceptive management, injectable Z30.42 Resolved 01/05/2023",
+      "certainty": "high",
+      "data": {
+        "condition": "Encounter for contraceptive management, injectable",
+        "icd10": "Z30.42",
+        "date": "04/13/2021",
+        "status": "Resolved 01/05/2023"
+      }
+    },
+    {
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "09/06/2022 Headache, intractable (per PCP records) R51.9 Active",
+      "certainty": "high",
+      "reported_by": "outside record (PCP)",
+      "data": {
+        "condition": "Headache, intractable",
+        "icd10": "R51.9",
+        "date": "09/06/2022",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "11/21/2022 Papilledema, bilateral (per Northgate Eye Associates) H47.10 Active",
+      "certainty": "high",
+      "reported_by": "outside record (Northgate Eye Associates)",
+      "data": {
+        "condition": "Papilledema, bilateral",
+        "icd10": "H47.10",
+        "date": "11/21/2022",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "diagnosis",
+      "page": 1,
+      "quote": "12/16/2022 Idiopathic intracranial hypertension G93.2 Active",
+      "certainty": "high",
+      "data": {
+        "condition": "Idiopathic intracranial hypertension",
+        "icd10": "G93.2",
+        "date": "12/16/2022",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 2,
+      "quote": "Depo-Provera (medroxyprogesterone acetate) NDC 0009-0746-30 150 mg/mL, IM injection1 injection IM every 12–13 weeks04/13/2021 01/05/2023 A. Reyes, MD This clinic",
+      "certainty": "medium",
+      "data": {
+        "drug": "Depo-Provera (medroxyprogesterone acetate)",
+        "ndc": "0009-0746-30",
+        "dose": "150 mg/mL",
+        "route": "IM injection",
+        "frequency": "1 injection IM every 12–13 weeks",
+        "start_date": "04/13/2021",
+        "end_date": "01/05/2023",
+        "prescriber": "A. Reyes, MD"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 2,
+      "quote": "Ibuprofen 600 mg, oral tablet 1 tab PO q6h PRN headache 09/06/2022 — S. Grant, DO Reconciled – PCP",
+      "certainty": "medium",
+      "reported_by": "reconciliation (PCP)",
+      "data": {
+        "drug": "Ibuprofen",
+        "dose": "600 mg",
+        "route": "oral tablet",
+        "frequency": "1 tab PO q6h PRN headache",
+        "start_date": "09/06/2022",
+        "prescriber": "S. Grant, DO"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 2,
+      "quote": "Sumatriptan 50 mg, oral tablet 1 tab PO at headache onset; max 2/day 10/28/2022 — S. Grant, DO Reconciled – PCP",
+      "certainty": "medium",
+      "reported_by": "reconciliation (PCP)",
+      "data": {
+        "drug": "Sumatriptan",
+        "dose": "50 mg",
+        "route": "oral tablet",
+        "frequency": "1 tab PO at headache onset; max 2/day",
+        "start_date": "10/28/2022",
+        "prescriber": "S. Grant, DO"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 2,
+      "quote": "Acetazolamide 500 mg, oral tablet 1 tab PO BID 12/16/2022 — P. Natarajan, MDReconciled – Neurology",
+      "certainty": "medium",
+      "reported_by": "reconciliation (Neurology)",
+      "data": {
+        "drug": "Acetazolamide",
+        "dose": "500 mg",
+        "route": "oral tablet",
+        "frequency": "1 tab PO BID",
+        "start_date": "12/16/2022",
+        "prescriber": "P. Natarajan, MD"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 2,
+      "quote": "Prenatal multivitamin oral tablet 1 tab PO daily 04/13/2021 10/01/2021 A. Reyes, MD This clinic",
+      "certainty": "medium",
+      "data": {
+        "drug": "Prenatal multivitamin",
+        "route": "oral tablet",
+        "frequency": "1 tab PO daily",
+        "start_date": "04/13/2021",
+        "end_date": "10/01/2021",
+        "prescriber": "A. Reyes, MD"
+      }
+    },
+    {
+      "type": "administration",
+      "page": 2,
+      "quote": "1 04/13/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 L deltoid M. Ortiz, RN",
+      "certainty": "high",
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "04/13/2021",
+        "ndc": "0009-0746-30",
+        "lot": "KJ4471",
+        "site": "L deltoid",
+        "administered_by": "M. Ortiz, RN"
+      }
+    },
+    {
+      "type": "administration",
+      "page": 2,
+      "quote": "2 07/20/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 KJ4471 R deltoid M. Ortiz, RN",
+      "certainty": "high",
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "07/20/2021",
+        "ndc": "0009-0746-30",
+        "lot": "KJ4471",
+        "site": "R deltoid",
+        "administered_by": "M. Ortiz, RN"
+      }
+    },
+    {
+      "type": "administration",
+      "page": 2,
+      "quote": "3 10/19/2021 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 L deltoid C. Boateng, LPN",
+      "certainty": "high",
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "10/19/2021",
+        "ndc": "0009-0746-30",
+        "lot": "LM0283",
+        "site": "L deltoid",
+        "administered_by": "C. Boateng, LPN"
+      }
+    },
+    {
+      "type": "administration",
+      "page": 2,
+      "quote": "4 01/18/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 LM0283 R gluteal M. Ortiz, RN",
+      "certainty": "high",
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "01/18/2022",
+        "ndc": "0009-0746-30",
+        "lot": "LM0283",
+        "site": "R gluteal",
+        "administered_by": "M. Ortiz, RN"
+      }
+    },
+    {
+      "type": "administration",
+      "page": 2,
+      "quote": "5 04/12/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 L deltoid C. Boateng, LPN",
+      "certainty": "high",
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "04/12/2022",
+        "ndc": "0009-0746-30",
+        "lot": "NP7719",
+        "site": "L deltoid",
+        "administered_by": "C. Boateng, LPN"
+      }
+    },
+    {
+      "type": "administration",
+      "page": 2,
+      "quote": "6 07/19/2022 Depo-Provera 150 mg/mL IM 0009-0746-30 NP7719 R deltoid M. Ortiz, RN",
+      "certainty": "high",
+      "data": {
+        "drug": "Depo-Provera",
+        "dose": "150 mg/mL",
+        "route": "IM",
+        "date": "07/19/2022",
+        "ndc": "0009-0746-30",
+        "lot": "NP7719",
+        "site": "R deltoid",
+        "administered_by": "M. Ortiz, RN"
+      }
+    },
+    {
+      "type": "negated_finding",
+      "page": 3,
+      "quote": "Office Visit — Contraceptive Initiation — 04/13/2021 Subjective: 30-year-old female presents to establish injectable contraception. Prior combined oral contraceptive use without complication. No current headaches, no visual complaints.",
+      "certainty": "high",
+      "data": {
+        "condition": "Headache",
+        "date": "04/13/2021",
+        "result": "Absent at contraceptive initiation — \"No current headaches, no visual complaints\""
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 3,
+      "quote": "No current headaches, no visual complaints. Denies tobacco use.",
+      "certainty": "high",
+      "data": {
+        "field": "Tobacco use",
+        "value": "Denies tobacco use (04/13/2021)"
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 3,
+      "quote": "Objective: BP 116/72, HR 74, BMI 24.8. Urine hCG negative today.",
+      "certainty": "high",
+      "data": {
+        "field": "BMI at contraceptive initiation",
+        "value": "24.8 (04/13/2021)"
+      }
+    },
+    {
+      "type": "demographic",
+      "page": 3,
+      "quote": "Objective: BP 120/78, HR 76, Weight 152 lb.",
+      "certainty": "high",
+      "data": {
+        "field": "Weight",
+        "value": "152 lb (04/12/2022)"
+      }
+    },
+    {
+      "type": "treatment",
+      "page": 4,
+      "quote": "Telephone Encounter — 10/14/2022 Patient called to defer injection scheduled for week of 10/18/2022. Reports ongoing headaches under evaluation by primary care.",
+      "certainty": "high",
+      "data": {
+        "intervention": "Scheduled Depo-Provera injection deferred by patient",
+        "date": "10/14/2022",
+        "result": "Injection due week of 10/18/2022 not administered; ongoing headaches under evaluation by primary care"
+      }
+    },
+    {
+      "type": "diagnosis",
+      "page": 5,
+      "quote": "Since last injection she has been diagnosed with idiopathic intracranial hypertension (G93.2) by Dr. Priya Natarajan, Springfield Neurology Group, following lumbar puncture on 12/16/2022 (opening pressure 32 cm H2O per outside record).",
+      "certainty": "high",
+      "reported_by": "outside record (Springfield Neurology Group)",
+      "data": {
+        "condition": "Idiopathic intracranial hypertension",
+        "icd10": "G93.2",
+        "date": "12/16/2022",
+        "diagnosed_by": "Dr. Priya Natarajan, Springfield Neurology Group",
+        "confirming_test": "Lumbar puncture 12/16/2022, opening pressure 32 cm H2O"
+      }
+    },
+    {
+      "type": "exposure",
+      "page": 5,
+      "quote": "Currently taking acetazolamide 500 mg BID.",
+      "certainty": "high",
+      "data": {
+        "drug": "Acetazolamide",
+        "dose": "500 mg",
+        "frequency": "BID",
+        "start_date": ""
+      }
+    },
+    {
+      "type": "treatment",
+      "page": 5,
+      "quote": "In light of neurology's recommendation, Depo-Provera is discontinued as of today. Last dose administered 07/19/2022.",
+      "certainty": "high",
+      "data": {
+        "intervention": "Depo-Provera discontinued in light of neurology's recommendation",
+        "result": "Last dose administered 07/19/2022"
+      }
+    }
+  ]
+}

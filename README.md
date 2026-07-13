@@ -41,6 +41,84 @@ Adjust the term taxonomy in `pipeline/casepipe/terms.json` (categories → terms
 variants, negation cues, thresholds). Regenerate UI demo assets by re-running the
 pipeline and copying outputs to `public/demo/` (see `public/demo/manifest.json`).
 
+## Record extraction (Claude Sonnet 5)
+
+The term matcher above proves that a term *appears* in a document. A Plaintiff
+Fact Sheet needs more than that: it needs the dose, the route, the prescriber,
+the date the drug was actually injected, the ICD-10 code, the test that
+confirmed the diagnosis. Those are fields, not keyword hits, so a second stage
+extracts them.
+
+```bash
+export ANTHROPIC_API_KEY=...
+python -m casepipe.extract_records --input fixtures/records --out public/demo \
+       --save-raw fixtures/extractions
+python pipeline/emit_records_sql.py        # regenerate the Supabase seed
+```
+
+One Sonnet call per document. The model sees page-tagged text — the same word
+stream the matcher sees, text layer or OCR — and returns records through a tool
+schema. It never sees the PDF, so it cannot read anything the OCR did not
+produce.
+
+**Nothing the model says is trusted on its word.** Every record must carry a
+`quote` copied verbatim from the page it cites. `casepipe/records.py` then tries
+to locate that quote in the page word stream:
+
+- **not found → the record is discarded**, and counted. This is the
+  hallucination rate, and it is reported rather than hidden (`rejected` in every
+  `*.records.json`, and on screen in Upload & Process).
+- **found →** the span gives us the highlight rects for free, and the OCR
+  confidence of the words actually quoted.
+
+Confidence reuses the matcher's formula so both stages route on one scale:
+
+```
+confidence = model_certainty × grounding × page_ocr_confidence × source_factor
+             auto ≥ 0.85   ·   review ≥ 0.60   ·   else escalated
+```
+
+A clean text-layer page scores ~0.96 and auto-accepts. The 47%-confidence
+urgent-care fax scores ~0.43 and escalates — every record on it, regardless of
+how sure the model claims to be. The model is not permitted to be confident
+about text the OCR could not read.
+
+Current fixtures: **103 records grounded, 0 ungrounded** across 6 documents
+(79 auto / 16 review / 8 escalated). Raw model output is committed to
+`fixtures/extractions/`, so `--raw` replays a run with no API call — grounding,
+scoring, and routing changes are reviewable without re-billing, and CI can gate
+on them.
+
+`pipeline/casepipe/record_spec.json` is the single source of truth for the
+model, the prompt, the tool schema, and the thresholds. Both runtimes import it:
+the Python batch pipeline and `app/api/extract-records` (the live route behind
+Upload & Process). `lib/record-grounding.ts` is a port of `records.py` and is
+verified to reproduce its numbers exactly — same relationship
+`lib/client-pipeline.ts` has to `match.py`.
+
+## Case profile — draft Plaintiff Fact Sheet
+
+`/profile` aggregates every record across every document into the PFS sections a
+paralegal would otherwise fill in by hand: identity, exposure, administration
+log, diagnosis timeline, causation, treatment, providers, ruled-out findings.
+
+Three rules hold the page together:
+
+1. **Nothing is asserted without a citation.** Every field links back to the
+   document, page, and verbatim quote it came from, with its confidence.
+2. **Nothing is silently chosen.** When two documents disagree — Depo-Provera's
+   last injection (07/19/2022) versus its formal discontinuation (01/05/2023) —
+   both values are surfaced as a conflict. The tool does not pick a winner
+   behind the reviewer's back. Cosmetic differences ("PO" vs "oral tablet",
+   "S. Grant, DO" vs "Grant, Sofia DO") are reconciled silently, because a flag
+   that cries wolf is worse than no flag.
+3. **Nothing rejected survives.** Field-level approve/reject writes through to
+   every record backing that field and is excluded from the export.
+
+The `.docx` export is a draft PFS with a **"Verification required before
+filing"** appendix — every low-confidence extraction and every unresolved source
+conflict, listed for a human. Export writes an audit event.
+
 ## Web app
 
 ```bash
@@ -52,6 +130,10 @@ npm install && npm run dev
 - **Workbench** — enriched-PDF viewer (highlights + outline render natively) with
   findings / bookmarks / extracted-fields panels, page-jump, validate/reject
 - **Review Queue** — lowest-confidence-first exception handling
+- **Case Profile** — cross-document Plaintiff Fact Sheet with per-field
+  provenance, conflict surfacing, approve/reject, and `.docx` export
+- **Upload & Process** — drop any PDF: OCR, term matching, and Sonnet record
+  extraction run live, with ungrounded records visibly rejected
 - **Litify Sync** — simulated connection health, SOQL pull log, and write-back
   staging (ContentVersion insert → ContentDocumentLink → field PATCH → Task),
   gated on explicit approval
@@ -78,13 +160,21 @@ visit `/admin` to create the first admin user.
 
 ## Persistence (Supabase)
 
-Findings, review decisions, and audit events live in a Supabase Postgres
-(`matters`, `documents`, `findings`, `audit_events`) with Row Level Security:
+Findings, extracted records, review decisions, and audit events live in a
+Supabase Postgres (`matters`, `documents`, `findings`, `case_records`,
+`audit_events`) with Row Level Security:
 anonymous read everywhere; anonymous writes limited to review decisions on
 `findings` and inserts on `audit_events`. Workbench validate/reject and the
 review queue's approve/correct/escalate persist with an audit event and
 survive reloads. The static JSON under `public/demo/` remains a read fallback
 if the store is unreachable.
+
+`case_records` is created and seeded by:
+
+```bash
+psql "$SUPABASE_DB_URL" -f supabase/0001_case_records.sql
+psql "$SUPABASE_DB_URL" -f supabase/0002_seed_case_records.sql
+```
 
 The publishable key in `lib/supabase.ts` is intentionally client-safe (RLS is
 the enforcement layer) and can be overridden with `NEXT_PUBLIC_SUPABASE_URL`
@@ -92,14 +182,25 @@ and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel.
 
 ## Roadmap (next slices)
 
-1. Managed Agents escalation worker (code-first, agent second-opinion on
-   low-confidence findings; gated behind `ANTHROPIC_API_KEY` env)
-2. Real Litify connector behind the same interface as the mock
+1. Attach the draft fact sheet to the Litify write-back flow (today it is a
+   download; it should stage like the enriched PDF does)
+2. Version and persist each generated profile (`case_profile_versions`) so an
+   export is a citable artifact rather than a client-side recomputation
+3. Managed Agents escalation worker (agent second-opinion on escalated records)
+4. Real Litify connector behind the same interface as the mock
    (`app/api/litify/*` defines the contract)
-3. Adjustable-schema editor backed by a describe()-shaped definition file
-4. Supabase Realtime for a live processing board
+5. Adjustable-schema editor backed by a describe()-shaped definition file
+6. Supabase Realtime for a live processing board
 
 ## Environment
 
-No server secrets required for the demo. Future slices read from env (set in
-Vercel): `SUPABASE_SERVICE_ROLE_KEY` (never in the repo), `ANTHROPIC_API_KEY`.
+`ANTHROPIC_API_KEY` — required by the extraction stage: by
+`casepipe.extract_records` when run against the API (not needed for `--raw`
+replay), and by `app/api/extract-records`, the live route behind Upload &
+Process. Without it, the seeded Case Profile still renders in full from the
+committed records; only live extraction of a newly dropped PDF is disabled, and
+the page says so.
+
+Optional: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
+`DATABASE_URI` and `PAYLOAD_SECRET` (admin), `SUPABASE_SERVICE_ROLE_KEY` (never
+in the repo).

@@ -6,6 +6,9 @@ import {
 } from "lucide-react";
 
 import { matchPage, PipeFinding, PipeWord } from "@/lib/client-pipeline";
+import type { ExtractionPage } from "@/lib/record-grounding";
+import type { CaseRecord } from "@/lib/records";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConfMeter, PageHeader, RoutingBadge, TintBadge } from "@/components/case-ui";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -48,6 +51,40 @@ const OVERLAY_TINT: Record<string, string> = {
   negated: "bg-slate-500/25 ring-slate-500/70",
 };
 
+/** One-line title for a record, drawn from whichever fields its type carries. */
+function recordTitle(r: CaseRecord): string {
+  const d = r.data;
+  return (
+    d.drug ?? d.condition ?? d.intervention ?? d.field ?? d.name ?? d.statement ?? r.type
+  ).slice(0, 60);
+}
+
+function recordDetail(r: CaseRecord): string {
+  const d = r.data;
+  switch (r.type) {
+    case "demographic":
+      return d.value ?? "";
+    case "exposure":
+      return [d.dose, d.route, d.frequency, d.start_date && `from ${d.start_date}`, d.prescriber]
+        .filter(Boolean).join(" · ");
+    case "administration":
+      return [d.date, d.dose, d.route, d.site, d.lot && `lot ${d.lot}`, d.administered_by]
+        .filter(Boolean).join(" · ");
+    case "diagnosis":
+      return [d.icd10, d.date, d.diagnosed_by, d.confirming_test].filter(Boolean).join(" · ");
+    case "treatment":
+      return [d.date, d.cpt, d.result].filter(Boolean).join(" · ");
+    case "causation":
+      return [d.author, d.date, d.relationship].filter(Boolean).join(" · ");
+    case "provider":
+      return [d.credential, d.specialty, d.role].filter(Boolean).join(" · ");
+    case "negated_finding":
+      return [d.date, d.result].filter(Boolean).join(" · ");
+    default:
+      return "";
+  }
+}
+
 const LOG_DOT: Record<LogLine["kind"], string> = {
   info: "bg-slate-400",
   ok: "bg-emerald-600",
@@ -58,12 +95,20 @@ const LOG_DOT: Record<LogLine["kind"], string> = {
 export default function UploadAndProcess() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [fileName, setFileName] = useState("");
+  const fileNameRef = useRef("");
   const [pages, setPages] = useState<PageState[]>([]);
   const [log, setLog] = useState<LogLine[]>([]);
   const [findings, setFindings] = useState<PipeFinding[]>([]);
   const [current, setCurrent] = useState(1);
   const [dragOver, setDragOver] = useState(false);
   const [ocr, setOcr] = useState<{ page: number; pct: number } | null>(null);
+  const [records, setRecords] = useState<CaseRecord[]>([]);
+  const [extraction, setExtraction] = useState<
+    | { state: "idle" }
+    | { state: "running" }
+    | { state: "done"; proposed: number; rejected: number }
+    | { state: "error"; message: string }
+  >({ state: "idle" });
   const inputRef = useRef<HTMLInputElement>(null);
   const logRef = useRef<HTMLDivElement>(null);
   const logId = useRef(0);
@@ -86,6 +131,8 @@ export default function UploadAndProcess() {
     setPages([]);
     setLog([]);
     setFindings([]);
+    setRecords([]);
+    setExtraction({ state: "idle" });
     setCurrent(1);
     setOcr(null);
     if (inputRef.current) inputRef.current.value = "";
@@ -97,6 +144,56 @@ export default function UploadAndProcess() {
     return c;
   }, [findings]);
 
+  /**
+   * Structured record extraction — one Claude Sonnet 5 call for the whole
+   * document, then server-side grounding of every record it returns against
+   * the exact page words we just produced. Anything the page does not support
+   * is rejected; we show that number rather than hide it.
+   */
+  const extractRecords = useCallback(
+    async (docPages: ExtractionPage[]) => {
+      setExtraction({ state: "running" });
+      addLog(`Sending ${docPages.length} page(s) of text to claude-sonnet-5 for record extraction…`);
+      try {
+        const res = await fetch("/api/extract-records", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            documentId: "upload",
+            filename: fileNameRef.current,
+            pages: docPages,
+          }),
+        });
+        const j = await res.json();
+        if (!res.ok) throw new Error(j.error ?? `HTTP ${res.status}`);
+
+        setRecords(j.records as CaseRecord[]);
+        setExtraction({
+          state: "done",
+          proposed: j.counts.proposed,
+          rejected: j.counts.rejected,
+        });
+        addLog(
+          `Extraction complete — ${j.counts.proposed} records proposed, ${j.counts.grounded} grounded ` +
+            `(${j.counts.auto} auto / ${j.counts.review} review / ${j.counts.escalated} escalated).`,
+          j.counts.escalated > 0 ? "alert" : "ok"
+        );
+        if (j.counts.rejected > 0) {
+          addLog(
+            `${j.counts.rejected} record(s) rejected — the quote could not be located on the cited ` +
+              `page, so the claim was discarded.`,
+            "warn"
+          );
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        setExtraction({ state: "error", message });
+        addLog(`Record extraction unavailable: ${message}`, "warn");
+      }
+    },
+    [addLog]
+  );
+
   const processFile = useCallback(
     async (file: File) => {
       if (!file.name.toLowerCase().endsWith(".pdf") && file.type !== "application/pdf") {
@@ -107,6 +204,7 @@ export default function UploadAndProcess() {
       cancelled.current = false;
       setPhase("working");
       setFileName(file.name);
+      fileNameRef.current = file.name;
       setPages([]);
       setFindings([]);
       setLog([]);
@@ -122,6 +220,7 @@ export default function UploadAndProcess() {
         addLog(`Document opened — ${pdf.numPages} page(s). Extracting per page…`, "ok");
 
         let findingIdx = 0;
+        const collected: ExtractionPage[] = [];
 
         for (let n = 1; n <= pdf.numPages; n++) {
           if (cancelled.current) return;
@@ -158,6 +257,7 @@ export default function UploadAndProcess() {
           }
 
           let source: "text_layer" | "ocr" = "text_layer";
+          let meanConf = 0.99;
           if (words.length >= 5) {
             addLog(`Page ${n}: native text layer — ${words.length} words (conf 99%)`, "ok");
           } else {
@@ -196,11 +296,14 @@ export default function UploadAndProcess() {
               `Page ${n}: OCR complete — ${words.length} words, mean confidence ${(mean * 100).toFixed(0)}%`,
               mean < 0.7 ? "warn" : "ok"
             );
+            meanConf = mean;
             setPages((p) => p.map((pg) => (pg.num === n ? { ...pg, meanConf: mean } : pg)));
           }
           setPages((p) =>
             p.map((pg) => (pg.num === n ? { ...pg, source, wordCount: words.length } : pg))
           );
+
+          collected.push({ number: n, source, mean_conf: meanConf, words });
 
           // 3) Term matching + routing (same taxonomy + thresholds as the server pipeline)
           const pageFindings = matchPage(words, n, source, findingIdx);
@@ -221,6 +324,13 @@ export default function UploadAndProcess() {
         addLog("Processing complete.", "ok");
         setPhase("done");
         setCurrent(1);
+
+        // 4) Structured record extraction (Claude Sonnet 5). The PDF never
+        // leaves the browser — only the page word stream is sent, and every
+        // record that comes back is grounded against those same words before
+        // it is shown. Records the page cannot support are rejected, and the
+        // rejection count is displayed rather than hidden.
+        await extractRecords(collected);
       } catch (err) {
         setPhase("error");
         addLog(`Processing failed: ${err instanceof Error ? err.message : String(err)}`, "alert");
@@ -229,7 +339,7 @@ export default function UploadAndProcess() {
         if (tessWorker) await tessWorker.terminate().catch(() => {});
       }
     },
-    [addLog]
+    [addLog, extractRecords]
   );
 
   const onDrop = useCallback(
@@ -409,48 +519,114 @@ export default function UploadAndProcess() {
             </Card>
 
             <Card className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden rounded-lg py-0 shadow-none">
-              <div className="flex shrink-0 items-baseline justify-between border-b px-3 py-2">
-                <span className="text-[13px] font-semibold">Findings ({findings.length})</span>
-                <span className="text-muted-foreground text-[11px]">click to jump to page</span>
-              </div>
-              <div className="min-h-0 flex-1 overflow-y-auto">
-                {findings.map((f) => (
-                  <div key={f.idx} className="hover:bg-muted/40 border-b px-3 py-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <button
-                        onClick={() => setCurrent(f.page)}
-                        className="min-w-0 truncate text-left text-[13px] font-medium hover:underline"
-                      >
-                        {f.term_label}
-                        <span className="text-muted-foreground ml-1.5 text-[11px] font-normal tabular-nums">
-                          p.{f.page}
+              <Tabs defaultValue="records" className="flex min-h-0 flex-1 flex-col gap-0">
+                <div className="flex shrink-0 items-center justify-between border-b px-3 py-1.5">
+                  <TabsList className="h-7">
+                    <TabsTrigger value="records" className="h-6 text-[11px]">
+                      Records ({records.length})
+                    </TabsTrigger>
+                    <TabsTrigger value="findings" className="h-6 text-[11px]">
+                      Term matches ({findings.length})
+                    </TabsTrigger>
+                  </TabsList>
+                  {extraction.state === "running" && (
+                    <span className="text-muted-foreground flex items-center gap-1.5 text-[11px]">
+                      <Loader2 className="size-3 animate-spin" /> extracting
+                    </span>
+                  )}
+                  {extraction.state === "done" && extraction.rejected > 0 && (
+                    <TintBadge tone="orange">{extraction.rejected} ungrounded, dropped</TintBadge>
+                  )}
+                </div>
+
+                {/* Structured records — what a fact sheet is actually built from */}
+                <TabsContent value="records" className="min-h-0 flex-1 overflow-y-auto">
+                  {records.map((r) => (
+                    <div key={r.id} className="hover:bg-muted/40 border-b px-3 py-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <button
+                          onClick={() => setCurrent(r.page)}
+                          className="min-w-0 truncate text-left text-[13px] font-medium hover:underline"
+                        >
+                          {recordTitle(r)}
+                          <span className="text-muted-foreground ml-1.5 text-[11px] font-normal tabular-nums">
+                            p.{r.page}
+                          </span>
+                        </button>
+                        <ConfMeter value={r.confidence} routing={r.routing} />
+                      </div>
+                      <div className="text-muted-foreground mt-0.5 truncate text-[11px]">
+                        {recordDetail(r)}
+                      </div>
+                      <p className="text-muted-foreground mt-0.5 truncate text-[11px] italic" title={r.quote}>
+                        “{r.quote}”
+                      </p>
+                      <div className="mt-1.5 flex items-center justify-between gap-2">
+                        <span className="flex items-center gap-1">
+                          <TintBadge tone="slate">{r.type.replace("_", " ")}</TintBadge>
+                          <RoutingBadge routing={r.routing} />
+                          {r.reported_by && <TintBadge tone="slate">via {r.reported_by}</TintBadge>}
                         </span>
-                      </button>
-                      <ConfMeter value={f.confidence} routing={f.routing} />
+                        <span className="text-muted-foreground text-[10px]">
+                          {(r.grounding * 100).toFixed(0)}% grounded × {(r.page_conf * 100).toFixed(0)}%{" "}
+                          {r.source === "ocr" ? "OCR" : "text"} · {r.certainty}
+                        </span>
+                      </div>
                     </div>
-                    <p
-                      className="text-muted-foreground mt-0.5 truncate text-[11px] italic"
-                      title={f.evidence}
-                    >
-                      “…{f.evidence}…”
-                    </p>
-                    <div className="mt-1.5 flex items-center justify-between gap-2">
-                      <RoutingBadge routing={f.routing} />
-                      <span className="text-muted-foreground text-[10px]">
-                        {(f.match_quality * 100).toFixed(0)}% match × {(f.ocr_conf * 100).toFixed(0)}%{" "}
-                        {f.source === "ocr" ? "OCR" : "text"}
-                      </span>
+                  ))}
+                  {records.length === 0 && (
+                    <div className="text-muted-foreground px-3 py-8 text-center text-xs">
+                      {extraction.state === "running"
+                        ? "Claude Sonnet 5 is reading the document…"
+                        : extraction.state === "error"
+                          ? extraction.message
+                          : phase === "working"
+                            ? "Records are extracted once every page has been read."
+                            : "No structured records extracted from this document."}
                     </div>
-                  </div>
-                ))}
-                {findings.length === 0 && (
-                  <div className="text-muted-foreground px-3 py-8 text-center text-xs">
-                    {phase === "working"
-                      ? "Matches appear here as each page completes…"
-                      : "No taxonomy terms found in this document."}
-                  </div>
-                )}
-              </div>
+                  )}
+                </TabsContent>
+
+                {/* Deterministic term matches — the evidence spine, unchanged */}
+                <TabsContent value="findings" className="min-h-0 flex-1 overflow-y-auto">
+                  {findings.map((f) => (
+                    <div key={f.idx} className="hover:bg-muted/40 border-b px-3 py-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <button
+                          onClick={() => setCurrent(f.page)}
+                          className="min-w-0 truncate text-left text-[13px] font-medium hover:underline"
+                        >
+                          {f.term_label}
+                          <span className="text-muted-foreground ml-1.5 text-[11px] font-normal tabular-nums">
+                            p.{f.page}
+                          </span>
+                        </button>
+                        <ConfMeter value={f.confidence} routing={f.routing} />
+                      </div>
+                      <p
+                        className="text-muted-foreground mt-0.5 truncate text-[11px] italic"
+                        title={f.evidence}
+                      >
+                        “…{f.evidence}…”
+                      </p>
+                      <div className="mt-1.5 flex items-center justify-between gap-2">
+                        <RoutingBadge routing={f.routing} />
+                        <span className="text-muted-foreground text-[10px]">
+                          {(f.match_quality * 100).toFixed(0)}% match ×{" "}
+                          {(f.ocr_conf * 100).toFixed(0)}% {f.source === "ocr" ? "OCR" : "text"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                  {findings.length === 0 && (
+                    <div className="text-muted-foreground px-3 py-8 text-center text-xs">
+                      {phase === "working"
+                        ? "Matches appear here as each page completes…"
+                        : "No taxonomy terms found in this document."}
+                    </div>
+                  )}
+                </TabsContent>
+              </Tabs>
             </Card>
           </div>
         </div>

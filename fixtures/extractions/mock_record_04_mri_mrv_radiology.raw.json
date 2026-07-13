@@ -1,0 +1,98 @@
+{
+  "document_id": "mock_record_04_mri_mrv_radiology",
+  "model": "claude-sonnet-5",
+  "records": [
+    {
+      "type": "demographic",
+      "page": 1,
+      "quote": "PATIENT: WHITFIELD, DANA L. DOB: 03/14/1991 MRN: SIC-77320",
+      "certainty": "high",
+      "data": {
+        "field": "Medical record number",
+        "value": "SIC-77320 (Springfield Imaging Center)"
+      }
+    },
+    {
+      "type": "treatment",
+      "page": 1,
+      "quote": "EXAM: MRI BRAIN W/WO CONTRAST (CPT 70551) + MRV HEAD DATE: 12/02/2022 REFERRER: P. NATARAJAN, MD · Springfield Neurology Associates",
+      "certainty": "high",
+      "data": {
+        "intervention": "MRI brain with/without contrast + MRV head",
+        "cpt": "70551",
+        "date": "12/02/2022",
+        "facility": "Springfield Imaging Center",
+        "prescriber": "P. Natarajan, MD"
+      }
+    },
+    {
+      "type": "negated_finding",
+      "page": 1,
+      "quote": "Patient denies pulsatile tinnitus. Presents without vision loss at time of exam.",
+      "certainty": "high",
+      "data": {
+        "condition": "Pulsatile tinnitus",
+        "date": "12/02/2022",
+        "result": "Denied at time of MRI (12/02/2022)"
+      }
+    },
+    {
+      "type": "negated_finding",
+      "page": 1,
+      "quote": "Patient denies pulsatile tinnitus. Presents without vision loss at time of exam.",
+      "certainty": "high",
+      "data": {
+        "condition": "Vision loss",
+        "date": "12/02/2022",
+        "result": "Absent at time of MRI (12/02/2022)"
+      }
+    },
+    {
+      "type": "negated_finding",
+      "page": 1,
+      "quote": "Venous system (MRV): The dural venous sinuses are patent. No evidence of dural venous sinus thrombosis or focal high-grade stenosis.",
+      "certainty": "high",
+      "data": {
+        "condition": "Dural venous sinus thrombosis",
+        "date": "12/02/2022",
+        "result": "Excluded on MRV — secondary cause of intracranial hypertension ruled out"
+      }
+    },
+    {
+      "type": "treatment",
+      "page": 1,
+      "quote": "Orbits: Mild flattening of the posterior globes bilaterally with distension and tortuosity of the optic nerve sheath complexes, findings that can be seen with elevated intracranial pressure.",
+      "certainty": "high",
+      "data": {
+        "intervention": "MRI orbit findings",
+        "date": "12/02/2022",
+        "result": "Mild posterior globe flattening bilaterally with optic nerve sheath distension and tortuosity — can be seen with elevated intracranial pressure"
+      }
+    },
+    {
+      "type": "treatment",
+      "page": 2,
+      "quote": "IMPRESSION 1. No intracranial mass, hemorrhage, or venous sinus thrombosis. 2. Partially empty sella, posterior globe flattening, and optic nerve sheath distension: constellation compatible with idiopathic intracranial hypertension in the appropriate clinical setting. 3. Recommend correlation with lumbar puncture opening pressure.",
+      "certainty": "high",
+      "data": {
+        "intervention": "Neuroradiology impression (MRI brain + MRV)",
+        "date": "12/02/2022",
+        "result": "No mass, hemorrhage, or venous sinus thrombosis. Partially empty sella, posterior globe flattening and optic nerve sheath distension — constellation compatible with idiopathic intracranial hypertension in the appropriate clinical setting. Correlation with lumbar puncture opening pressure recommended.",
+        "facility": "Springfield Imaging Center"
+      }
+    },
+    {
+      "type": "provider",
+      "page": 2,
+      "quote": "ELECTRONICALLY SIGNED R. Vasquez, MD · Neuroradiology Signed: 12/02/2022 16:41",
+      "certainty": "high",
+      "data": {
+        "name": "R. Vasquez",
+        "credential": "MD",
+        "specialty": "Neuroradiology",
+        "role": "Interpreted MRI brain + MRV (12/02/2022)",
+        "facility": "Springfield Imaging Center"
+      }
+    }
+  ]
+}
