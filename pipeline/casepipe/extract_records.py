@@ -52,10 +52,16 @@ def call_model(spec: dict, doc_text: str, filename: str) -> list[dict]:
 
     client = Anthropic()
     tool = spec["tool"]
+    # Sonnet 5 rejects sampling parameters (temperature/top_p/top_k) with a 400.
+    # Reproducibility here does not come from temperature anyway — it comes from
+    # grounding: whatever the model samples, a record the page cannot support is
+    # dropped. Adaptive thinking is on by default and counts against max_tokens,
+    # so the budget covers thinking plus the tool call; effort is set explicitly
+    # rather than left at the "high" default.
     msg = client.messages.create(
         model=spec["model"],
         max_tokens=spec["max_tokens"],
-        temperature=spec["temperature"],
+        output_config={"effort": spec["effort"]},
         system=spec["system_prompt"],
         tools=[tool],
         tool_choice={"type": "tool", "name": tool["name"]},

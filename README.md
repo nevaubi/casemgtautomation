@@ -89,6 +89,16 @@ Current fixtures: **103 records grounded, 0 ungrounded** across 6 documents
 scoring, and routing changes are reviewable without re-billing, and CI can gate
 on them.
 
+**Sonnet 5 API notes.** No sampling parameters are sent: `temperature`, `top_p`
+and `top_k` return a 400 on this model. That costs nothing here — reproducibility
+in this pipeline never came from `temperature`, it comes from grounding. Whatever
+the model samples, a record the page cannot support is dropped. Adaptive thinking
+is on by default and counts against `max_tokens` (a hard limit on thinking *plus*
+output), so the budget is sized for both, and `effort` is set explicitly to
+`medium` rather than inheriting the `high` default — on Sonnet 5 that is roughly
+Sonnet 4.6 at high, which is the right trade for a bounded extraction task whose
+output is verified downstream anyway.
+
 `pipeline/casepipe/record_spec.json` is the single source of truth for the
 model, the prompt, the tool schema, and the thresholds. Both runtimes import it:
 the Python batch pipeline and `app/api/extract-records` (the live route behind

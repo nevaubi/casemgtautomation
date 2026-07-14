@@ -2,11 +2,11 @@
   "meta": {
     "name": "PFS record extraction spec",
     "version": 1,
-    "note": "Canonical spec for the LLM record-extraction stage. Imported by BOTH the Python batch pipeline (casepipe.extract_records) and the Next.js live route (app/api/extract-records). Changing it changes both. The deterministic term matcher (terms.json) is unchanged and still runs — it is the evidence spine and the eval gate; this stage adds the structured fields a Plaintiff Fact Sheet needs."
+    "note": "Canonical spec for the LLM record-extraction stage. Imported by BOTH the Python batch pipeline (casepipe.extract_records) and the Next.js live route (app/api/extract-records). Changing it changes both. The deterministic term matcher (terms.json) is unchanged and still runs - it is the evidence spine and the eval gate; this stage adds the structured fields a Plaintiff Fact Sheet needs. Sonnet 5 notes: sampling parameters (temperature/top_p/top_k) return 400 and are deliberately absent - determinism is enforced through the system prompt and, more importantly, through grounding: a record the page cannot support is dropped no matter how the model sampled it. Adaptive thinking is on by default, and max_tokens is a hard limit on thinking plus output combined, so the budget is sized for both. Effort is set explicitly rather than left at the 'high' default: on Sonnet 5, medium is roughly Sonnet 4.6 at high, which is the right trade for a bounded extraction task that is verified downstream."
   },
   "model": "claude-sonnet-5",
-  "max_tokens": 8000,
-  "temperature": 0,
+  "max_tokens": 32000,
+  "effort": "medium",
   "confidence": {
     "certainty_weight": {
       "high": 0.97,

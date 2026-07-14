@@ -58,10 +58,14 @@ export async function POST(req: NextRequest) {
 
   let raw: RawRecord[] = [];
   try {
+    // Sonnet 5 rejects sampling parameters (temperature/top_p/top_k) with a 400,
+    // and runs adaptive thinking by default — which counts against max_tokens.
+    // The spec's budget covers thinking plus the tool call, and sets effort
+    // explicitly instead of inheriting the "high" default.
     const msg = await client.messages.create({
       model: spec.model,
       max_tokens: spec.max_tokens,
-      temperature: spec.temperature,
+      output_config: { effort: spec.effort as "low" | "medium" | "high" },
       system: spec.system_prompt,
       tools: [tool as unknown as Anthropic.Tool],
       tool_choice: { type: "tool", name: tool.name },
