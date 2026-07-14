@@ -1012,3 +1012,222 @@ export async function snapshotScore(
     return false;
   }
 }
+
+/* ------------------------------------------------------------------ *
+ * Insights — the reading, not the reading material
+ *
+ * A scorecard is a table. A partner does not want a table; they want the one
+ * sentence that tells them what to do, and then the table underneath it if they
+ * disagree. Everything below is derived deterministically from the scorecard —
+ * no model, no prose generation — because the headline is a conclusion, and
+ * conclusions in this app are drawn by the engine.
+ * ------------------------------------------------------------------ */
+
+export interface Margin {
+  /** Points between the current score and the bottom of the current tier. */
+  aboveFloor: number;
+  /** Points needed to reach the next tier up. null if already at the top. */
+  toNextTier: number | null;
+  nextTier: Tier | null;
+  /** Sitting exactly on a tier boundary — one bad day from a demotion. */
+  onTheLine: boolean;
+}
+
+/** A MET factor whose points are being discounted because the file is thin.
+ *  Distinct from a record request: the fact is proved, it is just not proved
+ *  *well*, and the fix is corroboration rather than collection. */
+export interface CorroborationItem {
+  key: string;
+  label: string;
+  strength: number;
+  recoverable: number;
+  reason: string;
+  action: string;
+  documents: string[];
+}
+
+/** The case the other side gets to make, assembled from the file's own data. */
+export interface DefenceItem {
+  kind: "adverse" | "contested" | "single_source" | "hearsay" | "gap";
+  label: string;
+  detail: string;
+  severity: "high" | "medium" | "low";
+}
+
+export interface Insights {
+  headline: string;
+  subhead: string;
+  margin: Margin;
+  /** Tier reached if every open factor resolves favourably. */
+  ifAllResolve: { points: number; tier: Tier };
+  corroboration: CorroborationItem[];
+  /** Adjusted points recoverable by corroboration alone, with no new facts. */
+  recoverable: number;
+  defence: DefenceItem[];
+}
+
+function marginFor(points: number, tiers: Tier[]): Margin {
+  const sorted = [...tiers].sort((a, b) => a.min_points - b.min_points);
+  const current = tierFor(points, tiers);
+  const next = sorted.find((t) => t.min_points > points) ?? null;
+  const aboveFloor = points - current.min_points;
+  return {
+    aboveFloor,
+    toNextTier: next ? next.min_points - points : null,
+    nextTier: next,
+    onTheLine: aboveFloor <= 2,
+  };
+}
+
+export function deriveInsights(
+  card: Scorecard,
+  fragility: FragilityResult[],
+  matrix: Matrix = MATRIX
+): Insights {
+  const margin = marginFor(card.points, matrix.tiers);
+  const fatal = fragility.filter((f) => f.dropsATier);
+  const scoring = card.factors.filter((f) => f.points > 0);
+
+  /* ---- corroboration queue: proved, but not proved well ---- */
+  const corroboration: CorroborationItem[] = scoring
+    .filter((f) => f.strength.overall < 0.95)
+    .map((f) => {
+      const recoverable = Math.round((f.points - f.adjustedPoints) * 10) / 10;
+      const reasons: string[] = [];
+      const actions: string[] = [];
+      if (f.strength.sourceDocuments === 1) {
+        reasons.push("rests on a single document");
+        actions.push(
+          `Request the primary source directly from the originating facility, so the fact does not depend on one production.`
+        );
+      }
+      if (!f.strength.firstHand) {
+        reasons.push("every source is second-hand");
+        actions.push("Obtain the first-hand chart rather than the reconciliation or patient report.");
+      }
+      if (f.strength.isContested) {
+        reasons.push("two documents disagree on a supporting value");
+        actions.push("Resolve the conflict in the review queue — an unresolved conflict is a deposition question.");
+      }
+      if (f.strength.documentary < 0.85) {
+        reasons.push(`extraction confidence ${Math.round(f.strength.documentary * 100)}%`);
+        actions.push("Have a reviewer verify the low-confidence extraction so the points are released at full weight.");
+      }
+      if (reasons.length === 0 && f.strength.sourceDocuments === 2) {
+        reasons.push("only two independent sources");
+        actions.push("A third independent source removes the remaining discount entirely.");
+      }
+      if (reasons.length === 0) {
+        reasons.push("minor extraction discount");
+        actions.push("Approve the supporting records in the review queue to release the points at full weight.");
+      }
+      return {
+        key: f.key,
+        label: f.label,
+        strength: f.strength.overall,
+        recoverable,
+        reason: reasons.join("; "),
+        action: actions[0] ?? "Corroborate from a second independent source.",
+        documents: [...new Set(f.citations.map((c) => c.docTitle))],
+      };
+    })
+    .filter((c) => c.recoverable > 0)
+    .sort((a, b) => b.recoverable - a.recoverable);
+
+  const recoverable = Math.round(corroboration.reduce((n, c) => n + c.recoverable, 0) * 10) / 10;
+
+  /* ---- the defence's case, assembled from our own file ---- */
+  const defence: DefenceItem[] = [];
+  for (const f of card.factors) {
+    if (f.status === "adverse") {
+      defence.push({
+        kind: "adverse",
+        label: f.label,
+        detail:
+          `${f.finding} Their support for this is itself ${Math.round(f.strength.overall * 100)}% — ` +
+          `${f.strength.note}. That is an opening to attack it, not a reason to ignore it.`,
+        severity: "high",
+      });
+    }
+  }
+  for (const f of fatal) {
+    if (f.singleSource) {
+      defence.push({
+        kind: "single_source",
+        label: f.label,
+        detail:
+          `Worth ${f.pointsAtRisk} points and documented in one place: ${f.documents[0]}. ` +
+          `Discredit that document and the case drops to ${f.tierIfStruck}.`,
+        severity: "high",
+      });
+    }
+  }
+  for (const f of scoring) {
+    if (f.strength.isContested) {
+      defence.push({
+        kind: "contested",
+        label: f.label,
+        detail: "Two documents in the file disagree on a value this factor depends on. Expect it in a deposition.",
+        severity: "medium",
+      });
+    }
+    if (!f.strength.firstHand && f.points > 0) {
+      defence.push({
+        kind: "hearsay",
+        label: f.label,
+        detail: "Every source for this factor is second-hand — patient report or an outside record.",
+        severity: "medium",
+      });
+    }
+  }
+  for (const f of card.openItems) {
+    defence.push({
+      kind: "gap",
+      label: f.label,
+      detail: `${f.finding} An unanswerable question is one the other side gets to answer for you.`,
+      severity: f.worstCase < 0 ? "high" : "low",
+    });
+  }
+
+  /* ---- headline ---- */
+  const gapToAdjusted = Math.round((card.points - card.adjustedPoints) * 10) / 10;
+  const tierGap = card.adjustedTier.key !== card.tier.key;
+
+  let headline: string;
+  if (!card.gatesPassed) {
+    headline = "This case does not clear the eligibility gates.";
+  } else if (tierGap) {
+    headline = `The matrix scores ${card.tier.label}. The file proves ${card.adjustedTier.label}.`;
+  } else if (margin.onTheLine) {
+    headline = `${card.tier.label}, sitting on the line at ${card.points} points.`;
+  } else {
+    headline = `${card.tier.label} at ${card.points} points, with ${margin.aboveFloor} points of cushion.`;
+  }
+
+  const parts: string[] = [];
+  if (margin.onTheLine && fatal.length > 0) {
+    parts.push(
+      fatal.length === scoring.length
+        ? "Every scoring factor is load-bearing — the loss of any one drops a tier"
+        : `${fatal.length} of ${scoring.length} factors are load-bearing`
+    );
+  }
+  if (tierGap) parts.push(`${gapToAdjusted} points are discounted for thin evidence, ${recoverable} of them recoverable by corroboration alone`);
+  if (margin.toNextTier !== null && card.ceiling >= (margin.nextTier?.min_points ?? Infinity)) {
+    parts.push(`${margin.nextTier!.label} is reachable at ${margin.nextTier!.min_points} — the open factors are worth ${card.ceiling - card.points}`);
+  }
+  if (parts.length === 0) parts.push("No open factors and no thin evidence — the file is complete on this matrix");
+
+  return {
+    headline,
+    subhead: parts.join(". ") + ".",
+    margin,
+    ifAllResolve: { points: card.ceiling, tier: card.ceilingTier },
+    corroboration,
+    recoverable,
+    defence: defence.sort((a, b) => {
+      const rank = { high: 3, medium: 2, low: 1 } as const;
+      return rank[b.severity] - rank[a.severity];
+    }),
+  };
+}
