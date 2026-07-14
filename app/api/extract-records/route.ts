@@ -15,7 +15,10 @@ import { ExtractionPage, groundRecords, RawRecord } from "@/lib/record-grounding
  * both read pipeline/casepipe/record_spec.json.
  */
 
-export const maxDuration = 60;
+// Vercel's fluid-compute ceiling (300s on Hobby, 800s on Pro). Extraction is a
+// single Sonnet call, but on a long scanned chart it runs with adaptive thinking
+// over 30+ pages of OCR text, which does not fit in the 60s default.
+export const maxDuration = 300;
 
 interface Body {
   documentId: string;

@@ -154,6 +154,10 @@ export default function UploadAndProcess() {
     async (docPages: ExtractionPage[]) => {
       setExtraction({ state: "running" });
       addLog(`Sending ${docPages.length} page(s) of text to claude-sonnet-5 for record extraction…`);
+      // The function's own ceiling is 300s; give up slightly before that rather
+      // than leaving the panel spinning on a request the platform already killed.
+      const abort = new AbortController();
+      const timer = setTimeout(() => abort.abort(), 295_000);
       try {
         const res = await fetch("/api/extract-records", {
           method: "POST",
@@ -163,6 +167,7 @@ export default function UploadAndProcess() {
             filename: fileNameRef.current,
             pages: docPages,
           }),
+          signal: abort.signal,
         });
         const j = await res.json();
         if (!res.ok) throw new Error(j.error ?? `HTTP ${res.status}`);
@@ -186,9 +191,17 @@ export default function UploadAndProcess() {
           );
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
+        const message =
+          err instanceof DOMException && err.name === "AbortError"
+            ? "Extraction timed out. This document is long enough that a single call " +
+              "exceeds the function limit — run it through the batch pipeline instead."
+            : err instanceof Error
+              ? err.message
+              : String(err);
         setExtraction({ state: "error", message });
         addLog(`Record extraction unavailable: ${message}`, "warn");
+      } finally {
+        clearTimeout(timer);
       }
     },
     [addLog]
