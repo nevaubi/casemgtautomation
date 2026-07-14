@@ -65,23 +65,32 @@ export async function POST(req: NextRequest) {
     // and runs adaptive thinking by default — which counts against max_tokens.
     // The spec's budget covers thinking plus the tool call, and sets effort
     // explicitly instead of inheriting the "high" default.
-    const msg = await client.messages.create({
-      model: spec.model,
-      max_tokens: spec.max_tokens,
-      output_config: { effort: spec.effort as "low" | "medium" | "high" },
-      system: spec.system_prompt,
-      tools: [tool as unknown as Anthropic.Tool],
-      tool_choice: { type: "tool", name: tool.name },
-      messages: [
-        {
-          role: "user",
-          content:
-            `Document: ${body.filename ?? body.documentId}\n` +
-            `Pages with source="ocr" were scanned; their text is degraded and you must quote it ` +
-            `exactly as garbled. Extract every structured record.\n\n${documentText(body.pages)}`,
-        },
-      ],
-    });
+    //
+    // This MUST stream. The SDK estimates a request's duration from max_tokens
+    // and refuses a non-streaming call that could exceed 10 minutes — with a 32k
+    // budget it never even reaches the API. Streaming also keeps the connection
+    // alive, which is what the function's 300s ceiling actually needs. We do not
+    // consume the deltas; we just wait for the assembled message.
+    const msg = await client.messages
+      .stream({
+        model: spec.model,
+        max_tokens: spec.max_tokens,
+        output_config: { effort: spec.effort as "low" | "medium" | "high" },
+        system: spec.system_prompt,
+        tools: [tool as unknown as Anthropic.Tool],
+        tool_choice: { type: "tool", name: tool.name },
+        messages: [
+          {
+            role: "user",
+            content:
+              `Document: ${body.filename ?? body.documentId}\n` +
+              `Pages with source="ocr" were scanned; their text is degraded and you must quote it ` +
+              `exactly as garbled. Extract every structured record.\n\n${documentText(body.pages)}`,
+          },
+        ],
+      })
+      .finalMessage();
+
     for (const block of msg.content) {
       if (block.type === "tool_use" && block.name === tool.name) {
         raw = ((block.input as { records?: RawRecord[] }).records ?? []) as RawRecord[];

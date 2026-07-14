@@ -58,7 +58,11 @@ def call_model(spec: dict, doc_text: str, filename: str) -> list[dict]:
     # dropped. Adaptive thinking is on by default and counts against max_tokens,
     # so the budget covers thinking plus the tool call; effort is set explicitly
     # rather than left at the "high" default.
-    msg = client.messages.create(
+    #
+    # Streaming is not optional: the SDK estimates a request's duration from
+    # max_tokens and refuses a non-streaming call that could run past 10 minutes.
+    # We don't need the deltas, only the assembled message.
+    with client.messages.stream(
         model=spec["model"],
         max_tokens=spec["max_tokens"],
         output_config={"effort": spec["effort"]},
@@ -74,7 +78,9 @@ def call_model(spec: dict, doc_text: str, filename: str) -> list[dict]:
                 f"{doc_text}"
             ),
         }],
-    )
+    ) as stream:
+        msg = stream.get_final_message()
+
     for block in msg.content:
         if block.type == "tool_use" and block.name == tool["name"]:
             return block.input.get("records", [])
