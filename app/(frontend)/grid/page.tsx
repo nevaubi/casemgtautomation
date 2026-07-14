@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  AlertTriangle, ArrowRight, CheckCircle2, CircleHelp, Download, HelpCircle,
+  AlertTriangle, ArrowRight, CheckCircle2, CircleHelp, Download,
   Loader2, Lock, MinusCircle, PenLine, ScanLine, ShieldAlert, XCircle,
 } from "lucide-react";
 
@@ -55,7 +55,7 @@ function Sources({ citations }: { citations: Citation[] }) {
     return <span className="text-muted-foreground text-[10px] italic">none</span>;
   return (
     <div className="flex flex-wrap gap-x-1 gap-y-0.5">
-      {citations.slice(0, 2).map((c) => (
+      {citations.slice(0, 1).map((c) => (
         <Tooltip key={c.recordId}>
           <TooltipTrigger asChild>
             <Link
@@ -74,10 +74,21 @@ function Sources({ citations }: { citations: Citation[] }) {
           </TooltipContent>
         </Tooltip>
       ))}
-      {citations.length > 2 && (
-        <span className="text-muted-foreground font-mono text-[10px] leading-4">
-          +{citations.length - 2}
-        </span>
+      {citations.length > 1 && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="text-muted-foreground cursor-help font-mono text-[10px] leading-4">
+              +{citations.length - 1}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent className="max-w-md">
+            {citations.slice(1).map((c) => (
+              <p key={c.recordId} className="font-mono text-[10px]">
+                {c.docTitle} p.{c.page} · {(c.confidence * 100).toFixed(0)}%
+              </p>
+            ))}
+          </TooltipContent>
+        </Tooltip>
       )}
     </div>
   );
@@ -86,71 +97,99 @@ function Sources({ citations }: { citations: Citation[] }) {
 function TierRail({ card, tiers }: { card: Scorecard; tiers: Tier[] }) {
   const asc = [...tiers].sort((a, b) => a.min_points - b.min_points);
   const top = asc[asc.length - 1];
-  const scale = Math.max(card.ceiling, top.min_points) + 12;
+  const scale = Math.max(card.ceiling, top.min_points) + 10;
   const pct = (n: number) => `${Math.max(0, Math.min(100, (n / scale) * 100))}%`;
-  const shades = ["bg-muted", "bg-primary/15", "bg-primary/30", "bg-primary/50", "bg-primary/70"];
 
   return (
-    <div className="mt-3">
-      <div className="relative h-11">
-        <div className="absolute inset-x-0 top-0 flex h-4 overflow-hidden rounded">
-          {asc.map((t, i) => {
-            const next = asc[i + 1];
-            const width = ((next ? next.min_points : scale) - t.min_points) / scale;
-            return (
-              <Tooltip key={t.key}>
-                <TooltipTrigger asChild>
-                  <div
-                    className={`${shades[i]} h-full cursor-help border-r border-background/60 last:border-0`}
-                    style={{ width: `${width * 100}%` }}
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="text-[11px] font-medium">
-                    {t.label} — from {t.min_points} points
-                  </p>
-                  <p className="text-[11px] opacity-80">{t.description}</p>
-                </TooltipContent>
-              </Tooltip>
-            );
-          })}
-        </div>
+    <div className="relative">
+      {/* the tiers, named — a coloured gradient nobody can read is not a chart */}
+      <div className="flex h-6 overflow-hidden rounded">
+        {asc.map((t, i) => {
+          const next = asc[i + 1];
+          const width = ((next ? next.min_points : scale) - t.min_points) / scale;
+          const isCurrent = t.key === card.tier.key;
+          return (
+            <Tooltip key={t.key}>
+              <TooltipTrigger asChild>
+                <div
+                  className={`flex h-full cursor-help items-center justify-center border-r border-background last:border-0 ${
+                    isCurrent ? "bg-primary" : "bg-muted"
+                  }`}
+                  style={{ width: `${width * 100}%` }}
+                >
+                  <span
+                    className={`truncate px-1 text-[10px] font-semibold tracking-wide ${
+                      isCurrent ? "text-primary-foreground" : "text-muted-foreground"
+                    }`}
+                  >
+                    {width * 100 > 9 ? t.label : ""}
+                  </span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-[11px] font-medium">
+                  {t.label} — from {t.min_points} points
+                </p>
+                <p className="text-[11px] opacity-80">{t.description}</p>
+              </TooltipContent>
+            </Tooltip>
+          );
+        })}
+      </div>
 
-        {/* tier boundary labels */}
-        {asc.map((t) => (
+      {/* thresholds */}
+      <div className="relative h-3">
+        {asc.slice(1).map((t) => (
           <span
             key={t.key}
-            className="text-muted-foreground absolute top-[18px] font-mono text-[9px] tabular-nums"
+            className="text-muted-foreground absolute top-0 -translate-x-1/2 font-mono text-[9px] tabular-nums"
             style={{ left: pct(t.min_points) }}
           >
-            <span className="-ml-px block border-l border-border pl-1 leading-3">{t.min_points}</span>
+            {t.min_points}
           </span>
         ))}
-
-        <div className="absolute top-[-3px] h-[22px] w-0.5 rounded bg-emerald-600/60" style={{ left: pct(card.ceiling) }} />
-        <div className="absolute top-[-3px] h-[22px] w-0.5 rounded bg-amber-500" style={{ left: pct(card.adjustedPoints) }} />
-        <div className="absolute top-[-5px] h-[26px] w-[3px] rounded bg-foreground" style={{ left: pct(card.points) }} />
       </div>
 
-      <div className="text-muted-foreground -mt-1 flex flex-wrap items-center gap-x-6 gap-y-1 text-[11px]">
-        <span className="flex items-baseline gap-1.5">
-          <span className="bg-foreground inline-block h-2.5 w-[3px] translate-y-px rounded" />
-          <span className="text-foreground font-semibold tabular-nums">{card.points}</span>
-          <span>matrix · {card.tier.label}</span>
-        </span>
-        <span className="flex items-baseline gap-1.5">
-          <span className="inline-block h-2.5 w-[3px] translate-y-px rounded bg-amber-500" />
-          <span className="font-semibold tabular-nums text-amber-700 dark:text-amber-400">
-            {card.adjustedPoints}
-          </span>
-          <span>evidence-adjusted · {card.adjustedTier.label}</span>
-        </span>
-        <span className="flex items-baseline gap-1.5">
-          <span className="inline-block h-2.5 w-[3px] translate-y-px rounded bg-emerald-600/60" />
-          <span className="font-semibold tabular-nums text-emerald-700">{card.ceiling}</span>
-          <span>ceiling · {card.ceilingTier.label}</span>
-        </span>
+      {/* where the case actually is */}
+      <div
+        className="absolute -top-1 z-10 -translate-x-1/2"
+        style={{ left: pct(card.points) }}
+      >
+        <div className="bg-foreground text-background rounded px-1.5 py-px font-mono text-[10px] font-bold tabular-nums shadow-sm">
+          {card.points}
+        </div>
+        <div className="bg-foreground mx-auto h-2 w-0.5" />
       </div>
+
+      {/* what the evidence supports, and how far the ceiling is */}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div
+            className="absolute top-0 h-6 w-0.5 -translate-x-1/2 cursor-help bg-amber-500"
+            style={{ left: pct(card.adjustedPoints) }}
+          />
+        </TooltipTrigger>
+        <TooltipContent>
+          <p className="text-[11px]">
+            Evidence-adjusted: <b>{card.adjustedPoints}</b> ({card.adjustedTier.label}). What the file
+            actually proves, after discounting single-source, second-hand and contested facts.
+          </p>
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div
+            className="absolute top-0 h-6 w-0.5 -translate-x-1/2 cursor-help bg-emerald-600"
+            style={{ left: pct(card.ceiling) }}
+          />
+        </TooltipTrigger>
+        <TooltipContent>
+          <p className="text-[11px]">
+            Ceiling: <b>{card.ceiling}</b> ({card.ceilingTier.label}) if every open factor resolves in
+            the plaintiff&apos;s favour.
+          </p>
+        </TooltipContent>
+      </Tooltip>
     </div>
   );
 }
@@ -164,30 +203,46 @@ function FactorRow({ f }: { f: FactorResult }) {
     : "bg-orange-600";
 
   return (
-    <div className={`${COLS} hover:bg-muted/30 border-t px-4 py-2`}>
-      <Icon className={`mt-[3px] size-3.5 ${s.tone}`} />
+    <div className={`${COLS} hover:bg-muted/40 border-t px-4 py-1.5`}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Icon className={`mt-[3px] size-3.5 cursor-help ${s.tone}`} />
+        </TooltipTrigger>
+        <TooltipContent>
+          <p className="text-[11px] font-medium">{s.label}</p>
+          <p className="mt-0.5 max-w-xs text-[11px] opacity-80">{f.requirement}</p>
+        </TooltipContent>
+      </Tooltip>
 
-      <div className="min-w-0">
-        <span className="flex items-center gap-1">
-          <span className="truncate text-[12.5px] font-medium">{f.label}</span>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <HelpCircle className="text-muted-foreground/40 size-3 shrink-0 cursor-help" />
-            </TooltipTrigger>
-            <TooltipContent className="max-w-sm">
-              <p className="text-[11px] font-medium">{f.requirement}</p>
-              <p className="mt-1 text-[11px] opacity-80">{f.whyItMatters}</p>
-            </TooltipContent>
-          </Tooltip>
-        </span>
-        <span className="text-muted-foreground block text-[10px] tracking-wide uppercase">
-          {s.label}
-        </span>
-      </div>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span className="min-w-0 cursor-help truncate text-[12.5px] font-medium">{f.label}</span>
+        </TooltipTrigger>
+        <TooltipContent className="max-w-sm">
+          <p className="text-[11px] font-medium">{f.requirement}</p>
+          <p className="mt-1 text-[11px] opacity-80">{f.whyItMatters}</p>
+        </TooltipContent>
+      </Tooltip>
 
-      <p className="text-muted-foreground line-clamp-2 text-[11.5px] leading-snug">{f.finding}</p>
+      {/* One line. The full sentence is a hover away; a wall of two-line prose in
+          every row is what made this unreadable. */}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <p className="text-muted-foreground min-w-0 cursor-help truncate text-[11.5px] leading-5">
+            {f.finding}
+          </p>
+        </TooltipTrigger>
+        <TooltipContent className="max-w-md">
+          <p className="text-[11px]">{f.finding}</p>
+          {f.evidenceNeeded && (f.status === "indeterminate" || f.status === "withheld") && (
+            <p className="mt-1 text-[11px] font-medium">
+              Needed: {f.evidenceNeeded} (worth up to {f.swing})
+            </p>
+          )}
+        </TooltipContent>
+      </Tooltip>
 
-      <div className="pt-0.5">
+      <div className="pt-1">
         {f.points !== 0 ? (
           <Tooltip>
             <TooltipTrigger asChild>
@@ -216,20 +271,22 @@ function FactorRow({ f }: { f: FactorResult }) {
             </TooltipContent>
           </Tooltip>
         ) : (
-          <span className="text-muted-foreground/50 text-[10px]">—</span>
+          <span className="text-muted-foreground/40 text-[10px]">—</span>
         )}
       </div>
 
-      <Sources citations={f.citations} />
+      <div className="pt-0.5">
+        <Sources citations={f.citations} />
+      </div>
 
       <span
-        className={`text-right text-[12.5px] font-semibold tabular-nums ${
-          f.points > 0 ? "" : f.points < 0 ? "text-rose-600" : "text-muted-foreground/50"
+        className={`pt-0.5 text-right text-[12.5px] font-semibold tabular-nums ${
+          f.points > 0 ? "" : f.points < 0 ? "text-rose-600" : "text-muted-foreground/40"
         }`}
       >
         {f.points === 0 ? "—" : num(f.points)}
       </span>
-      <span className="text-muted-foreground text-right text-[12.5px] tabular-nums">
+      <span className="text-muted-foreground pt-0.5 text-right text-[12.5px] tabular-nums">
         {f.points > 0 ? f.adjustedPoints : "—"}
       </span>
     </div>
@@ -385,12 +442,12 @@ export default function SettlementGridPage() {
         </Button>
       </PageHeader>
 
-      {/* ---------- verdict ---------- */}
+      {/* ---------- verdict: one sentence, one score, one picture ---------- */}
       <Card className="shrink-0 gap-0 rounded-lg py-0 shadow-none">
-        <div className="grid gap-x-8 gap-y-3 px-4 py-3 lg:grid-cols-[minmax(0,1fr)_auto]">
+        <div className="grid items-center gap-x-8 gap-y-3 px-4 py-3 lg:grid-cols-[minmax(0,1fr)_260px]">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-[16px] leading-tight font-semibold tracking-tight">
+              <h2 className="text-[15px] leading-tight font-semibold tracking-tight">
                 {insights.headline}
               </h2>
               {!card.gatesPassed && <TintBadge tone="rose">Gate failed</TintBadge>}
@@ -402,28 +459,24 @@ export default function SettlementGridPage() {
                 </TintBadge>
               )}
             </div>
-            <p className="text-muted-foreground mt-1 max-w-3xl text-[12.5px] leading-relaxed">
+            <p className="text-muted-foreground mt-1 line-clamp-2 max-w-3xl text-[12px] leading-snug">
               {insights.subhead}
             </p>
           </div>
 
-          {/* the three numbers, in a fixed column so they never drift */}
-          <div className="flex shrink-0 gap-6 lg:justify-end">
-            {[
-              { k: "Base", v: num(card.basePoints), sub: "the injury" },
-              { k: "Adjustments", v: num(card.adjustmentPoints), sub: "everything else" },
-              { k: "Total", v: String(card.points), sub: card.tier.label, big: true },
-            ].map((x) => (
-              <div key={x.k} className="text-right">
-                <div className="text-muted-foreground text-[10px] tracking-wide uppercase">{x.k}</div>
-                <div
-                  className={`tabular-nums ${x.big ? "text-2xl font-semibold" : "text-lg font-medium"}`}
-                >
-                  {x.v}
-                </div>
-                <div className="text-muted-foreground text-[10px]">{x.sub}</div>
+          {/* The score is stated once, here. The table below shows how it was
+              reached; repeating the subtotals up here was noise. */}
+          <div className="flex items-baseline justify-end gap-2">
+            <span className="text-3xl font-semibold tabular-nums">{card.points}</span>
+            <div className="leading-tight">
+              <div className="bg-primary text-primary-foreground rounded px-1.5 py-px text-[12px] font-semibold">
+                {card.tier.label}
               </div>
-            ))}
+              <div className="text-muted-foreground mt-0.5 text-[10px] tabular-nums">
+                <span className="text-amber-700 dark:text-amber-400">{card.adjustedPoints}</span> on
+                the evidence
+              </div>
+            </div>
           </div>
         </div>
         <div className="px-4 pb-3">
