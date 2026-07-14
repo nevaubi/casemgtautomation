@@ -21,6 +21,7 @@ const TITLES: [string, string][] = [
   ["/workbench", "Workbench"],
   ["/review", "Review queue"],
   ["/profile", "Case profile"],
+  ["/grid", "Settlement grid"],
   ["/litify", "Litify sync"],
 ];
 

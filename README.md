@@ -129,6 +129,77 @@ The `.docx` export is a draft PFS with a **"Verification required before
 filing"** appendix — every low-confidence extraction and every unresolved source
 conflict, listed for a human. Export writes an audit event.
 
+## Settlement grid (deterministic scoring)
+
+Mass tort cases are not valued one at a time. When an MDL resolves globally, a
+special master applies a **point matrix** — exposure duration, diagnostic
+confirmation, permanence, confounders — and each plaintiff lands in an award
+tier. Firms with thousands of inventory cases live and die by how accurately and
+how early they can place each client on that grid, and today that placement is
+done by hand, months late, by paralegals reading charts.
+
+`/grid` does it from the extracted records, and it is the only surface in this
+app where a **model is not allowed anywhere near the decision**:
+
+```
+evaluate(records, matrix_version) -> scorecard      // pure function
+```
+
+Same records, same matrix version, same points, every time. The LLM extracts
+fields and writes prose. `pipeline/casepipe/matrix.json` — gates, scored factors
+with bands, tiers — decides. A score a language model produced is not something a
+special master, a lien administrator, or a firm allocating settlement funds will
+accept, and it should not be.
+
+Three rules carry over from the extraction stage:
+
+1. **No point without a citation.** A factor that cannot name the record, page,
+   and quote behind it does not score.
+2. **INDETERMINATE is a first-class answer** — and it is the useful one. It is
+   what tells the firm what to go and get.
+3. **Confidence gates apply to money too.** A factor whose only support is
+   low-confidence, unreviewed OCR text is WITHHELD, not guessed.
+
+On the seeded Whitfield file the engine returns **110 points, Tier 2** — with a
+ceiling of 145 (Tier 1). The gap is two unresolved factors, and the page ranks
+them by what they are worth:
+
+| Missing evidence | Worth | Why it cannot be answered now |
+|---|---|---|
+| PCP records for the 12 months before first exposure | up to 25 pts | Earliest record in the file is dated the day of the first injection. Absence cannot be proved from records that do not exist. |
+| Neuro-ophthalmology exam ≥6 months post-diagnosis | up to 20 pts | The most recent exam is 1 month post-diagnosis. Permanence cannot be established that early, whatever the exam shows. |
+
+That table is a paralegal work queue sorted by dollar impact, generated from the
+chart. Two factors are also scored from data the rest of the industry throws
+away: *secondary causes excluded on neuroimaging* is scored from a **negative**
+finding (no venous sinus thrombosis on MRV — the exclusion is the evidence), and
+the obesity confounder is scored from a **normal** BMI, which in an intracranial
+hypertension case removes the defence's first move.
+
+### The score history
+
+Because the score is a pure function of the record set, it can be replayed over
+the documents in the order the firm received them. Not a simulation — the same
+evaluator, run against progressively larger subsets of the same records:
+
+```
+2023-02-03  Northgate Pharmacy         0 pts  (+0)   Below matrix
+2023-02-06  Lakeview Women's Health    70 pts (+70)  Tier 4   ← 6 injections
+2023-02-10  Meridian Primary Care      87 pts (+17)  Tier 3   ← causation statement
+2023-02-12  Springfield Imaging       102 pts (+15)  Tier 3   ← secondary causes excluded
+2023-02-12  Northgate Eye Specialists 110 pts  (+8)  Tier 2   ← second attributing clinician
+2023-02-14  Riverbend Urgent Care     110 pts  (+0)  Tier 2
+```
+
+The pharmacy fax that arrived first was worth nothing. The clinic's injection log
+was worth seventy points. A new document just extends this list — which is what
+makes ingestion feel like the case revaluing itself, with every point traceable
+to a quote on a page.
+
+Exports a **Matrix Position Statement** (.docx) with every point cited, every
+open factor named, and the engine version stamped on the front so the result is
+reproducible. Each export pins an immutable snapshot to `case_scores`.
+
 ## Web app
 
 ```bash
@@ -142,6 +213,8 @@ npm install && npm run dev
 - **Review Queue** — lowest-confidence-first exception handling
 - **Case Profile** — cross-document Plaintiff Fact Sheet with per-field
   provenance, conflict surfacing, approve/reject, and `.docx` export
+- **Settlement Grid** — deterministic matrix scoring with cited points, unresolved
+  factors ranked by value of information, and a per-document score history
 - **Upload & Process** — drop any PDF: OCR, term matching, and Sonnet record
   extraction run live, with ungrounded records visibly rejected
 - **Litify Sync** — simulated connection health, SOQL pull log, and write-back
@@ -179,11 +252,12 @@ review queue's approve/correct/escalate persist with an audit event and
 survive reloads. The static JSON under `public/demo/` remains a read fallback
 if the store is unreachable.
 
-`case_records` is created and seeded by:
+`case_records` and the append-only `case_scores` history are created by:
 
 ```bash
 psql "$SUPABASE_DB_URL" -f supabase/0001_case_records.sql
 psql "$SUPABASE_DB_URL" -f supabase/0002_seed_case_records.sql
+psql "$SUPABASE_DB_URL" -f supabase/0003_case_scores.sql
 ```
 
 The publishable key in `lib/supabase.ts` is intentionally client-safe (RLS is

@@ -38,6 +38,7 @@ export interface Citation {
   source: "text_layer" | "ocr";
   certainty: string;
   reportedBy: string | null;
+  decision: Decision;
 }
 
 export interface Conflict {
@@ -189,6 +190,7 @@ function cite(rec: CaseRecord, doc: DocMeta): Citation {
     source: rec.source,
     certainty: rec.certainty,
     reportedBy: rec.reported_by ?? null,
+    decision: rec.decision ?? null,
   };
 }
 
