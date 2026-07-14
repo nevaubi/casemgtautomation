@@ -212,6 +212,9 @@ export async function loadDocRecords(doc: DocMeta): Promise<CaseRecord[]> {
   } catch {
     // fall through to the committed pipeline artifact
   }
+  // An ingested document has no committed artifact to fall back to; if the
+  // database did not answer, we have nothing, and we say so rather than inventing.
+  if (!doc.findingsJson) return [];
   const r = await fetch(recordsJsonPath(doc));
   if (!r.ok) return [];
   const j = (await r.json()) as RecordsFile;

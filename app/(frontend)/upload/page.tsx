@@ -2,12 +2,23 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
-  ChevronLeft, ChevronRight, FileText, Loader2, RotateCcw, UploadCloud,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  FilePlus2,
+  FileText,
+  Loader2,
+  RotateCcw,
+  UploadCloud,
 } from "lucide-react";
 
 import { matchPage, PipeFinding, PipeWord } from "@/lib/client-pipeline";
 import type { ExtractionPage } from "@/lib/record-grounding";
-import type { CaseRecord } from "@/lib/records";
+import { CaseRecord, loadDocRecords } from "@/lib/records";
+import { getManifest } from "@/lib/demo";
+import { buildCaseProfile } from "@/lib/case-profile";
+import { evaluate } from "@/lib/matrix";
+import { ingestDocument, slugFor } from "@/lib/ingest";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConfMeter, PageHeader, RoutingBadge, TintBadge } from "@/components/case-ui";
 import { Button } from "@/components/ui/button";
@@ -96,6 +107,7 @@ export default function UploadAndProcess() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [fileName, setFileName] = useState("");
   const fileNameRef = useRef("");
+  const pagesRef = useRef<ExtractionPage[]>([]);
   const [pages, setPages] = useState<PageState[]>([]);
   const [log, setLog] = useState<LogLine[]>([]);
   const [findings, setFindings] = useState<PipeFinding[]>([]);
@@ -103,6 +115,20 @@ export default function UploadAndProcess() {
   const [dragOver, setDragOver] = useState(false);
   const [ocr, setOcr] = useState<{ page: number; pct: number } | null>(null);
   const [records, setRecords] = useState<CaseRecord[]>([]);
+  const [ingest, setIngest] = useState<
+    | { state: "idle" }
+    | { state: "running" }
+    | {
+        state: "done";
+        documentId: string;
+        before: number;
+        after: number;
+        beforeTier: string;
+        afterTier: string;
+        changes: string[];
+      }
+    | { state: "error"; message: string }
+  >({ state: "idle" });
   const [extraction, setExtraction] = useState<
     | { state: "idle" }
     | { state: "running" }
@@ -133,6 +159,7 @@ export default function UploadAndProcess() {
     setFindings([]);
     setRecords([]);
     setExtraction({ state: "idle" });
+    setIngest({ state: "idle" });
     setCurrent(1);
     setOcr(null);
     if (inputRef.current) inputRef.current.value = "";
@@ -206,6 +233,87 @@ export default function UploadAndProcess() {
     },
     [addLog]
   );
+
+  /**
+   * Add the extracted document to the case file, then re-score.
+   *
+   * This is the loop closing. The records go into the same table the seeded
+   * documents live in; nothing downstream is told an ingest happened. The grid
+   * simply sees a seventh document and recomputes, because the score is a pure
+   * function of the record set — so the delta shown here is not a simulation of
+   * a re-score, it *is* the re-score.
+   */
+  const addToCase = useCallback(async () => {
+    if (records.length === 0) return;
+    setIngest({ state: "running" });
+    addLog("Adding document to the case file…");
+    try {
+      const manifestBefore = await getManifest();
+      const recsBefore = new Map(
+        await Promise.all(
+          manifestBefore.documents.map(
+            async (d) => [d.id, await loadDocRecords(d)] as const
+          )
+        )
+      );
+      const before = evaluate(buildCaseProfile(manifestBefore, recsBefore));
+
+      const documentId = slugFor(fileNameRef.current);
+      const ocrPages = pagesRef.current.filter((p) => p.source === "ocr");
+      const res = await ingestDocument({
+        matterId: manifestBefore.matter.id,
+        documentId,
+        title: fileNameRef.current.replace(/\.pdf$/i, ""),
+        facility: "Uploaded — facility not yet assigned",
+        pages: pagesRef.current.length,
+        ocrPages: ocrPages.length,
+        meanOcrConf:
+          ocrPages.length > 0
+            ? ocrPages.reduce((s, p) => s + p.mean_conf, 0) / ocrPages.length
+            : 0.99,
+        records,
+      });
+      if (!res.ok) throw new Error(res.error ?? "ingest failed");
+
+      const manifestAfter = await getManifest();
+      const recsAfter = new Map(
+        await Promise.all(
+          manifestAfter.documents.map(
+            async (d) => [d.id, await loadDocRecords(d)] as const
+          )
+        )
+      );
+      const after = evaluate(buildCaseProfile(manifestAfter, recsAfter));
+
+      const changes = after.factors
+        .map((f) => {
+          const b = before.factors.find((x) => x.key === f.key);
+          if (!b || (b.status === f.status && b.points === f.points)) return null;
+          const d = f.points - b.points;
+          return `${f.label}: ${b.status} → ${f.status}${d !== 0 ? ` (${d > 0 ? "+" : ""}${d})` : ""}`;
+        })
+        .filter((x): x is string => !!x);
+
+      setIngest({
+        state: "done",
+        documentId,
+        before: before.points,
+        after: after.points,
+        beforeTier: before.tier.label,
+        afterTier: after.tier.label,
+        changes,
+      });
+      addLog(
+        `Document ingested. Settlement grid re-scored: ${before.points} → ${after.points} points ` +
+          `(${before.tier.label} → ${after.tier.label}).`,
+        after.points > before.points ? "ok" : "info"
+      );
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      setIngest({ state: "error", message });
+      addLog(`Ingest failed: ${message}`, "alert");
+    }
+  }, [records, addLog]);
 
   const processFile = useCallback(
     async (file: File) => {
@@ -343,6 +451,7 @@ export default function UploadAndProcess() {
         // record that comes back is grounded against those same words before
         // it is shown. Records the page cannot support are rejected, and the
         // rejection count is displayed rather than hidden.
+        pagesRef.current = collected;
         await extractRecords(collected);
       } catch (err) {
         setPhase("error");
@@ -383,12 +492,78 @@ export default function UploadAndProcess() {
             {counts.negated > 0 && <TintBadge tone="slate">{counts.negated} negated</TintBadge>}
           </>
         )}
+        {extraction.state === "done" && records.length > 0 && ingest.state !== "done" && (
+          <Button size="sm" onClick={addToCase} disabled={ingest.state === "running"}>
+            {ingest.state === "running" ? (
+              <Loader2 className="size-3.5 animate-spin" />
+            ) : (
+              <FilePlus2 className="size-3.5" />
+            )}
+            Add to case file &amp; re-score
+          </Button>
+        )}
         {phase !== "idle" && (
           <Button variant="outline" size="sm" onClick={reset}>
             <RotateCcw className="size-3.5" /> Process another
           </Button>
         )}
       </PageHeader>
+
+      {ingest.state === "done" && (
+        <Card className="shrink-0 gap-0 rounded-lg border-emerald-600/30 bg-emerald-500/5 py-0 shadow-none">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
+            <div>
+              <div className="text-muted-foreground text-[10px] tracking-wide uppercase">
+                Settlement grid re-scored
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-muted-foreground text-lg tabular-nums line-through">
+                  {ingest.before}
+                </span>
+                <ArrowRight className="text-muted-foreground size-3.5" />
+                <span className="text-2xl font-semibold tabular-nums">{ingest.after}</span>
+                <span className="text-muted-foreground text-[13px]">points</span>
+                <span
+                  className={`ml-1 rounded px-2 py-0.5 text-[12px] font-semibold ${
+                    ingest.afterTier !== ingest.beforeTier
+                      ? "bg-emerald-600 text-white"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  {ingest.afterTier}
+                  {ingest.afterTier !== ingest.beforeTier && ` (was ${ingest.beforeTier})`}
+                </span>
+              </div>
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-muted-foreground text-[10px] tracking-wide uppercase">
+                What this document changed
+              </div>
+              {ingest.changes.length === 0 ? (
+                <p className="text-[13px]">
+                  Nothing scoreable — the records are in the file, but no matrix factor moved.
+                </p>
+              ) : (
+                <ul className="text-[12px]">
+                  {ingest.changes.map((c) => (
+                    <li key={c}>{c}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <Button size="sm" variant="outline" asChild>
+              <a href="/grid">
+                Open settlement grid <ArrowRight className="size-3.5" />
+              </a>
+            </Button>
+          </div>
+        </Card>
+      )}
+      {ingest.state === "error" && (
+        <Card className="shrink-0 rounded-lg border-orange-600/30 bg-orange-500/5 px-4 py-2 text-[12px] text-orange-800 shadow-none">
+          Ingest failed: {ingest.message}
+        </Card>
+      )}
 
       <input
         ref={inputRef}

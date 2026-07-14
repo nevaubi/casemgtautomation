@@ -2,10 +2,27 @@
   "meta": {
     "name": "Injectable Contraceptive / Intracranial Hypertension — Settlement Point Matrix",
     "mdl": "In re: Injectable Contraceptive Products Liability Litigation (MDL)",
-    "version": 1,
+    "version": 2,
     "synthetic": true,
     "disclaimer": "SYNTHETIC — FOR DEMONSTRATION ONLY. Real MDL settlement matrices are negotiated between the PSC and defendants and administered by a special master; they are confidential and case-specific. This file is a structurally faithful stand-in, authored to exercise the engine. A firm supplies their own matrix; nothing here is a valuation opinion.",
-    "note": "Read by lib/matrix.ts. The evaluator is deterministic: score(records, matrix) is a pure function, so the same record set and matrix version always produce the same points. The LLM extracts fields; it never scores. Every point must trace to a cited record, and a factor whose only support is unreviewed low-confidence text is withheld rather than guessed."
+    "note": "Read by lib/matrix.ts. The evaluator is deterministic: score(records, matrix) is a pure function, so the same record set and matrix version always produce the same points. The LLM extracts fields and writes prose; it never scores. Every point must trace to a cited record, and a factor whose only support is unreviewed low-confidence text is withheld rather than guessed.\n\nv2 adds three things a flat point table cannot express:\n  * EVIDENCE WEIGHTING. Points are what the matrix says a fact is worth. Strength is how well the file actually proves it. A factor resting on one page of one document is not the same asset as one corroborated across three facilities, even though the matrix pays the same for both. The engine reports the matrix position and the evidence-adjusted position, and the gap between them is where the file is thin.\n  * PRIORS. Each open factor carries the probability that the missing evidence, once obtained, resolves in the plaintiff's favour. Ranking record requests by best case tells you what to dream about; ranking by EXPECTED value tells you what to do — and it is the only way the engine can warn you that a record you are about to request could hurt you.\n  * FRAGILITY. Every scoring factor is re-evaluated with its own evidence struck out, to find the single record whose loss costs a tier. That is the record the defence will attack first.",
+    "weighting": {
+      "note": "Evidence strength is multiplicative and every term is <= 1, so strength can only ever discount. It is applied to POSITIVE points only — you discount your own evidence, you never discount the other side's. An adverse factor is carried at full weight on the assumption the defence will make it stick.",
+      "documentary": "Mean confidence of the records actually cited by the factor (extraction confidence, already OCR- and grounding-adjusted).",
+      "corroboration": {
+        "one_source": 0.75,
+        "two_sources": 0.9,
+        "three_or_more": 1.0
+      },
+      "provenance": {
+        "any_first_hand": 1.0,
+        "hearsay_only": 0.7
+      },
+      "contested": {
+        "clean": 1.0,
+        "contested": 0.8
+      }
+    }
   },
   "tiers": [
     {
@@ -150,7 +167,9 @@
           "points": 0,
           "label": "Clinical diagnosis only"
         }
-      ]
+      ],
+      "prior_favourable": 0.6,
+      "prior_rationale": "Where an LP has not been performed, ordering one late is uncommon and the pressure may have normalised on therapy."
     },
     {
       "key": "f3",
@@ -227,7 +246,9 @@
           "label": "Pre-exposure history of the condition is documented"
         }
       ],
-      "evidence_needed": "Primary-care and any specialist records covering the 12 months before the first administration."
+      "evidence_needed": "Primary-care and any specialist records covering the 12 months before the first administration.",
+      "prior_favourable": 0.7,
+      "prior_rationale": "Most plaintiffs in this cohort have no pre-exposure history of the condition — but a minority do, and finding one costs 10 points rather than gaining 15. This is the request that can go against you."
     },
     {
       "key": "f6",
@@ -253,7 +274,9 @@
           "label": "BMI 30 or above — obesity available as an alternative cause"
         }
       ],
-      "evidence_needed": "Any record documenting height/weight or BMI within 12 months of diagnosis."
+      "evidence_needed": "Any record documenting height/weight or BMI within 12 months of diagnosis.",
+      "prior_favourable": 0.8,
+      "prior_rationale": "BMI is recorded at almost every encounter; if it is missing it is nearly always obtainable, and the cohort skews non-obese."
     },
     {
       "key": "f7",
@@ -303,7 +326,9 @@
           "label": "No persistent deficit documented"
         }
       ],
-      "evidence_needed": "A current neuro-ophthalmology examination (visual fields + OCT) dated at least 6 months after the diagnosis date."
+      "evidence_needed": "A current neuro-ophthalmology examination (visual fields + OCT) dated at least 6 months after the diagnosis date.",
+      "prior_favourable": 0.35,
+      "prior_rationale": "Papilledema is documented as improving on the latest exam. A 6-month follow-up is more likely to confirm resolution than permanence, so the upside is real but not the base case."
     },
     {
       "key": "f9",

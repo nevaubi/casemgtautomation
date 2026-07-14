@@ -83,7 +83,12 @@ export interface AuditEvent {
 
 export async function getManifest(): Promise<Manifest> {
   const r = await fetch("/demo/manifest.json");
-  return r.json();
+  const manifest = (await r.json()) as Manifest;
+  // Documents ingested through Upload & Process live only in the database. The
+  // case file is the union of the seeded manifest and whatever has arrived since,
+  // so every surface that reads the manifest picks them up without changes.
+  const { withIngestedDocuments } = await import("./ingest");
+  return withIngestedDocuments(manifest);
 }
 
 /**
@@ -105,6 +110,8 @@ export async function loadDocFindings(doc: DocMeta): Promise<Finding[]> {
   } catch {
     // fall through to static fixture
   }
+  // Ingested documents have no static fixture — their records live only in the DB.
+  if (!doc.findingsJson) return [];
   const r = await fetch(doc.findingsJson);
   const j = await r.json();
   return (j.findings as Omit<Finding, "idx" | "decision">[]).map((f, i) => ({

@@ -3,15 +3,27 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  AlertTriangle, CheckCircle2, CircleHelp, Download, HelpCircle, Loader2,
-  Lock, MinusCircle, ScanLine, TrendingUp, XCircle,
+  AlertTriangle,
+  CheckCircle2,
+  CircleHelp,
+  Download,
+  HelpCircle,
+  Loader2,
+  Lock,
+  MinusCircle,
+  PenLine,
+  ScanLine,
+  ShieldAlert,
+  TrendingUp,
+  XCircle,
 } from "lucide-react";
 
 import { getManifest, logAuditEvent, Manifest } from "@/lib/demo";
 import { CaseRecord, loadDocRecords } from "@/lib/records";
 import { buildCaseProfile, Citation } from "@/lib/case-profile";
 import {
-  evaluate, evaluateTimeline, FactorResult, FactorStatus, Scorecard, snapshotScore, TimelineStep,
+  analyseFragility, evaluate, evaluateTimeline, FactorResult, FactorStatus,
+  FragilityResult, Scorecard, snapshotScore, TimelineStep,
 } from "@/lib/matrix";
 import { PageHeader, TintBadge } from "@/components/case-ui";
 import { Button } from "@/components/ui/button";
@@ -94,13 +106,56 @@ function FactorRow({ f }: { f: FactorResult }) {
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
+          {f.points !== 0 && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="flex cursor-help items-center gap-1">
+                  <span className="bg-muted relative inline-block h-1 w-12 rounded-full">
+                    <span
+                      className={`absolute inset-y-0 left-0 rounded-full ${
+                        f.strength.overall >= 0.85 ? "bg-emerald-600"
+                        : f.strength.overall >= 0.7 ? "bg-amber-500"
+                        : "bg-orange-600"
+                      }`}
+                      style={{ width: `${Math.round(f.strength.overall * 100)}%` }}
+                    />
+                  </span>
+                  <span className="text-muted-foreground w-7 text-[11px] tabular-nums">
+                    {Math.round(f.strength.overall * 100)}%
+                  </span>
+                </span>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-sm">
+                <p className="text-[11px] font-medium">
+                  {f.points > 0 ? "Evidence strength" : "Strength of the defence's support for this"}
+                </p>
+                <p className="mt-0.5 text-[11px]">{f.strength.note}.</p>
+                <p className="mt-1 font-mono text-[10px] opacity-70">
+                  confidence {(f.strength.documentary * 100).toFixed(0)}% × corroboration{" "}
+                  {f.strength.corroboration} × provenance {f.strength.provenance} × contested{" "}
+                  {f.strength.contested}
+                </p>
+                {f.points < 0 && (
+                  <p className="mt-1 text-[11px] italic">
+                    Adverse factors are carried at full weight — the assumption is that the defence
+                    lands it. But weak support here is an opening to attack it.
+                  </p>
+                )}
+              </TooltipContent>
+            </Tooltip>
+          )}
           <span className={`text-[11px] font-medium ${s.tone}`}>{s.label}</span>
-          <span
-            className={`w-10 text-right text-[13px] font-semibold tabular-nums ${
-              f.points > 0 ? "text-foreground" : f.points < 0 ? "text-rose-600" : "text-muted-foreground"
-            }`}
-          >
-            {f.points > 0 ? `+${f.points}` : f.points}
+          <span className="w-16 text-right tabular-nums">
+            <span
+              className={`text-[13px] font-semibold ${
+                f.points > 0 ? "text-foreground" : f.points < 0 ? "text-rose-600" : "text-muted-foreground"
+              }`}
+            >
+              {f.points > 0 ? `+${f.points}` : f.points}
+            </span>
+            {f.points > 0 && f.adjustedPoints !== f.points && (
+              <span className="text-muted-foreground ml-1 text-[10px]">→{f.adjustedPoints}</span>
+            )}
           </span>
         </div>
       </div>
@@ -168,6 +223,56 @@ function Timeline({ steps }: { steps: TimelineStep[] }) {
   );
 }
 
+function Fragility({ items, points, tier }: { items: FragilityResult[]; points: number; tier: string }) {
+  const fatal = items.filter((f) => f.dropsATier);
+  return (
+    <div>
+      {fatal.length > 0 && (
+        <div className="flex gap-2 border-b bg-orange-500/10 px-4 py-2.5 text-[11px] text-orange-900 dark:text-orange-300">
+          <ShieldAlert className="mt-px size-3.5 shrink-0" />
+          <span>
+            <span className="font-medium">
+              This case sits on the {tier} line at {points} points.
+            </span>{" "}
+            {fatal.length === items.length
+              ? "Every scoring factor is load-bearing — the loss of any one of them drops a tier."
+              : `${fatal.length} of ${items.length} factors are load-bearing.`}{" "}
+            These are the records the defence will attack first.
+          </span>
+        </div>
+      )}
+      <div className="divide-y">
+        {items.map((f) => (
+          <div key={f.key} className="px-4 py-2.5">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="text-[13px] font-medium">{f.label}</div>
+                <p className="text-muted-foreground mt-0.5 text-[11px]">
+                  Struck out: {points} → <span className="font-medium">{f.scoreIfStruck} points</span>,{" "}
+                  {f.tierIfStruck}
+                  {f.singleSource ? " · rests on one document" : ` · ${f.documents.length} documents`}
+                </p>
+                <p className="text-muted-foreground/80 mt-0.5 truncate text-[10px]">
+                  {f.documents.join(" · ")}
+                </p>
+              </div>
+              <span
+                className={`shrink-0 rounded px-2 py-0.5 text-[12px] font-semibold tabular-nums ${
+                  f.dropsATier
+                    ? "bg-orange-500/15 text-orange-800 dark:text-orange-300"
+                    : "bg-muted text-muted-foreground"
+                }`}
+              >
+                −{f.pointsAtRisk}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const Section = ({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) => (
   <Card className="gap-0 self-start rounded-lg py-0 shadow-none">
     <div className="flex items-baseline gap-2 border-b px-4 py-2.5">
@@ -182,6 +287,12 @@ export default function SettlementGridPage() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [records, setRecords] = useState<Map<string, CaseRecord[]> | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [memo, setMemo] = useState<
+    | { state: "idle" }
+    | { state: "running" }
+    | { state: "done"; text: string; verified: boolean; ungrounded: string[] }
+    | { state: "error"; message: string }
+  >({ state: "idle" });
 
   useEffect(() => {
     (async () => {
@@ -202,6 +313,40 @@ export default function SettlementGridPage() {
     () => (manifest && records ? evaluateTimeline(manifest, records) : []),
     [manifest, records]
   );
+  const fragility = useMemo(
+    () => (manifest && records ? analyseFragility(manifest, records) : []),
+    [manifest, records]
+  );
+
+  /** The model may describe the score. It may not compute one — and every figure it
+   *  writes is checked back against the scorecard before the memo is shown. */
+  const draftMemo = async () => {
+    if (!card || !manifest) return;
+    setMemo({ state: "running" });
+    try {
+      const res = await fetch("/api/case-grid/memo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ scorecard: card, fragility, matter: manifest.matter }),
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.error ?? `HTTP ${res.status}`);
+      setMemo({
+        state: "done",
+        text: j.memo as string,
+        verified: j.verified as boolean,
+        ungrounded: (j.ungroundedFigures ?? []) as string[],
+      });
+      await logAuditEvent(
+        "grid.memo_drafted",
+        null,
+        `Assessment memo drafted from scorecard v${card.matrixVersion} — ` +
+          `${j.verified ? "all figures verified against the scorecard" : `${j.ungroundedFigures.length} ungrounded figure(s) flagged`}`
+      );
+    } catch (err) {
+      setMemo({ state: "error", message: err instanceof Error ? err.message : String(err) });
+    }
+  };
 
   const exportDocx = async () => {
     if (!card || !manifest) return;
@@ -210,7 +355,7 @@ export default function SettlementGridPage() {
       const res = await fetch("/api/case-grid/export", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ scorecard: card, matter: manifest.matter, timeline }),
+        body: JSON.stringify({ scorecard: card, matter: manifest.matter, timeline, fragility }),
       });
       if (!res.ok) throw new Error("export failed");
       const blob = await res.blob();
@@ -255,6 +400,14 @@ export default function SettlementGridPage() {
         <TintBadge tone={card.gatesPassed ? "emerald" : "rose"}>
           {card.gatesPassed ? "Gates passed" : "Gate failed"}
         </TintBadge>
+        <Button size="sm" variant="outline" onClick={draftMemo} disabled={memo.state === "running"}>
+          {memo.state === "running" ? (
+            <Loader2 className="size-3.5 animate-spin" />
+          ) : (
+            <PenLine className="size-3.5" />
+          )}
+          Draft assessment
+        </Button>
         <Button size="sm" onClick={exportDocx} disabled={exporting}>
           {exporting ? <Loader2 className="size-3.5 animate-spin" /> : <Download className="size-3.5" />}
           Position statement (.docx)
@@ -287,6 +440,37 @@ export default function SettlementGridPage() {
             </div>
           </div>
           <div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="text-muted-foreground cursor-help text-[10px] tracking-wide uppercase">
+                  Evidence-adjusted
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-sm">
+                <p className="text-[11px]">
+                  Matrix points weighted by how well the file actually proves each fact —
+                  extraction confidence × corroboration × first-hand provenance × whether the
+                  fact is contested. Positive points only: you discount your own evidence, never
+                  the other side&apos;s.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+            <div className="flex items-baseline gap-2">
+              <span
+                className={`text-2xl font-semibold tabular-nums ${
+                  card.adjustedTier.key !== card.tier.key ? "text-amber-700 dark:text-amber-400" : ""
+                }`}
+              >
+                {card.adjustedPoints}
+              </span>
+              {card.adjustedTier.key !== card.tier.key && (
+                <span className="rounded bg-amber-500/15 px-2 py-0.5 text-[12px] font-semibold text-amber-800 dark:text-amber-300">
+                  {card.adjustedTier.label}
+                </span>
+              )}
+            </div>
+          </div>
+          <div>
             <div className="text-muted-foreground text-[10px] tracking-wide uppercase">Floor</div>
             <div className="text-2xl font-semibold tabular-nums">{card.floor}</div>
           </div>
@@ -300,6 +484,20 @@ export default function SettlementGridPage() {
             </div>
           </div>
         </div>
+        {card.adjustedTier.key !== card.tier.key && (
+          <div className="flex gap-2 border-t bg-amber-500/10 px-4 py-2 text-[11px] text-amber-900 dark:text-amber-300">
+            <AlertTriangle className="mt-px size-3.5 shrink-0" />
+            <span>
+              <span className="font-medium">
+                The matrix scores this case at {card.tier.label}; the evidence only supports{" "}
+                {card.adjustedTier.label}.
+              </span>{" "}
+              The {Math.round((card.points - card.adjustedPoints) * 10) / 10}-point gap is where the
+              file is thin — single-source facts, second-hand reports, and contested values. Closing
+              it is corroboration work, not collection work.
+            </span>
+          </div>
+        )}
         <div className="text-muted-foreground border-t px-4 py-1.5 text-[10px] italic">
           {card.disclaimer}
         </div>
@@ -338,9 +536,50 @@ export default function SettlementGridPage() {
         </div>
 
         <div className="flex flex-col gap-3">
+          {memo.state !== "idle" && (
+            <Card className="gap-0 self-start rounded-lg py-0 shadow-none">
+              <div className="flex items-center justify-between gap-2 border-b px-4 py-2.5">
+                <span className="text-[13px] font-semibold">Case assessment</span>
+                {memo.state === "done" &&
+                  (memo.verified ? (
+                    <TintBadge tone="emerald">every figure verified against the scorecard</TintBadge>
+                  ) : (
+                    <TintBadge tone="orange">
+                      {memo.ungrounded.length} figure(s) not in the scorecard
+                    </TintBadge>
+                  ))}
+              </div>
+              <div className="px-4 py-3">
+                {memo.state === "running" && (
+                  <p className="text-muted-foreground flex items-center gap-2 text-xs">
+                    <Loader2 className="size-3.5 animate-spin" /> Drafting from the scorecard…
+                  </p>
+                )}
+                {memo.state === "error" && (
+                  <p className="text-[12px] text-orange-700">{memo.message}</p>
+                )}
+                {memo.state === "done" && (
+                  <>
+                    {!memo.verified && (
+                      <p className="mb-2 rounded bg-orange-500/10 px-2 py-1 text-[11px] text-orange-900 dark:text-orange-300">
+                        These figures appear in the memo but not in the scorecard, and should not be
+                        relied on: {memo.ungrounded.join(", ")}
+                      </p>
+                    )}
+                    {memo.text.split(/\n{2,}/).map((para, i) => (
+                      <p key={i} className="mb-2 text-[12.5px] leading-relaxed last:mb-0">
+                        {para}
+                      </p>
+                    ))}
+                  </>
+                )}
+              </div>
+            </Card>
+          )}
+
           <Section
             title="Request these records next"
-            note="ranked by points at stake, not by convenience"
+            note="ranked by expected value — not by best case"
           >
             {card.openItems.length === 0 && (
               <div className="text-muted-foreground px-4 py-6 text-center text-xs">
@@ -357,14 +596,39 @@ export default function SettlementGridPage() {
                     </div>
                     <p className="text-muted-foreground mt-0.5 text-[11px]">{f.evidenceNeeded}</p>
                     <p className="text-muted-foreground/80 mt-1 text-[11px] italic">{f.finding}</p>
+                    {f.priorRationale && (
+                      <p className="mt-1 rounded bg-muted/60 px-2 py-1 text-[11px]">
+                        <span className="font-medium">
+                          {Math.round((f.priorFavourable ?? 0) * 100)}% likely to help
+                        </span>{" "}
+                        <span className="text-muted-foreground">{f.priorRationale}</span>
+                      </p>
+                    )}
                   </div>
-                  <span className="shrink-0 rounded bg-amber-500/15 px-2 py-0.5 text-[12px] font-semibold tabular-nums text-amber-800 dark:text-amber-300">
-                    +{f.swing}
+                  <span className="shrink-0 text-right">
+                    <span className="block rounded bg-amber-500/15 px-2 py-0.5 text-[12px] font-semibold tabular-nums text-amber-800 dark:text-amber-300">
+                      {f.expectedGain !== null
+                        ? `${f.expectedGain > 0 ? "+" : ""}${f.expectedGain} exp.`
+                        : `+${f.swing}`}
+                    </span>
+                    <span className="text-muted-foreground mt-0.5 block text-[10px] tabular-nums">
+                      best +{f.bestCase} / worst {f.worstCase}
+                    </span>
                   </span>
                 </div>
               </div>
             ))}
           </Section>
+
+          <Card className="gap-0 self-start rounded-lg py-0 shadow-none">
+            <div className="flex items-baseline gap-2 border-b px-4 py-2.5">
+              <span className="text-[13px] font-semibold">What breaks this case</span>
+              <span className="text-muted-foreground text-[11px]">
+                each factor&apos;s evidence struck out, and the file re-scored
+              </span>
+            </div>
+            <Fragility items={fragility} points={card.points} tier={card.tier.label} />
+          </Card>
 
           <Section
             title="Score history"

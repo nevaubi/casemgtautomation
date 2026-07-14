@@ -5,7 +5,7 @@ import {
 } from "docx";
 
 import type { Citation } from "@/lib/case-profile";
-import type { Scorecard, TimelineStep } from "@/lib/matrix";
+import type { FragilityResult, Scorecard, TimelineStep } from "@/lib/matrix";
 import type { Manifest } from "@/lib/demo";
 
 /**
@@ -92,6 +92,7 @@ interface Body {
   scorecard: Scorecard;
   matter: Manifest["matter"];
   timeline: TimelineStep[];
+  fragility?: FragilityResult[];
 }
 
 export async function POST(req: NextRequest) {
@@ -134,12 +135,27 @@ export async function POST(req: NextRequest) {
     table(
       ["", "Points", "Tier"],
       [
-        ["Current, on the records in hand", String(c.points), c.tier.label],
+        ["Matrix position, on the records in hand", String(c.points), c.tier.label],
+        [
+          "Evidence-adjusted — what the file actually proves",
+          String(c.adjustedPoints),
+          c.adjustedTier.label,
+        ],
         ["Ceiling, if every open factor resolves favourably", String(c.ceiling), c.ceilingTier.label],
         ["Floor, if every open factor resolves against", String(c.floor), ""],
       ],
       [58, 16, 26]
     ),
+    ...(c.adjustedTier.key !== c.tier.key
+      ? [
+          note(
+            `The matrix scores this case at ${c.tier.label}. The evidence supports ` +
+              `${c.adjustedTier.label}. The ${Math.round((c.points - c.adjustedPoints) * 10) / 10}-point ` +
+              `gap is where the file is thin — facts resting on a single document, second-hand reports, ` +
+              `and values two documents disagree about. Closing it is corroboration work, not collection work.`
+          ),
+        ]
+      : []),
     note(
       `Scored by a deterministic rules engine against ${c.matrixName} v${c.matrixVersion} from ` +
         `${c.records} structured records extracted across ${c.documents} source document(s). ` +
@@ -157,15 +173,17 @@ export async function POST(req: NextRequest) {
 
     h2("2. Scored factors"),
     table(
-      ["Factor", "Status", "Pts", "Basis", "Source"],
+      ["Factor", "Status", "Pts", "Adj.", "Evidence", "Basis", "Source"],
       c.factors.map((f) => [
         f.label,
         STATUS_LABEL[f.status] ?? f.status,
         f.points > 0 ? `+${f.points}` : String(f.points),
+        f.points > 0 ? String(f.adjustedPoints) : dash,
+        f.points !== 0 ? `${Math.round(f.strength.overall * 100)}% — ${f.strength.note}` : dash,
         f.finding,
         src(f.citations),
       ]),
-      [18, 12, 6, 38, 26]
+      [15, 10, 5, 5, 22, 26, 17]
     ),
 
     h2("3. Unresolved factors and the evidence that would close them"),
@@ -189,7 +207,29 @@ export async function POST(req: NextRequest) {
           ),
         ]),
 
-    h2("4. How the position was built, document by document"),
+    h2("4. Fragility — what breaks this case"),
+    note(
+      "Each scoring factor was struck from the file and the case fully re-scored. These are the " +
+        "records the defence will attack first, and they are listed here so that the answer is " +
+        "prepared before the question is asked."
+    ),
+    ...(b.fragility && b.fragility.length > 0
+      ? [
+          table(
+            ["Factor", "Points at risk", "Score if struck", "Tier if struck", "Rests on"],
+            b.fragility.map((f) => [
+              f.label,
+              `-${f.pointsAtRisk}`,
+              String(f.scoreIfStruck),
+              f.dropsATier ? `${f.tierIfStruck}  ← DROPS A TIER` : f.tierIfStruck,
+              f.singleSource ? `ONE DOCUMENT: ${f.documents[0]}` : f.documents.join("; "),
+            ]),
+            [22, 10, 10, 18, 40]
+          ),
+        ]
+      : [body("Fragility analysis not supplied.", { italics: true })]),
+
+    h2("5. How the position was built, document by document"),
     note(
       "Because the score is a pure function of the record set, it can be replayed over the documents " +
         "in the order they were received. This is the same engine run against progressively larger " +

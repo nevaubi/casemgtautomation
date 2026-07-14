@@ -176,6 +176,65 @@ finding (no venous sinus thrombosis on MRV — the exclusion is the evidence), a
 the obesity confounder is scored from a **normal** BMI, which in an intracranial
 hypertension case removes the defence's first move.
 
+### The matrix weighs its own evidence
+
+Points are what the matrix says a fact is *worth*. They say nothing about whether
+you can make it stick. A diagnostic confirmation resting on one page of one
+document is not the same asset as an exposure history corroborated across three
+facilities — and the difference is exactly what opposing counsel is looking for.
+
+So every factor is scored twice:
+
+```
+strength = extraction_confidence × corroboration × provenance × contested
+adjusted = points × strength           (positive points only)
+```
+
+Multiplicative, every term ≤ 1, so it can only discount. And it is applied to
+**positive points only**: you discount your own evidence, you never discount the
+other side's. An adverse factor is carried at full weight on the assumption the
+defence lands it.
+
+On the seeded file that produces the single most useful number on the page:
+
+> **Matrix position: 110 — Tier 2. Evidence-adjusted: 84.6 — Tier 3.**
+> The 25-point gap is where the file is thin. Closing it is corroboration work,
+> not collection work.
+
+The diagnostic confirmation — the LP opening pressure of 32 cm H₂O, the fact the
+entire injury claim rests on — scores 72%, because it appears on exactly one page
+of one document.
+
+### What breaks this case
+
+Every scoring factor is struck from the file and the case **fully re-scored** —
+not arithmetic, a complete re-evaluation, because losing a record cascades (the
+LP note also carries the diagnosis date other factors anchor on).
+
+The answer for Whitfield is uncomfortable and correct: the case sits at 110
+points, and Tier 2 begins at 110. **Every scoring factor is load-bearing.** The
+loss of any one of them drops a tier. That is the sentence a partner needs before
+they take the case to a mediator, and no one has ever been able to produce it in
+under three days.
+
+### The record you request can hurt you
+
+Requests are ranked by **expected** value, not best case:
+
+```
+expected = prior × best + (1 - prior) × worst
+```
+
+| Request | Best | Worst | Prior | **Expected** |
+|---|---|---|---|---|
+| Pre-exposure PCP records | +15 | **−10** | 70% | **+7.5** |
+| 6-month neuro-ophth exam | +20 | 0 | 35% | **+7.0** |
+
+The first request has a downside: go looking for pre-exposure records and you may
+find the very headache history that sinks the case. Ranking by best case would
+have told you to chase the twenty-pointer. Ranking by expected value tells you
+the truth — they are worth almost the same, and only one of them can hurt you.
+
 ### The score history
 
 Because the score is a pure function of the record set, it can be replayed over
@@ -196,9 +255,35 @@ was worth seventy points. A new document just extends this list — which is wha
 makes ingestion feel like the case revaluing itself, with every point traceable
 to a quote on a page.
 
-Exports a **Matrix Position Statement** (.docx) with every point cited, every
-open factor named, and the engine version stamped on the front so the result is
-reproducible. Each export pins an immutable snapshot to `case_scores`.
+### Ingest closes the loop
+
+A PDF dropped on **Upload & Process** is extracted, grounded, and then — with one
+click — written into the same tables the seeded documents live in. Nothing
+downstream is told an ingest happened. The grid simply sees another document and
+recomputes, because the score is a pure function of the record set. The delta the
+page shows you is not a simulation of a re-score; it **is** the re-score.
+
+### The memo, and where the model is finally allowed to speak
+
+`Draft assessment` sends the finished scorecard to Sonnet and asks for the memo a
+senior associate would write from it. The model never sees the records — only the
+result — so it cannot change a number. It can only describe one.
+
+And it is verified the way everything else here is verified. The extraction stage
+checks every quote against the page it cites; the memo checks **every figure
+against the scorecard it was given**. A number the scorecard does not contain is a
+fabricated number, and it is shown to the reader as one:
+
+> ⚠ These figures appear in the memo but not in the scorecard, and should not be
+> relied on: $450,000, 87%
+
+That is the whole architecture in one line. The model reads and writes. The engine
+decides. The grounding check is what makes it safe to let the model near either.
+
+Exports a **Matrix Position Statement** (.docx) with every point cited, the
+evidence-adjusted position, the fragility analysis, the score history, and the
+engine version stamped on the front so the result is reproducible. Each export
+pins an immutable snapshot to `case_scores`.
 
 ## Web app
 

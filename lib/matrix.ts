@@ -69,6 +69,17 @@ export interface Factor {
   fallback_rule?: Rule;
   bands: Band[];
   evidence_needed?: string;
+  /** Probability that the missing evidence, once obtained, resolves favourably. */
+  prior_favourable?: number;
+  prior_rationale?: string;
+}
+
+export interface Weighting {
+  note: string;
+  documentary: string;
+  corroboration: { one_source: number; two_sources: number; three_or_more: number };
+  provenance: { any_first_hand: number; hearsay_only: number };
+  contested: { clean: number; contested: number };
 }
 
 export interface Gate {
@@ -88,7 +99,10 @@ export interface Tier {
 }
 
 export interface Matrix {
-  meta: { name: string; mdl: string; version: number; synthetic: boolean; disclaimer: string; note: string };
+  meta: {
+    name: string; mdl: string; version: number; synthetic: boolean;
+    disclaimer: string; note: string; weighting: Weighting;
+  };
   tiers: Tier[];
   gates: Gate[];
   factors: Factor[];
@@ -109,6 +123,20 @@ export type FactorStatus =
   | "indeterminate"  // the records cannot answer it — go and get more
   | "withheld";      // answerable, but only from evidence no human has verified
 
+export interface EvidenceStrength {
+  /** 0..1. Multiplicative, every term <= 1, so it can only ever discount. */
+  overall: number;
+  documentary: number;
+  corroboration: number;
+  provenance: number;
+  contested: number;
+  sourceDocuments: number;
+  firstHand: boolean;
+  isContested: boolean;
+  /** The one-line reason the file is (or is not) thin here. */
+  note: string;
+}
+
 export interface FactorResult {
   key: string;
   label: string;
@@ -118,6 +146,16 @@ export interface FactorResult {
   status: FactorStatus;
   /** Points actually awarded. Indeterminate and withheld factors award nothing. */
   points: number;
+  /** points x evidence strength. What the file actually proves, as opposed to what
+   *  the matrix says the fact is worth. Positive points only — see the weighting note. */
+  adjustedPoints: number;
+  strength: EvidenceStrength;
+  /** Expected points from chasing this factor's missing evidence, given the prior.
+   *  Can be lower than the best case, and for some factors it is negative: some
+   *  records you request will hurt you. */
+  expectedGain: number | null;
+  priorFavourable: number | null;
+  priorRationale: string | null;
   /** What the rule found, in plain words, with no model in the loop. */
   finding: string;
   bandLabel: string | null;
@@ -139,6 +177,19 @@ export interface GateResult {
   citations: Citation[];
 }
 
+/** What happens to the case if one factor's evidence is struck out. */
+export interface FragilityResult {
+  key: string;
+  label: string;
+  pointsAtRisk: number;
+  scoreIfStruck: number;
+  tierIfStruck: string;
+  dropsATier: boolean;
+  /** The documents that would have to be discredited to strike it. */
+  documents: string[];
+  singleSource: boolean;
+}
+
 export interface Scorecard {
   matrixName: string;
   matrixVersion: number;
@@ -150,14 +201,19 @@ export interface Scorecard {
   gatesPassed: boolean;
   factors: FactorResult[];
   points: number;
+  /** Sum of evidence-adjusted points. The gap to `points` is where the file is thin. */
+  adjustedPoints: number;
   /** Ceiling if every open factor resolved in the plaintiff's favour. */
   ceiling: number;
   /** Floor if every open factor resolved against. */
   floor: number;
   tier: Tier;
   ceilingTier: Tier;
-  /** Open factors, ranked by how much they could move the score. */
+  adjustedTier: Tier;
+  /** Open factors, ranked by EXPECTED points — not best case. */
   openItems: FactorResult[];
+  /** Populated by analyseFragility(); empty on a bare evaluate(). */
+  fragility: FragilityResult[];
 }
 
 /* ------------------------------------------------------------------ *
@@ -501,6 +557,85 @@ function evalRule(rule: Rule, p: CaseProfile): RuleOutcome {
 
 const ROUTING_RANK: Record<EntryRouting, number> = { auto: 3, review: 2, escalated: 1 };
 
+/**
+ * How well does the file actually prove this?
+ *
+ * The matrix says what a fact is *worth*. It says nothing about whether you can
+ * make it stick. A diagnostic confirmation resting on one page of one document is
+ * not the same asset as an exposure history corroborated across three facilities,
+ * even though the matrix pays the same for both — and the difference is exactly
+ * what opposing counsel is looking for.
+ *
+ * Strength is multiplicative and every term is <= 1, so it can only discount,
+ * never inflate. It is applied to POSITIVE points only: you discount your own
+ * evidence, you never discount the other side's. An adverse factor is carried at
+ * full weight on the assumption the defence will make it stick.
+ */
+function evidenceStrength(
+  citations: Citation[],
+  contestedRecordIds: Set<string>,
+  w: Weighting
+): EvidenceStrength {
+  if (citations.length === 0) {
+    return {
+      overall: 0, documentary: 0, corroboration: 0, provenance: 0, contested: 1,
+      sourceDocuments: 0, firstHand: false, isContested: false,
+      note: "No citable record.",
+    };
+  }
+
+  const documentary =
+    citations.reduce((n, c) => n + c.confidence, 0) / citations.length;
+
+  const docs = new Set(citations.map((c) => c.docId));
+  const corroboration =
+    docs.size >= 3 ? w.corroboration.three_or_more
+    : docs.size === 2 ? w.corroboration.two_sources
+    : w.corroboration.one_source;
+
+  const firstHand = citations.some((c) => !c.reportedBy);
+  const provenance = firstHand ? w.provenance.any_first_hand : w.provenance.hearsay_only;
+
+  const isContested = citations.some((c) => contestedRecordIds.has(c.recordId));
+  const contested = isContested ? w.contested.contested : w.contested.clean;
+
+  const overall = documentary * corroboration * provenance * contested;
+
+  const notes: string[] = [];
+  if (docs.size === 1) notes.push(`rests on a single document (${citations[0].docTitle})`);
+  else notes.push(`corroborated across ${docs.size} documents`);
+  if (!firstHand) notes.push("every source is second-hand");
+  if (isContested) notes.push("a supporting fact is contested between documents");
+  if (documentary < 0.85) notes.push(`mean extraction confidence ${(documentary * 100).toFixed(0)}%`);
+
+  return {
+    overall: Math.round(overall * 1000) / 1000,
+    documentary: Math.round(documentary * 1000) / 1000,
+    corroboration, provenance, contested,
+    sourceDocuments: docs.size,
+    firstHand,
+    isContested,
+    note: notes.join("; "),
+  };
+}
+
+/** Records that back a fact two documents disagree about. A contested fact is not
+ *  a false one — but it is one the other side gets to argue about, and the score
+ *  should say so out loud rather than quietly bank it. */
+function contestedRecords(p: CaseProfile): Set<string> {
+  const out = new Set<string>();
+  const groups = [
+    p.demographics, p.exposures, p.administrations, p.diagnoses,
+    p.treatments, p.causation, p.providers, p.ruledOut,
+  ];
+  for (const g of groups) {
+    for (const e of g) {
+      if (e.conflicts.length > 0) for (const c of e.citations) out.add(c.recordId);
+    }
+  }
+  return out;
+}
+
 function pickBand(bands: Band[], value: number | boolean, usedFallback: boolean): Band | null {
   if (usedFallback) {
     const fb = bands.find((b) => b.fallback);
@@ -521,7 +656,12 @@ function tidy(cs: Citation[]): Citation[] {
   return [...seen.values()].sort((a, b) => b.confidence - a.confidence).slice(0, 8);
 }
 
-function scoreFactor(f: Factor, p: CaseProfile): FactorResult {
+function scoreFactor(
+  f: Factor,
+  p: CaseProfile,
+  contested: Set<string>,
+  w: Weighting
+): FactorResult {
   const best = Math.max(...f.bands.map((b) => b.points));
   const worst = Math.min(...f.bands.map((b) => b.points));
 
@@ -542,6 +682,9 @@ function scoreFactor(f: Factor, p: CaseProfile): FactorResult {
       : citations.reduce((a, c) => (ROUTING_RANK[c.routing] < ROUTING_RANK[a.routing] ? c : a), citations[0])
           .routing;
 
+  const strength = evidenceStrength(citations, contested, w);
+  const prior = typeof f.prior_favourable === "number" ? f.prior_favourable : null;
+
   const base = {
     key: f.key,
     label: f.label,
@@ -553,13 +696,23 @@ function scoreFactor(f: Factor, p: CaseProfile): FactorResult {
     bestCase: best,
     worstCase: worst,
     evidenceNeeded: f.evidence_needed ?? null,
+    strength,
+    priorFavourable: prior,
+    priorRationale: f.prior_rationale ?? null,
   };
 
   if (out.indeterminate) {
+    // Expected value, not best case. Chasing this record has a downside as well
+    // as an upside, and for some factors the downside is real: go looking for
+    // pre-exposure records and you may find the very history that sinks you.
+    const expected =
+      prior === null ? null : Math.round((prior * best + (1 - prior) * worst) * 10) / 10;
     return {
       ...base,
       status: "indeterminate",
       points: 0,
+      adjustedPoints: 0,
+      expectedGain: expected,
       finding: out.finding,
       bandLabel: null,
       swing: best - worst,
@@ -581,6 +734,8 @@ function scoreFactor(f: Factor, p: CaseProfile): FactorResult {
       ...base,
       status: "withheld",
       points: 0,
+      adjustedPoints: 0,
+      expectedGain: band ? band.points : null,
       finding:
         `${out.finding} Every source for this factor is low-confidence (${weakest}) and unreviewed, ` +
         `so the points are withheld pending human verification.`,
@@ -595,6 +750,8 @@ function scoreFactor(f: Factor, p: CaseProfile): FactorResult {
       ...base,
       status: "indeterminate",
       points: 0,
+      adjustedPoints: 0,
+      expectedGain: prior === null ? null : Math.round((prior * best + (1 - prior) * worst) * 10) / 10,
       finding: `${out.finding} No citable record supports this factor, so it does not score.`,
       bandLabel: null,
       swing: best - worst,
@@ -618,6 +775,11 @@ function scoreFactor(f: Factor, p: CaseProfile): FactorResult {
     ...base,
     status,
     points,
+    // Positive points are discounted by how well the file proves them. Negative
+    // points are not: assume the defence lands its punch.
+    adjustedPoints:
+      points > 0 ? Math.round(points * strength.overall * 10) / 10 : points,
+    expectedGain: null,
     finding: out.finding,
     bandLabel: band?.label ?? null,
     swing: 0,
@@ -632,6 +794,9 @@ function tierFor(points: number, tiers: Tier[]): Tier {
 }
 
 export function evaluate(profile: CaseProfile, matrix: Matrix = MATRIX): Scorecard {
+  const contested = contestedRecords(profile);
+  const w = matrix.meta.weighting;
+
   const gates: GateResult[] = matrix.gates.map((g) => {
     let out = evalRule(g.rule, profile);
     if (out.value === false && g.fallback_rule) {
@@ -652,8 +817,11 @@ export function evaluate(profile: CaseProfile, matrix: Matrix = MATRIX): Scoreca
     };
   });
 
-  const factors = matrix.factors.map((f) => scoreFactor(f, profile));
+  const factors = matrix.factors.map((f) => scoreFactor(f, profile, contested, w));
   const points = factors.reduce((n, f) => n + f.points, 0);
+  const adjustedPoints =
+    Math.round(factors.reduce((n, f) => n + f.adjustedPoints, 0) * 10) / 10;
+
   const open = factors.filter((f) => f.status === "indeterminate" || f.status === "withheld");
   const ceiling = points + open.reduce((n, f) => n + (f.bestCase - f.points), 0);
   const floor = points + open.reduce((n, f) => n + (f.worstCase - f.points), 0);
@@ -669,12 +837,72 @@ export function evaluate(profile: CaseProfile, matrix: Matrix = MATRIX): Scoreca
     gatesPassed: gates.every((g) => g.passed),
     factors,
     points,
+    adjustedPoints,
     ceiling,
     floor,
     tier: tierFor(points, matrix.tiers),
     ceilingTier: tierFor(ceiling, matrix.tiers),
-    openItems: [...open].sort((a, b) => b.swing - a.swing),
+    adjustedTier: tierFor(adjustedPoints, matrix.tiers),
+    // Ranked by EXPECTED points, falling back to raw swing where the matrix
+    // states no prior. Best case tells you what to dream about; expected value
+    // tells you what to do next.
+    openItems: [...open].sort(
+      (a, b) => (b.expectedGain ?? b.swing) - (a.expectedGain ?? a.swing)
+    ),
+    fragility: [],
   };
+}
+
+/* ------------------------------------------------------------------ *
+ * Fragility — what breaks this case
+ *
+ * For every factor that is currently scoring, strike its supporting records out
+ * of the file and re-run the whole evaluator. Not arithmetic: a full re-scoring,
+ * because losing a record can cascade (the LP note also carries the diagnosis
+ * date that other factors anchor on).
+ *
+ * The output is the question defence counsel is already asking — which single
+ * document do I have to discredit to move this claimant down a tier — answered
+ * before they ask it.
+ * ------------------------------------------------------------------ */
+
+export function analyseFragility(
+  manifest: Manifest,
+  records: Map<string, CaseRecord[]>,
+  matrix: Matrix = MATRIX
+): FragilityResult[] {
+  const baseline = evaluate(buildCaseProfile(manifest, records), matrix);
+
+  const out: FragilityResult[] = [];
+  for (const f of baseline.factors) {
+    if (f.points <= 0 || f.citations.length === 0) continue;
+
+    const strike = new Set(f.citations.map((c) => c.recordId));
+    const struck = new Map<string, CaseRecord[]>();
+    for (const [docId, recs] of records) {
+      struck.set(
+        docId,
+        recs.map((r) => (strike.has(r.id) ? { ...r, decision: "rejected" as const } : r))
+      );
+    }
+    const after = evaluate(buildCaseProfile(manifest, struck), matrix);
+    const docs = [...new Set(f.citations.map((c) => c.docTitle))];
+
+    out.push({
+      key: f.key,
+      label: f.label,
+      pointsAtRisk: baseline.points - after.points,
+      scoreIfStruck: after.points,
+      tierIfStruck: after.tier.label,
+      dropsATier: after.tier.key !== baseline.tier.key,
+      documents: docs,
+      singleSource: f.strength.sourceDocuments === 1,
+    });
+  }
+
+  return out.sort(
+    (a, b) => Number(b.dropsATier) - Number(a.dropsATier) || b.pointsAtRisk - a.pointsAtRisk
+  );
 }
 
 /* ------------------------------------------------------------------ *
