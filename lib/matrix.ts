@@ -72,6 +72,10 @@ export interface Factor {
   /** Probability that the missing evidence, once obtained, resolves favourably. */
   prior_favourable?: number;
   prior_rationale?: string;
+  /** Real matrices separate the base award for the injury itself from the
+   *  adjustments that move it. So does this one. */
+  kind?: "base" | "adjustment";
+  section?: string;
 }
 
 export interface Weighting {
@@ -141,6 +145,8 @@ export interface FactorResult {
   key: string;
   label: string;
   category: string;
+  kind: "base" | "adjustment";
+  section: string;
   requirement: string;
   whyItMatters: string;
   status: FactorStatus;
@@ -201,6 +207,10 @@ export interface Scorecard {
   gatesPassed: boolean;
   factors: FactorResult[];
   points: number;
+  /** Base (the injury) and adjustments (everything that moves it), the way a
+   *  claims administrator reads a matrix. */
+  basePoints: number;
+  adjustmentPoints: number;
   /** Sum of evidence-adjusted points. The gap to `points` is where the file is thin. */
   adjustedPoints: number;
   /** Ceiling if every open factor resolved in the plaintiff's favour. */
@@ -689,6 +699,8 @@ function scoreFactor(
     key: f.key,
     label: f.label,
     category: f.category,
+    kind: f.kind ?? "adjustment",
+    section: f.section ?? f.category,
     requirement: f.requirement,
     whyItMatters: f.why_it_matters,
     citations,
@@ -819,6 +831,10 @@ export function evaluate(profile: CaseProfile, matrix: Matrix = MATRIX): Scoreca
 
   const factors = matrix.factors.map((f) => scoreFactor(f, profile, contested, w));
   const points = factors.reduce((n, f) => n + f.points, 0);
+  const basePoints = factors.filter((f) => f.kind === "base").reduce((n, f) => n + f.points, 0);
+  const adjustmentPoints = factors
+    .filter((f) => f.kind !== "base")
+    .reduce((n, f) => n + f.points, 0);
   const adjustedPoints =
     Math.round(factors.reduce((n, f) => n + f.adjustedPoints, 0) * 10) / 10;
 
@@ -837,6 +853,8 @@ export function evaluate(profile: CaseProfile, matrix: Matrix = MATRIX): Scoreca
     gatesPassed: gates.every((g) => g.passed),
     factors,
     points,
+    basePoints,
+    adjustmentPoints,
     adjustedPoints,
     ceiling,
     floor,

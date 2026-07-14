@@ -2,7 +2,7 @@
   "meta": {
     "name": "Injectable Contraceptive / Intracranial Hypertension — Settlement Point Matrix",
     "mdl": "In re: Injectable Contraceptive Products Liability Litigation (MDL)",
-    "version": 2,
+    "version": 3,
     "synthetic": true,
     "disclaimer": "SYNTHETIC — FOR DEMONSTRATION ONLY. Real MDL settlement matrices are negotiated between the PSC and defendants and administered by a special master; they are confidential and case-specific. This file is a structurally faithful stand-in, authored to exercise the engine. A firm supplies their own matrix; nothing here is a valuation opinion.",
     "note": "Read by lib/matrix.ts. The evaluator is deterministic: score(records, matrix) is a pure function, so the same record set and matrix version always produce the same points. The LLM extracts fields and writes prose; it never scores. Every point must trace to a cited record, and a factor whose only support is unreviewed low-confidence text is withheld rather than guessed.\n\nv2 adds three things a flat point table cannot express:\n  * EVIDENCE WEIGHTING. Points are what the matrix says a fact is worth. Strength is how well the file actually proves it. A factor resting on one page of one document is not the same asset as one corroborated across three facilities, even though the matrix pays the same for both. The engine reports the matrix position and the evidence-adjusted position, and the gap between them is where the file is thin.\n  * PRIORS. Each open factor carries the probability that the missing evidence, once obtained, resolves in the plaintiff's favour. Ranking record requests by best case tells you what to dream about; ranking by EXPECTED value tells you what to do — and it is the only way the engine can warn you that a record you are about to request could hurt you.\n  * FRAGILITY. Every scoring factor is re-evaluated with its own evidence struck out, to find the single record whose loss costs a tier. That is the record the defence will attack first.",
@@ -22,7 +22,8 @@
         "clean": 1.0,
         "contested": 0.8
       }
-    }
+    },
+    "structure": "Structured the way real MDL matrices are structured, and no more elaborately. The Duke Bolch Judicial Institute's MDL guidelines describe the canonical shape — a matrix grid implementing a point system, where base points are assigned by injury severity and then adjusted by objective criteria (exposure, causation, damages, confounders) — and they name the tension explicitly: the more detailed the matrix, the more eligibility disputes it generates; the less detailed, the less it reflects real differences between claimants. Complexity is a cost, not a virtue. Ten to forty scored factors is the working range. This file has three gates and ten factors, arranged in the four sections a claims administrator would recognise: QUALIFICATION (the gates), BASE (the injury itself), and ADJUSTMENTS (everything that moves the base up or down)."
   },
   "tiers": [
     {
@@ -102,39 +103,6 @@
   ],
   "factors": [
     {
-      "key": "f1",
-      "label": "Exposure duration and intensity",
-      "category": "Exposure",
-      "requirement": "Number of documented administrations of the injectable contraceptive.",
-      "why_it_matters": "Dose-response is the spine of general causation. Administration count is the most defensible measure of it, because each dose is an independently documented event.",
-      "rule": {
-        "type": "administration_count",
-        "drug": "depo-provera"
-      },
-      "bands": [
-        {
-          "min": 6,
-          "points": 25,
-          "label": "6 or more documented administrations"
-        },
-        {
-          "min": 3,
-          "points": 15,
-          "label": "3-5 documented administrations"
-        },
-        {
-          "min": 1,
-          "points": 5,
-          "label": "1-2 documented administrations"
-        },
-        {
-          "min": 0,
-          "points": 0,
-          "label": "No administration documented"
-        }
-      ]
-    },
-    {
       "key": "f2",
       "label": "Diagnostic confirmation",
       "category": "Injury",
@@ -169,7 +137,9 @@
         }
       ],
       "prior_favourable": 0.6,
-      "prior_rationale": "Where an LP has not been performed, ordering one late is uncommon and the pressure may have normalised on therapy."
+      "prior_rationale": "Where an LP has not been performed, ordering one late is uncommon and the pressure may have normalised on therapy.",
+      "kind": "base",
+      "section": "Base — injury"
     },
     {
       "key": "f3",
@@ -192,114 +162,9 @@
           "points": 0,
           "label": "Not excluded on the available records"
         }
-      ]
-    },
-    {
-      "key": "f4",
-      "label": "Treating-clinician causation statement",
-      "category": "Causation",
-      "requirement": "Treating clinicians attributing the injury to the exposure, in the record, in their own words.",
-      "why_it_matters": "A statement written by a treating physician in a contemporaneous chart note is worth far more than a retained expert's opinion, and two independent clinicians is the threshold at which the attribution stops looking like one doctor's theory.",
-      "rule": {
-        "type": "causation_statements",
-        "distinct_authors": true
-      },
-      "bands": [
-        {
-          "min": 2,
-          "points": 20,
-          "label": "Two or more independent treating clinicians attribute causation"
-        },
-        {
-          "min": 1,
-          "points": 12,
-          "label": "One treating clinician attributes causation"
-        },
-        {
-          "min": 0,
-          "points": 0,
-          "label": "No treating-clinician attribution in the record"
-        }
-      ]
-    },
-    {
-      "key": "f5",
-      "label": "No pre-exposure history of the condition",
-      "category": "Causation",
-      "requirement": "Medical records covering at least 12 months before first exposure, showing no intracranial hypertension and no chronic headache disorder.",
-      "why_it_matters": "You cannot prove absence from records that do not exist. Without pre-exposure coverage the defence will argue the condition predated the drug, and there is nothing in the file to rebut it.",
-      "rule": {
-        "type": "pre_exposure_absence",
-        "drug": "depo-provera",
-        "condition_match": "headache|intracranial|papilledema",
-        "months_before": 12
-      },
-      "bands": [
-        {
-          "equals": true,
-          "points": 15,
-          "label": "Pre-exposure records confirm the condition was absent"
-        },
-        {
-          "equals": false,
-          "points": -10,
-          "label": "Pre-exposure history of the condition is documented"
-        }
       ],
-      "evidence_needed": "Primary-care and any specialist records covering the 12 months before the first administration.",
-      "prior_favourable": 0.7,
-      "prior_rationale": "Most plaintiffs in this cohort have no pre-exposure history of the condition — but a minority do, and finding one costs 10 points rather than gaining 15. This is the request that can go against you."
-    },
-    {
-      "key": "f6",
-      "label": "Obesity confounder",
-      "category": "Confounder",
-      "requirement": "BMI at or around the time of diagnosis.",
-      "why_it_matters": "Obesity is the single most-cited alternative cause of intracranial hypertension and the defence's first move. A plaintiff with a normal BMI removes it — which makes this one of the most valuable normal-range vital signs in the entire chart.",
-      "rule": {
-        "type": "demographic_numeric",
-        "field_match": "bmi",
-        "op": "<",
-        "value": 30
-      },
-      "bands": [
-        {
-          "equals": true,
-          "points": 10,
-          "label": "BMI below 30 — obesity confounder removed"
-        },
-        {
-          "equals": false,
-          "points": -15,
-          "label": "BMI 30 or above — obesity available as an alternative cause"
-        }
-      ],
-      "evidence_needed": "Any record documenting height/weight or BMI within 12 months of diagnosis.",
-      "prior_favourable": 0.8,
-      "prior_rationale": "BMI is recorded at almost every encounter; if it is missing it is nearly always obtainable, and the cohort skews non-obese."
-    },
-    {
-      "key": "f7",
-      "label": "Ongoing treatment burden",
-      "category": "Damages",
-      "requirement": "Still on disease-directed therapy at the most recent record.",
-      "why_it_matters": "Continuing therapy is the difference between a resolved episode and an ongoing injury, and it is the anchor for future-medicals.",
-      "rule": {
-        "type": "ongoing_therapy",
-        "drug": "acetazolamide"
-      },
-      "bands": [
-        {
-          "equals": true,
-          "points": 15,
-          "label": "On disease-directed therapy at the latest record"
-        },
-        {
-          "equals": false,
-          "points": 5,
-          "label": "Therapy concluded / resolved"
-        }
-      ]
+      "kind": "base",
+      "section": "Base — injury"
     },
     {
       "key": "f8",
@@ -328,31 +193,44 @@
       ],
       "evidence_needed": "A current neuro-ophthalmology examination (visual fields + OCT) dated at least 6 months after the diagnosis date.",
       "prior_favourable": 0.35,
-      "prior_rationale": "Papilledema is documented as improving on the latest exam. A 6-month follow-up is more likely to confirm resolution than permanence, so the upside is real but not the base case."
+      "prior_rationale": "Papilledema is documented as improving on the latest exam. A 6-month follow-up is more likely to confirm resolution than permanence, so the upside is real but not the base case.",
+      "kind": "base",
+      "section": "Base — injury"
     },
     {
-      "key": "f9",
-      "label": "Alternative headache etiology",
-      "category": "Confounder",
-      "requirement": "Personal or family history of migraine or other primary headache disorder.",
-      "why_it_matters": "Not fatal, but it gives the defence a competing explanation for the presenting symptom and it will appear in their expert report. Better to know it is in the file before they find it.",
+      "key": "f1",
+      "label": "Exposure duration and intensity",
+      "category": "Exposure",
+      "requirement": "Number of documented administrations of the injectable contraceptive.",
+      "why_it_matters": "Dose-response is the spine of general causation. Administration count is the most defensible measure of it, because each dose is an independently documented event.",
       "rule": {
-        "type": "confounder_present",
-        "field_match": "family history|past medical",
-        "value_match": "migraine"
+        "type": "administration_count",
+        "drug": "depo-provera"
       },
       "bands": [
         {
-          "equals": true,
-          "points": -5,
-          "label": "Migraine history documented — defence-usable confounder"
+          "min": 6,
+          "points": 25,
+          "label": "6 or more documented administrations"
         },
         {
-          "equals": false,
+          "min": 3,
+          "points": 15,
+          "label": "3-5 documented administrations"
+        },
+        {
+          "min": 1,
+          "points": 5,
+          "label": "1-2 documented administrations"
+        },
+        {
+          "min": 0,
           "points": 0,
-          "label": "No competing headache etiology in the record"
+          "label": "No administration documented"
         }
-      ]
+      ],
+      "kind": "adjustment",
+      "section": "Adjustment — exposure"
     },
     {
       "key": "f10",
@@ -376,7 +254,150 @@
           "points": 0,
           "label": "Exposure documented by a single source"
         }
-      ]
+      ],
+      "kind": "adjustment",
+      "section": "Adjustment — exposure"
+    },
+    {
+      "key": "f4",
+      "label": "Treating-clinician causation statement",
+      "category": "Causation",
+      "requirement": "Treating clinicians attributing the injury to the exposure, in the record, in their own words.",
+      "why_it_matters": "A statement written by a treating physician in a contemporaneous chart note is worth far more than a retained expert's opinion, and two independent clinicians is the threshold at which the attribution stops looking like one doctor's theory.",
+      "rule": {
+        "type": "causation_statements",
+        "distinct_authors": true
+      },
+      "bands": [
+        {
+          "min": 2,
+          "points": 20,
+          "label": "Two or more independent treating clinicians attribute causation"
+        },
+        {
+          "min": 1,
+          "points": 12,
+          "label": "One treating clinician attributes causation"
+        },
+        {
+          "min": 0,
+          "points": 0,
+          "label": "No treating-clinician attribution in the record"
+        }
+      ],
+      "kind": "adjustment",
+      "section": "Adjustment — causation"
+    },
+    {
+      "key": "f5",
+      "label": "No pre-exposure history of the condition",
+      "category": "Causation",
+      "requirement": "Medical records covering at least 12 months before first exposure, showing no intracranial hypertension and no chronic headache disorder.",
+      "why_it_matters": "You cannot prove absence from records that do not exist. Without pre-exposure coverage the defence will argue the condition predated the drug, and there is nothing in the file to rebut it.",
+      "rule": {
+        "type": "pre_exposure_absence",
+        "drug": "depo-provera",
+        "condition_match": "headache|intracranial|papilledema",
+        "months_before": 12
+      },
+      "bands": [
+        {
+          "equals": true,
+          "points": 15,
+          "label": "Pre-exposure records confirm the condition was absent"
+        },
+        {
+          "equals": false,
+          "points": -10,
+          "label": "Pre-exposure history of the condition is documented"
+        }
+      ],
+      "evidence_needed": "Primary-care and any specialist records covering the 12 months before the first administration.",
+      "prior_favourable": 0.7,
+      "prior_rationale": "Most plaintiffs in this cohort have no pre-exposure history of the condition — but a minority do, and finding one costs 10 points rather than gaining 15. This is the request that can go against you.",
+      "kind": "adjustment",
+      "section": "Adjustment — causation"
+    },
+    {
+      "key": "f7",
+      "label": "Ongoing treatment burden",
+      "category": "Damages",
+      "requirement": "Still on disease-directed therapy at the most recent record.",
+      "why_it_matters": "Continuing therapy is the difference between a resolved episode and an ongoing injury, and it is the anchor for future-medicals.",
+      "rule": {
+        "type": "ongoing_therapy",
+        "drug": "acetazolamide"
+      },
+      "bands": [
+        {
+          "equals": true,
+          "points": 15,
+          "label": "On disease-directed therapy at the latest record"
+        },
+        {
+          "equals": false,
+          "points": 5,
+          "label": "Therapy concluded / resolved"
+        }
+      ],
+      "kind": "adjustment",
+      "section": "Adjustment — damages"
+    },
+    {
+      "key": "f6",
+      "label": "Obesity confounder",
+      "category": "Confounder",
+      "requirement": "BMI at or around the time of diagnosis.",
+      "why_it_matters": "Obesity is the single most-cited alternative cause of intracranial hypertension and the defence's first move. A plaintiff with a normal BMI removes it — which makes this one of the most valuable normal-range vital signs in the entire chart.",
+      "rule": {
+        "type": "demographic_numeric",
+        "field_match": "bmi",
+        "op": "<",
+        "value": 30
+      },
+      "bands": [
+        {
+          "equals": true,
+          "points": 10,
+          "label": "BMI below 30 — obesity confounder removed"
+        },
+        {
+          "equals": false,
+          "points": -15,
+          "label": "BMI 30 or above — obesity available as an alternative cause"
+        }
+      ],
+      "evidence_needed": "Any record documenting height/weight or BMI within 12 months of diagnosis.",
+      "prior_favourable": 0.8,
+      "prior_rationale": "BMI is recorded at almost every encounter; if it is missing it is nearly always obtainable, and the cohort skews non-obese.",
+      "kind": "adjustment",
+      "section": "Adjustment — confounders"
+    },
+    {
+      "key": "f9",
+      "label": "Alternative headache etiology",
+      "category": "Confounder",
+      "requirement": "Personal or family history of migraine or other primary headache disorder.",
+      "why_it_matters": "Not fatal, but it gives the defence a competing explanation for the presenting symptom and it will appear in their expert report. Better to know it is in the file before they find it.",
+      "rule": {
+        "type": "confounder_present",
+        "field_match": "family history|past medical",
+        "value_match": "migraine"
+      },
+      "bands": [
+        {
+          "equals": true,
+          "points": -5,
+          "label": "Migraine history documented — defence-usable confounder"
+        },
+        {
+          "equals": false,
+          "points": 0,
+          "label": "No competing headache etiology in the record"
+        }
+      ],
+      "kind": "adjustment",
+      "section": "Adjustment — confounders"
     }
   ]
 }
